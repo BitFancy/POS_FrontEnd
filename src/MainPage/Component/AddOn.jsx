@@ -7,10 +7,16 @@ const Addon = () => {
   useEffect(() => {
     (async () => {
       const res = await api.get('/product');
-      console.log(res.data);
-      setAddons(res.data);
+      console.log("whole products ==============", res.data);
+      const realAddon = res.data.filter((item) => item.productType === 5);
+      console.log(realAddon, "this is realadd on");
+      setAddons(realAddon);
     })();
-  }, []);
+  }, [setAddons]);
+
+  useEffect(() => {
+    console.log("This is addons--------------", addons);
+  }, [addons]);
 
   const showAddons = addons.map((addon, index) => {
     return (
