@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const MainProduct = ({ productId, name, price, handleSelected }) => {
+const SubProductTwo = ({ productId, name, price, handleSelected }) => {
   const [isActive, setIsActive] = useState(false);
   const handleSubmit = () => {
     setIsActive(!isActive);
@@ -14,7 +14,7 @@ const MainProduct = ({ productId, name, price, handleSelected }) => {
       className="col-lg-2 col-sm-6 d-flex"
       style={{ marginTop: '10px' }}
     >
-      <div className="productset flex-fill" style={{ background: '#fe9f43' }}>
+      <div className="productset flex-fill" style={{ background: '#00CC66' }}>
         <div className="productsetcontent">
           <h4>{name}</h4>
           <h6>{price}</h6>
@@ -24,4 +24,4 @@ const MainProduct = ({ productId, name, price, handleSelected }) => {
   );
 };
 
-export default MainProduct;
+export default SubProductTwo;

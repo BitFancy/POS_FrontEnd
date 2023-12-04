@@ -23,6 +23,8 @@ import {
   ellipise1,
   scanner1,
 } from "../../EntryFile/imagePath";
+import Addon from "../../MainPage/Component/AddOn";
+import Minus from "../../MainPage/Component/Minus";
 
 const Pos = () => {
   
@@ -169,7 +171,7 @@ const Pos = () => {
                               className="select"
                               data={options}
                               options={{
-                                placeholder: "Walk-in Customer",
+                                placeholder: 'Walk-in Customer',
                               }}
                             />
                           </div>
@@ -182,7 +184,7 @@ const Pos = () => {
                               className="select"
                               data={options1}
                               options={{
-                                placeholder: "Product",
+                                placeholder: 'Product',
                               }}
                             />
                           </div>
@@ -227,7 +229,7 @@ const Pos = () => {
                                   <input
                                     type="text"
                                     name="child"
-                                    value={counter}
+                                    defaultValue={counter}
                                     className="quantity-field"
                                   />
                                   <input
@@ -274,7 +276,7 @@ const Pos = () => {
                                   <input
                                     type="text"
                                     name="child"
-                                    value={counter1}
+                                    defalutvalue={counter1}
                                     className="quantity-field"
                                   />
                                   <input
@@ -321,7 +323,7 @@ const Pos = () => {
                                   <input
                                     type="text"
                                     name="child"
-                                    value={counter2}
+                                    defaultValue={counter2}
                                     className="quantity-field"
                                   />
                                   <input
@@ -369,7 +371,7 @@ const Pos = () => {
                                     type="text"
                                     min={0}
                                     name="child"
-                                    value={counter3}
+                                    defalutvalue={counter3}
                                     className="quantity-field"
                                   />
                                   <input
@@ -473,7 +475,7 @@ const Pos = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#recents"
                           >
-                            <img src={transcation} alt="img" className="me-1" />{" "}
+                            <img src={transcation} alt="img" className="me-1" />{' '}
                             Transaction
                           </Link>
                         </li>
@@ -488,7 +490,7 @@ const Pos = () => {
       </div>
       <div
         className="modal fade"
-        id="create"
+        id="addon"
         tabIndex={-1}
         aria-labelledby="create"
         aria-hidden="true"
@@ -498,65 +500,23 @@ const Pos = () => {
           role="document"
         >
           <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Create</h5>
-              <button
-                type="button"
-                className="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <div className="row">
-                <div className="col-lg-6 col-sm-12 col-12">
-                  <div className="form-group">
-                    <label>Customer Name</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-sm-12 col-12">
-                  <div className="form-group">
-                    <label>Email</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-sm-12 col-12">
-                  <div className="form-group">
-                    <label>Phone</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-sm-12 col-12">
-                  <div className="form-group">
-                    <label>Country</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-sm-12 col-12">
-                  <div className="form-group">
-                    <label>City</label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-sm-12 col-12">
-                  <div className="form-group">
-                    <label>Address</label>
-                    <input type="text" />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <Link to="#" className="btn btn-submit me-2">
-                  Submit
-                </Link>
-                <Link to="#" className="btn btn-cancel" data-bs-dismiss="modal">
-                  Cancel
-                </Link>
-              </div>
-            </div>
+            <Addon />
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="minus"
+        tabIndex={-1}
+        aria-labelledby="create"
+        aria-hidden="true"
+      >
+        <div
+          className="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
+          <div className="modal-content">
+            <Minus />
           </div>
         </div>
       </div>

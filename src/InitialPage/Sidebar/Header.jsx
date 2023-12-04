@@ -94,11 +94,11 @@ const Header = (props) => {
         </Link>
         </div>
         <div className="nav-item has-arrow nav-item-box user-menu align-self-center">
-          <p><TimeClock /></p>
+          <TimeClock />
         </div>
         <ul className="justify-content-between nav user-menu">
           <li className="nav-item-box align-self-center me-3">
-            <p><TimeDate /></p>
+            <TimeDate />
           </li>
           <li className="d-flex align-items-center nav-item dropdown has-arrow flag-nav nav-item-boxb">
             <div className="nav-item dropdown has-arrow flag-nav nav-item-boxb d-flex justify-content-end">

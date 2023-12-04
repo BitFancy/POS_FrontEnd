@@ -126,7 +126,7 @@ const ProductList = () => {
       }
       setData(inputData);
     }
-    check();  
+    check();
   }, []);
 
   return (
@@ -157,9 +157,7 @@ const ProductList = () => {
                 className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
                 id="filter_inputs"
                 style={{ display: inputfilter ? 'block' : 'none' }}
-              >
-                
-              </div>
+              ></div>
               {/* /Filter */}
               <div className="table-responsive">
                 <Table columns={columns} dataSource={data} />

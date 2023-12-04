@@ -7660,7 +7660,6 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .productset {
-  border: 1px solid #F8F8F8;
   box-shadow: 0px 4px 4px 0px rgba(237, 237, 237, 0.2509803922);
   background: #fff;
   margin: 0 0 25px;
@@ -7683,7 +7682,7 @@ span.select2-container.select2-container--default.select2-container--open {
   background: #7367F0;
   border-radius: 4px 0;
 }
-.productset.active {
+.productset .active {
   border: 1px solid #7367F0;
 }
 .productset:hover .productsetimg img {

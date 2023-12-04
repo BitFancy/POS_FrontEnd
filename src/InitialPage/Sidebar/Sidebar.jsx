@@ -280,7 +280,7 @@ const Sidebar = (props) => {
                     <li>
                       <Link to="/pos">
                         <FeatherIcon icon="hard-drive" />
-                        <span>Making Order</span>
+                        <span>Make Order</span>
                       </Link>
                     </li>
                     {/* <li className="submenu">
@@ -703,22 +703,22 @@ const Sidebar = (props) => {
                         <ul>
                           <li>
                             <Link
-                              to="/dream-pos/users/newuser"
-                              className={
-                                pathname.includes("newuser") ? "active" : ""
-                              }
-                            >
-                              New User{" "}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link
                               to="/dream-pos/users/userlists"
                               className={
                                 pathname.includes("userlists") ? "active" : ""
                               }
                             >
-                              Users List
+                              Users
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/dream-pos/users/customerlists"
+                              className={
+                                pathname.includes("customerlists") ? "active" : ""
+                              }
+                            >
+                              Customers
                             </Link>
                           </li>
                         </ul>

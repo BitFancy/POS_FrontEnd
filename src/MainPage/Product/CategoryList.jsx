@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Table from "../../EntryFile/datatable";
-import { Link } from "react-router-dom";
-import Tabletop from "../../EntryFile/tabletop";
+import React, { useState, useEffect } from 'react';
+import Table from '../../EntryFile/datatable';
+import { Link } from 'react-router-dom';
+import Tabletop from '../../EntryFile/tabletop';
 import {
   ClosesIcon,
   Excel,
@@ -19,136 +19,81 @@ import {
   EditIcon,
   DeleteIcon,
   search_whites,
-} from "../../EntryFile/imagePath";
-import Select2 from "react-select2-wrapper";
-import "react-select2-wrapper/css/select2.css";
-import Swal from "sweetalert2";
+} from '../../EntryFile/imagePath';
+import Select2 from 'react-select2-wrapper';
+import 'react-select2-wrapper/css/select2.css';
+import Swal from 'sweetalert2';
+import api from '../../utils/api';
 
 const options = [
-  { id: 1, text: "Choose Category", text: "Choose Category" },
-  { id: 2, text: "Computers", text: "Computers" },
+  { id: 1, text: 'Choose Category', text: 'Choose Category' },
+  { id: 2, text: 'Computers', text: 'Computers' },
 ];
 const options1 = [
-  { id: 1, text: "Choose Sub Category", text: "Choose Sub Category" },
-  { id: 2, text: "Fruits", text: "Fruits" },
+  { id: 1, text: 'Choose Sub Category', text: 'Choose Sub Category' },
+  { id: 2, text: 'Fruits', text: 'Fruits' },
 ];
 const options2 = [
-  { id: 1, text: "Choose Sub Brand", text: "Choose Sub Brand" },
-  { id: 2, text: "Brand", text: "Brand" },
+  { id: 1, text: 'Choose Sub Brand', text: 'Choose Sub Brand' },
+  { id: 2, text: 'Brand', text: 'Brand' },
 ];
 const confirmText = () => {
   Swal.fire({
-    title: "Are you sure?",
+    title: 'Are you sure?',
     text: "You won't be able to revert this!",
-    type: "warning",
+    type: 'warning',
     showCancelButton: !0,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-    confirmButtonClass: "btn btn-primary",
-    cancelButtonClass: "btn btn-danger ml-1",
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
+    confirmButtonClass: 'btn btn-primary',
+    cancelButtonClass: 'btn btn-danger ml-1',
     buttonsStyling: !1,
   }).then(function (t) {
     t.value &&
       Swal.fire({
-        type: "success",
-        title: "Deleted!",
-        text: "Your file has been deleted.",
-        confirmButtonClass: "btn btn-success",
+        type: 'success',
+        title: 'Deleted!',
+        text: 'Your file has been deleted.',
+        confirmButtonClass: 'btn btn-success',
       });
   });
 };
 const CategoryList = () => {
   const [inputfilter, setInputfilter] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
 
   const togglefilter = (value) => {
     setInputfilter(value);
   };
 
-  const [data] = useState([
-    {
-      id: 1,
-      image: MacbookIcon,
-      categoryName: "Main Food",
-      categoryCode: "Fruit",
-      description: "This food is fruit",
-      createdBy: "Admin",
-    },
-    // {
-    //   id: 2,
-    //   image: OrangeImage,
-    //   categoryName: "Orange",
-    //   categoryCode: "CTO02",
-    //   description: "Fruit Description",
-    //   createdBy: "Admin",
-    // },
-    // {
-    //   id: 3,
-    //   image: PineappleImage,
-    //   categoryName: "Pinapple",
-    //   categoryCode: "CTO03",
-    //   description: "Fruit Description",
-    //   createdBy: "Admin",
-    // },
-    // {
-    //   id: 4,
-    //   image: StawberryImage,
-    //   categoryName: "Strawberry",
-    //   categoryCode: "CTO04",
-    //   description: "Fruit Description",
-    //   createdBy: "Admin",
-    // },
-    // {
-    //   id: 5,
-    //   image: AvocatImage,
-    //   categoryName: "Avocat",
-    //   categoryCode: "CTO05",
-    //   description: "Computer Description",
-    //   createdBy: "Admin",
-    // },
-    // {
-    //   id: 6,
-    //   image: MacbookIcon,
-    //   categoryName: "Macbook pro",
-    //   categoryCode: "CTO06",
-    //   description: "Computer Description",
-    //   createdBy: "Admin",
-    // },
-  ]);
+  useEffect(() => {
+    // console.log(data);
+    const fetchData = async () => {
+      await api.get('/category/all').then((res) => {
+        console.log('category list ----->>  ', res.data);
+        res.data.map((category) => {
+          category.createdAt = new Date(category.createdAt).toDateString();
+        });
+        setCategoryList(res.data);
+      });
+    };
+    fetchData();
+  }, []);
 
   const columns = [
     {
-      title: "Category Name",
-      dataIndex: "categoryName",
-      render: (text, record) => (
-        <div className="productimgname">
-          <Link to="#" className="product-img">
-            <img alt="" src={record.image} />
-          </Link>
-          <Link to="#" style={{ fontSize: "15px", marginLeft: "10px" }}>
-            {record.categoryName}
-          </Link>
-        </div>
-      ),
+      title: 'Category Name',
+      dataIndex: 'categoryName',
       sorter: (a, b) => a.categoryName.length - b.categoryName.length,
     },
     {
-      title: "Sub Category",
-      dataIndex: "categoryCode",
-      sorter: (a, b) => a.categoryCode.length - b.categoryCode.length,
-    },
-    {
-      title: " Description",
-      dataIndex: "description",
-      sorter: (a, b) => a.description.length - b.description.length,
-    },
-    {
-      title: "Created By",
-      dataIndex: "createdBy",
+      title: 'Created By',
+      dataIndex: 'createdAt',
       sorter: (a, b) => a.createdBy.length - b.createdBy.length,
     },
     {
-      title: "Action",
+      title: 'Action',
       render: () => (
         <>
           <>
@@ -189,9 +134,9 @@ const CategoryList = () => {
               <Tabletop inputfilter={inputfilter} togglefilter={togglefilter} />
               {/* /Filter */}
               <div
-                className={`card mb-0 ${inputfilter ? "toggleCls" : ""}`}
+                className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
                 id="filter_inputs"
-                style={{ display: inputfilter ? "block" : "none" }}
+                style={{ display: inputfilter ? 'block' : 'none' }}
               >
                 <div className="card-body pb-0">
                   <div className="row">
@@ -201,7 +146,7 @@ const CategoryList = () => {
                           className="select"
                           data={options}
                           options={{
-                            placeholder: "Choose Category",
+                            placeholder: 'Choose Category',
                           }}
                         />
                       </div>
@@ -212,7 +157,7 @@ const CategoryList = () => {
                           className="select"
                           data={options1}
                           options={{
-                            placeholder: "Choose Sub Category",
+                            placeholder: 'Choose Sub Category',
                           }}
                         />
                       </div>
@@ -223,7 +168,7 @@ const CategoryList = () => {
                           className="select"
                           data={options2}
                           options={{
-                            placeholder: "Choose Sub Brand",
+                            placeholder: 'Choose Sub Brand',
                           }}
                         />
                       </div>
@@ -240,7 +185,7 @@ const CategoryList = () => {
               </div>
               {/* /Filter */}
               <div className="table-responsive">
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={categoryList} />
               </div>
             </div>
           </div>

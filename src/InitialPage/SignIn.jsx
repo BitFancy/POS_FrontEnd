@@ -61,8 +61,9 @@ const SignInPage = (props) => {
         if (window.localStorage.token) {
           history.push('/dream-pos/product/productlist-product');
         }
-      }).catch((err) => {
-          alert(err)
+      })
+      .catch((err) => {
+        alert(err);
       });
   };
 

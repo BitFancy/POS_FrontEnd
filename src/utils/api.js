@@ -2,10 +2,10 @@ import axios from 'axios';
 
 // Create an instance of axios
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://restaurant-pos-service.onrender.com/api',
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 /*
   NOTE: intercept any error responses from the api
@@ -15,14 +15,14 @@ const api = axios.create({
  logout the user if the token has expired
 */
 
-api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response.status === 401) {
-      window.localStorage.clear();
-    }
-    return Promise.reject(err);
-  }
-);
+// api.interceptors.response.use(
+//   (res) => res,
+//   (err) => {
+//     if (err.response.status === 401) {
+//       window.localStorage.clear();
+//     }
+//     return Promise.reject(err);
+//   }
+// );
 
 export default api;

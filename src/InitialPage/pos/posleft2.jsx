@@ -1,41 +1,196 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
-import {
-  Product62,
-  Product63,
-  } from "../../EntryFile/imagePath";
-import MainProduct from "../../MainPage/Component/MainProduct";
-import api from "../../utils/api";
-
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-  console.log("This is hanele click button-------");
-  axios.get('http://localhost:5000/api/product').then(res => {
-    console.log("This axios data response -------",res.data);
-  });
-}
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { Product62, Product63 } from '../../EntryFile/imagePath';
+import MainProduct from '../../MainPage/Component/MainProduct';
+import SubProductOne from '../../MainPage/Component/SubProductOne';
+import SubProductTwo from '../../MainPage/Component/SubProductTwo';
+import SubProductThree from '../../MainPage/Component/SubProductThree';
+import api from '../../utils/api';
+import Addon from '../../MainPage/Component/AddOn';
 
 const Posleft2 = () => {
   const [categories, setCategories] = useState([]);
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [mainProducts, setMainProducts] = useState([]);
+  const [subProductOne, setSubProductOne] = useState([]);
+  const [subProductTwo, setSubProductTwo] = useState([]);
+  const [subProductThree, setSubProductThree] = useState([]);
+  const [addOn, setAddOn] = useState([]);
+  const [minus, setMinus] = useState([]);
+  const [dishes, setDishes] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleClick = () => {
+    console.log('clicked add button');
+    setOpenModal(true);
+  };
 
   useEffect(() => {
-    const getCategoryType = async () => {
-        await api.get("/category").then(res => {
-            console.log("This is category -------> ", res.data);
-            res.data.forEach((row) => {
-                setCategories(prevCategory => [...prevCategory, { id: row._id, text: row.categoryName }]);
-            });
-        })
-    }
-    console.log("This is categories -------> ", categories);
-    getCategoryType();
+    (async () => {
+      const res = await api.get('/category/all');
+      const tempData = [];
+
+      for (let i = 0; i < res.data.length; i++) {
+        tempData.push({ id: res.data[i]._id, text: res.data[i].categoryName });
+        if (i === res.data.length - 1) {
+          setCategories([...tempData]);
+        }
+        console.log(tempData, 'tempData');
+      }
+
+      const res2 = await api.get('/product');
+      setProducts(res2.data);
+    })();
   }, []);
+
+  const handleSubmit = async (id) => {
+    console.log('This is category id value', id);
+    await api.get('/product').then((res) => {
+      const filterProducts = res.data.filter(
+        (item) => item.category.includes(id) && item.productType.includes(1)
+      );
+      console.log('products -------->>>>>>', filterProducts);
+      setMainProducts(filterProducts);
+      setSubProductOne(
+        res.data.filter(
+          (item) => item.category.includes(id) && item.productType.includes(2)
+        )
+      );
+      setSubProductTwo(
+        res.data.filter(
+          (item) => item.category.includes(id) && item.productType.includes(3)
+        )
+      );
+      setSubProductThree(
+        res.data.filter(
+          (item) => item.category.includes(id) && item.productType.includes(4)
+        )
+      );
+      setAddOn(
+        res.data.filter(
+          (item) => item.category.includes(id) && item.productType.includes(5)
+        )
+      );
+      setMinus(
+        res.data.filter(
+          (item) => item.category.includes(id) && item.productType.includes(6)
+        )
+      );
+    });
+  };
+
+  useEffect(() => {
+    const filterProducts = products.filter(
+      (item) =>
+        item.category.includes(categories[0].id) && item.productType.includes(1)
+    );
+    console.log('products -------->>>>>>', filterProducts);
+    setMainProducts(filterProducts);
+    setSubProductOne(
+      products.filter(
+        (item) =>
+          item.category.includes(categories[0].id) &&
+          item.productType.includes(2)
+      )
+    );
+    setSubProductTwo(
+      products.filter(
+        (item) =>
+          item.category.includes(categories[0].id) &&
+          item.productType.includes(3)
+      )
+    );
+    setSubProductThree(
+      products.filter(
+        (item) =>
+          item.category.includes(categories[0].id) &&
+          item.productType.includes(4)
+      )
+    );
+    setAddOn(
+      products.filter(
+        (item) =>
+          item.category.includes(categories[0].id) &&
+          item.productType.includes(5)
+      )
+    );
+    setMinus(
+      products.filter(
+        (item) =>
+          item.category.includes(categories[0].id) &&
+          item.productType.includes(6)
+      )
+    );
+  }, [products]);
+
+  const handleSelected = (id, isActive) => {
+    console.log(
+      'this is id value=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+      id
+    );
+    console.log(
+      'this is isActive value=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+      isActive
+    );
+    if (isActive === true) {
+      setDishes([...dishes, ...products.filter((item) => item._id === id)]);
+    } else {
+      setDishes(dishes.filter((item) => item._id !== id));
+    }
+  };
+
+  useEffect(() => {
+    console.log('this is dishes ------------------', dishes);
+  }, [dishes]);
+
+  const showMainProducts = mainProducts.map((product, index) => {
+    return (
+      <MainProduct
+        productId={product._id}
+        key={index}
+        name={product.productName}
+        price={product.price}
+        handleSelected={handleSelected}
+      />
+    );
+  });
+
+  const showSubProductOne = subProductOne.map((product, index) => {
+    return (
+      <SubProductOne
+        productId={product._id}
+        key={index}
+        name={product.productName}
+        price={product.price}
+        handleSelected={handleSelected}
+      />
+    );
+  });
+  const showSubProductTwo = subProductTwo.map((product, index) => {
+    return (
+      <SubProductTwo
+        productId={product._id}
+        key={index}
+        name={product.productName}
+        price={product.price}
+        handleSelected={handleSelected}
+      />
+    );
+  });
+  const showSubProductThree = subProductThree.map((product, index) => {
+    return (
+      <SubProductThree
+        productId={product._id}
+        key={index}
+        name={product.productName}
+        price={product.price}
+        handleSelected={handleSelected}
+      />
+    );
+  });
 
   return (
     <div className="col-lg-8 col-sm-12 tabs_wrapper">
@@ -46,87 +201,87 @@ const Posleft2 = () => {
         </div>
       </div>
       <ul className=" tabs owl-carousel owl-theme owl-product  border-0">
-        <OwlCarousel
+        {/* <OwlCarousel
           className="owl-theme"
           items={8}
           margin={10}
           dots={false}
           nav
-        >
+        > */}
+        <div className="d-flex">
           {categories.map((category, index) => (
-            
-            console.log("This is category -------> ", index),
-            <li onClick={handleSubmit} id={category.text} className="item">
+            <li
+              onClick={() => {
+                handleSubmit(category.id);
+              }}
+              key={index}
+              id={category.text}
+              className="item"
+            >
               <div className="product-details ">
                 <img src={Product62} alt="img" />
                 <h6>{category.text}</h6>
               </div>
             </li>
           ))}
-          <li onClick={handleSubmit} id="Fruits" className="item">
-            <div className="product-details">
-              <img src={Product62} alt="img" />
-              <h6>Fruits</h6>
-            </div>
-          </li>
-          <li id="headphone" className="item">
-            <div className="product-details ">
-              <img src={Product63} alt="img" />
-              <h6>Headphones</h6>
-            </div>
-          </li>
-        </OwlCarousel>
+        </div>
+        {/* </OwlCarousel> */}
       </ul>
       {/* <div className="tabs_container"> */}
-        <div className="tab_content active" data-tab="fruits">
-          <div className="productsetmain">
-            <h4>Main Product</h4>
-            <div className="row">
-              <MainProduct name="orange" price="150.00"/>
-            </div>
-          </div>
-          <div className="productsetsub1">
-            <h4>Sub Product 1</h4>
-            <div className="row ">
-              <div className="col-lg-2 col-sm-6 d-flex ">
-                <div className="productset flex-fill">
-                  <div className="productsetmain">
-                    <h4>Earphones</h4>
-                    <h4>150.00</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="productsetsub2">
-            <h4>Sub Product 2</h4>
-            <div className="row ">
-              <div className="col-lg-2 col-sm-6 d-flex ">
-                <div className="productset flex-fill">
-                  <div className="productsetsub2">
-                    <h4>Earphones</h4>
-                    <h4>150.00</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="productsetsub3">
-            <h4>Sub Product 3</h4>
-            <div className="row ">
-              <div className="col-lg-2 col-sm-6 d-flex ">
-                <div className="productset flex-fill">
-                  <div className="productsetmain">
-                    <h4>Earphones</h4>
-                    <h4>150.00</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="tab_content active">
+        <h4>Main Product</h4>
+        <div className="products">
+          <div className="row">{showMainProducts}</div>
+        </div>
+        <h4>Sub Product 1</h4>
+        <div className="products">
+          <div className="row ">{showSubProductOne}</div>
+        </div>
+        <h4>Sub Product 2</h4>
+        <div className="products">
+          <div className="row ">{showSubProductTwo}</div>
+        </div>
+        <h4>Sub Product 3</h4>
+        <div className="products">
+          <div className="row ">{showSubProductThree}</div>
         </div>
       </div>
-    // </div>    
+      <div className="row">
+        <div className="col-6">
+          {/* <Link
+            to="#"
+            className="btn btn-adds"
+            data-bs-toggle="modal"
+            data-bs-target="#create"
+          >
+            <i className="fa fa-plus me-2" />
+            AddOn
+          </Link> */}
+
+          <button
+            onClick={handleClick}
+            className="btn btn-adds"
+            data-bs-toggle="modal"
+            data-bs-target="#addon"
+          >
+            <i className="fa fa-plus me-2" />
+            AddOn
+          </button>
+        </div>
+        <div className="col-6">
+          <Link
+            to="#"
+            className="btn btn-adds"
+            data-bs-toggle="modal"
+            data-bs-target="#minus"
+          >
+            <i className="fa fa-minus me-2" />
+            Minus
+          </Link>
+        </div>
+      </div>
+    </div>
+    // </div>
   );
 };
 

@@ -20,10 +20,10 @@ import Select2 from "react-select2-wrapper";
 import "react-select2-wrapper/css/select2.css";
 import api from "../../utils/api";
 
-const UserLists = () => {
+const CustomerLists = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [inputfilter, setInputfilter] = useState(false);
-  const [userList, setUserList] = useState([]);
+  const [customerList, setCustomerList] = useState([]);
 
   const options = [
     { id: 1, text: "Disable", text: "Disable" },
@@ -34,19 +34,13 @@ const UserLists = () => {
   };
 
   useEffect(() => {
-    // console.log(data);
     const fetchData = async () => {
-      await api.get("/users/all").then((res) => {
-        console.log("user list ----->>  ", res.data);
-        res.data.map((user) => {
-          if(user.role === 1) {
-            user.role = 'Admin'
-          } else {
-            user.role = 'User';
-          }
-          user.createdAt = new Date(user.createdAt).toDateString();
+      await api.get("/customer").then((res) => {
+        console.log("customer list ----->>  ", res.data);
+        res.data.map((customer) => {
+          customer.createdAt = new Date(customer.createdAt).toDateString();
         })
-        setUserList(res.data);
+        setCustomerList(res.data);
       });
     }
     fetchData();
@@ -54,29 +48,39 @@ const UserLists = () => {
 
   const columns = [
     {
-      title: "User Name",
-      dataIndex: "userName",
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "Customer Name",
+      dataIndex: "customerName",
+      sorter: (a, b) => a.customerName.length - b.customerName.length,
     },
-    // {
-    //   title: "Phone",
-    //   dataIndex: "Phone",
-    //   sorter: (a, b) => a.Phone.length - b.Phone.length,
-    // },
     {
       title: "Email",
       dataIndex: "email",
       sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-      title: "Role",
-      dataIndex: "role",
-      sorter: (a, b) => a.Role.length - b.Role.length,
+      title: "Phone",
+      dataIndex: "phoneNumber",
+      sorter: (a, b) => a.phoneNumber.length - b.phoneNumber.length,
+    },
+    {
+      title: "City",
+      dataIndex: "city",
+      sorter: (a, b) => a.city.length - b.city.length,
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      sorter: (a, b) => a.address.length - b.address.length,
+    },
+    {
+      title: "Zip Code",
+      dataIndex: "zipCode",
+      sorter: (a, b) => a.zipCode.length - b.zipCode.length,
     },
     {
       title: "Created On",
       dataIndex: "createdAt",
-      sorter: (a, b) => a.On.length - b.On.length,
+      sorter: (a, b) => a.createdAt.length - b.createdAt.length,
     },
     {
       title: "Action",
@@ -98,13 +102,13 @@ const UserLists = () => {
       <div className="content">
         <div className="page-header">
           <div className="page-title">
-            <h4>User List</h4>
-            <h6>Manage your User</h6>
+            <h4>Customer List</h4>
+            <h6>Manage your Customer</h6>
           </div>
           <div className="page-btn">
-            <Link to="/dream-pos/users/newuser" className="btn btn-added">
+            <Link to="/dream-pos/users/newcustomer" className="btn btn-added">
               <img src={PlusIcon} alt="img" className="me-2" />
-              Add User
+              Add Customer
             </Link>
           </div>
         </div>
@@ -229,7 +233,7 @@ const UserLists = () => {
             </div>
             {/* /Filter */}
             <div className="table-responsive">
-              <Table columns={columns} dataSource={userList} />
+              <Table columns={columns} dataSource={customerList} />
             </div>
           </div>
         </div>
@@ -239,4 +243,4 @@ const UserLists = () => {
   );
 };
 
-export default UserLists;
+export default CustomerLists;
