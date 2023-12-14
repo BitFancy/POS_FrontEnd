@@ -224,13 +224,13 @@ const Pos = () => {
         .post('/order/add', orderData)
         .then((res) => {
           alertify.success('Successfully Order Added!');
+          setDishes([]);
         })
         .catch((err) => {
           console.log(err);
           alertify.warning('Some error!');
         });
     }
-    setDishes([]);
   };
 
   const handleSelected = (id, isActive) => {
