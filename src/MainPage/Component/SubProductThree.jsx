@@ -33,7 +33,7 @@ const SubProductThree = ({
       <div
         className="productset flex-fill"
         style={{
-          background: '#fe9f43',
+          background: '#663300',
           border: `${activeState[productId] ? '2px solid #7367f0' : 'none'}`,
         }}
       >
