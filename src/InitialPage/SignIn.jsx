@@ -13,6 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Redirect, useHistory } from 'react-router-dom';
 import api from '../utils/api';
+import setAuthToken from '../utils/setAuthToken';
 
 const SignInPage = (props) => {
   const [email, setemail] = useState('');
@@ -53,6 +54,7 @@ const SignInPage = (props) => {
       .then((res) => {
         console.log(res.data);
         window.localStorage.setItem('token', res.data.token);
+        setAuthToken(res.data.token);
         // if (res.data.message) {
         //   alert(res.data.message);
         // }
