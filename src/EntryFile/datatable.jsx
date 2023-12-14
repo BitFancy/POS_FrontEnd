@@ -1,12 +1,12 @@
-import React,{useState} from "react";
-import { Table } from "antd";
-import "./antd.css";
-import { itemRender, onShowSizeChange } from "../components/pagination";
+import React, { useState } from 'react';
+import { Table } from 'antd';
+import './antd.css';
+import { itemRender, onShowSizeChange } from '../components/pagination';
 
 const Datatable = ({ props, columns, dataSource }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
+    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 

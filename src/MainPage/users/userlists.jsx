@@ -35,9 +35,9 @@ const UserLists = () => {
 
   useEffect(() => {
     // console.log(data);
-    const fetchData = async () => {
+    ( async () => {
       await api.get("/users/all").then((res) => {
-        console.log("user list ----->>  ", res.data);
+        console.log("user list ------------------------------------>>  ", res.data);
         res.data.map((user) => {
           if(user.role === 1) {
             user.role = 'Admin'
@@ -48,8 +48,7 @@ const UserLists = () => {
         })
         setUserList(res.data);
       });
-    }
-    fetchData();
+    })();
   }, [])
 
   const columns = [
@@ -58,11 +57,6 @@ const UserLists = () => {
       dataIndex: "userName",
       sorter: (a, b) => a.name.length - b.name.length,
     },
-    // {
-    //   title: "Phone",
-    //   dataIndex: "Phone",
-    //   sorter: (a, b) => a.Phone.length - b.Phone.length,
-    // },
     {
       title: "Email",
       dataIndex: "email",

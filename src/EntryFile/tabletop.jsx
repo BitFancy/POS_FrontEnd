@@ -34,9 +34,9 @@ const Tabletop = ({inputfilter,togglefilter}) => {
             type="text"
             placeholder="Search..."
           />
-          <Link to="#" className="btn btn-searchset">
+          {/* <Link to="#" className="btn btn-searchset">
             <img src={Search} alt="img" />
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="wordset">

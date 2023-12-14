@@ -1,35 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
+import { useOrderContext } from '../../context/OrderContext';
 
-const Addon = () => {
+const Addon = ({
+  activeState,
+  setActiveState,
+  productList,
+  handleSelected,
+}) => {
+  const { changeAction } = useOrderContext();
   const [addons, setAddons] = useState([]);
+  const [isActive, setIsActive] = useState(false);
+  const [addonId, setAddonId] = useState('');
+
+  const handleSubmit = (addonid) => {
+    setIsActive(!isActive);
+    setAddonId(addonid);
+    setActiveState({ ...activeState, [addonid]: !activeState[addonid] });
+  };
+  
+  useEffect(() => {
+    handleSelected(addonId, activeState[addonId]);
+  }, [isActive]);
+  
+  useEffect(() => {
+    setIsActive(false);
+  }, [changeAction]);
+
   useEffect(() => {
     (async () => {
       const res = await api.get('/product');
-      console.log("whole products ==============", res.data);
-      const realAddon = res.data.filter((item) => item.productType === 5);
-      console.log(realAddon, "this is realadd on");
+      const realAddon = res.data.filter((item) => item.productType.includes(5));
       setAddons(realAddon);
     })();
-  }, [setAddons]);
-
-  useEffect(() => {
-    console.log("This is addons--------------", addons);
-  }, [addons]);
-
-  const showAddons = addons.map((addon, index) => {
-    return (
-      <div key={index} className="col-lg-3 col-sm-12 col-12 d-flwx">
-        <div className="productset flex-fill" style={{ background: '#fe9f43' }}>
-          <div className="productsetcontent">
-            <h4>{addon.productName}</h4>
-            <h6>{addon.price}</h6>
-          </div>
-        </div>
-      </div>
-    );
-  });
+  }, []);
 
   return (
     <>
@@ -41,26 +46,44 @@ const Addon = () => {
           data-bs-dismiss="modal"
           aria-label="Close"
         >
-          <span aria-hidden="true">×</span>
+          <span aria-hidden="true">x</span>
         </button>
       </div>
       <div className="modal-body">
         <div className="row">
-          {/* <div className="col-lg-3 col-sm-12 col-12"> */}
-            {showAddons}
-          {/* </div> */}
+          {addons.map((addon, index) => (
+            <div
+              key={index}
+              className="col-lg-2 col-sm-12 col-12 d-flwx"
+              onClick={() => handleSubmit(addon._id)}
+            >
+              <div
+                className="productset flex-fill"
+                style={{
+                  background: '#fe9f43',
+                  border: `${
+                    activeState[addon._id] ? '2px solid #7367f0' : 'none'
+                  }`,
+                }}
+              >
+                <div className="productsetcontent">
+                  <h4>{addon.productName}</h4>
+                  <h6>{addon.price}</h6>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="col-lg-12">
-          <Link to="#" className="btn btn-submit me-2">
+          <div to="#" className="btn btn-submit me-2" data-bs-dismiss="modal">
             Addon
-          </Link>
-          <Link to="#" className="btn btn-cancel" data-bs-dismiss="modal">
+          </div>
+          <div to="#" className="btn btn-cancel" data-bs-dismiss="modal">
             Close
-          </Link>
+          </div>
         </div>
       </div>
     </>
   );
 };
-
 export default Addon;

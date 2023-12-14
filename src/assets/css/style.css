@@ -33,7 +33,7 @@
 .product-details,
 .header-menuset ul li a,
 .owl-product .owl-nav button,
-.productimg .productcontet h4,
+.productimg .productcontent h4,
 .increment-decrement .input-groups input[type='button'],
 .setvaluecash ul li a,
 .select-split .btn-filters,
@@ -95,7 +95,7 @@ div#global-loader,
 .owl-product .owl-nav button,
 .tab-set ul,
 .productimg .productlinkset,
-.productimg .productcontet h4,
+.productimg .productcontent h4,
 .productimg,
 .increment-decrement .input-groups input[type='button'],
 .increment-decrement .input-groups,
@@ -263,7 +263,7 @@ div#global-loader,
 .owl-product .owl-nav button,
 .tab-set ul,
 .productimg .productlinkset,
-.productimg .productcontet h4,
+.productimg .productcontent h4,
 .productimg,
 .increment-decrement .input-groups input[type='button'],
 .increment-decrement .input-groups,
@@ -732,7 +732,7 @@ strong {
 .product-details,
 .header-menuset ul li a,
 .owl-product .owl-nav button,
-.productimg .productcontet h4,
+.productimg .productcontent h4,
 .increment-decrement .input-groups input[type='button'],
 .setvaluecash ul li a,
 .select-split .btn-filters,
@@ -794,7 +794,7 @@ div#global-loader,
 .owl-product .owl-nav button,
 .tab-set ul,
 .productimg .productlinkset,
-.productimg .productcontet h4,
+.productimg .productcontent h4,
 .productimg,
 .increment-decrement .input-groups input[type='button'],
 .increment-decrement .input-groups,
@@ -962,7 +962,7 @@ div#global-loader,
 .owl-product .owl-nav button,
 .tab-set ul,
 .productimg .productlinkset,
-.productimg .productcontet h4,
+.productimg .productcontent h4,
 .productimg,
 .increment-decrement .input-groups input[type='button'],
 .increment-decrement .input-groups,
@@ -2516,7 +2516,7 @@ body[data-theme='dark'] .order-list .orderid h4,
 body[data-theme='dark'] .order-list .orderid h5 {
   color: #97a2d2;
 }
-body[data-theme='dark'] .productimg .productcontet h4 {
+body[data-theme='dark'] .productimg .productcontent h4 {
   color: #97a2d2;
 }
 body[data-theme='dark'] .topnav-dropdown-header .notification-title {
@@ -8647,7 +8647,7 @@ span.select2-container.select2-container--default.select2-container--open {
   height: 40px;
 }
 
-.table tr:hover .productimg .productcontet h4 img {
+.table tr:hover .productimg .productcontent h4 img {
   opacity: 1;
 }
 
@@ -8687,6 +8687,14 @@ span.select2-container.select2-container--default.select2-container--open {
   width: 33%;
   margin-right: 10px;
 }
+
+.setvaluecash ul li.active {
+  border: 1px solid #7367f0;
+  color: #7367f0;
+  width: 33%;
+  margin-right: 10px;
+}
+
 .setvaluecash ul li:last-child {
   margin: 0;
 }
@@ -8695,7 +8703,7 @@ span.select2-container.select2-container--default.select2-container--open {
   color: #000;
   font-size: 14px;
   font-weight: 600;
-  min-height: 95px;
+  min-height: 57px;
   border-radius: 5px;
   padding: 10px 20px;
 }
@@ -8779,13 +8787,13 @@ span.select2-container.select2-container--default.select2-container--open {
   height: 82px;
   object-fit: cover;
 }
-.productimg .productcontet h4 {
+.productimg .productcontent h4 {
   font-size: 14px;
   color: #000;
   font-weight: 600;
   margin-bottom: 5px;
 }
-.productimg .productcontet h4 img {
+.productimg .productcontent h4 img {
   opacity: 0;
   margin-top: 5px;
   display: block;
@@ -8804,11 +8812,22 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .product-table {
-  height: 34vh;
+  height: 60vh;
   overflow: auto;
 }
+
+.order-table {
+  height: 27.3vh;
+  overflow: auto;
+}
+
 @media (max-width: 991.98px) {
   .product-table {
+    height: auto;
+  }
+}
+@media (max-width: 991.98px) {
+  .order-table {
     height: auto;
   }
 }
@@ -8943,6 +8962,15 @@ span.select2-container.select2-container--default.select2-container--open {
   margin-right: 1px;
   margin-bottom: 10px;
 }
+
+.btn-pos ul li.active {
+  margin-right: 1px;
+  margin-bottom: 10px;
+  border: 1px solid #ea5455;
+  color: #ea5455;
+  background: rgba(234, 84, 85, 0.06);
+}
+
 @media (max-width: 991.98px) {
   .btn-pos ul li {
     width: 48%;
@@ -9289,8 +9317,17 @@ span.select2-container.select2-container--default.select2-container--open {
   border-radius: 4px 0;
 }
 .productset.active {
-  border: 2px solid #7367f0;
+  /* border: 2px solid #7367f0; */
 }
+
+.productset.isSelected {
+  border: 2px solid #7367f0 !important;
+}
+
+.cursorHand {
+  cursor: pointer;
+}
+
 .productset:hover .productsetimg img {
   transform: scale(1.2);
 }

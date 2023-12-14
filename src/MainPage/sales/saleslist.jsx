@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Table from "../../EntryFile/datatable";
-import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import Tabletop from "../../EntryFile/tabletop";
-import Swal from "sweetalert2";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useEffect, useState } from 'react';
+import Table from '../../EntryFile/datatable';
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import Tabletop from '../../EntryFile/tabletop';
+import Swal from 'sweetalert2';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
   ClosesIcon,
   Excel,
@@ -23,14 +23,22 @@ import {
   delete1,
   DeleteIcon,
   datepicker,
-} from "../../EntryFile/imagePath";
-import Select2 from "react-select2-wrapper";
-import "react-select2-wrapper/css/select2.css";
+} from '../../EntryFile/imagePath';
+import Select2 from 'react-select2-wrapper';
+import 'react-select2-wrapper/css/select2.css';
+import api from '../../utils/api';
 
 const SalesList = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [startDate1, setStartDate1] = useState(new Date());
   const [inputfilter, setInputfilter] = useState(false);
+  const [customerName, setCustomerName] = useState([]);
+  const [orderDate, setOrderDate] = useState([]);
+  const [payMethod, setPayMethod] = useState([]);
+  const [orderStatus, setOrderStatus] = useState([]);
+  const [orderPrice, setOrderPrice] = useState([]);
+
+  const [orderList, setOrderList] = useState([]);
 
   const togglefilter = (value) => {
     setInputfilter(value);
@@ -38,347 +46,215 @@ const SalesList = (props) => {
 
   const confirmText = () => {
     Swal.fire({
-      title: "Are you sure?",
+      title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      type: "warning",
+      type: 'warning',
       showCancelButton: !0,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-      confirmButtonClass: "btn btn-primary",
-      cancelButtonClass: "btn btn-danger ml-1",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn btn-danger ml-1',
       buttonsStyling: !1,
     }).then(function (t) {
       t.value &&
         Swal.fire({
-          type: "success",
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          confirmButtonClass: "btn btn-success",
+          type: 'success',
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          confirmButtonClass: 'btn btn-success',
         });
     });
   };
   const options = [
-    { id: 1, text: "Completed", text: "Completed" },
-    { id: 2, text: "Paid", text: "Paid" },
+    { id: 1, text: 'Completed', text: 'Completed' },
+    { id: 2, text: 'Paid', text: 'Paid' },
   ];
   const options1 = [
-    { id: 1, text: "Cash", text: "Cash" },
-    { id: 2, text: "Online", text: "Online" },
-    { id: 3, text: "Inprogess", text: "Inprogess" },
+    { id: 1, text: 'Cash', text: 'Cash' },
+    { id: 2, text: 'Online', text: 'Online' },
+    { id: 3, text: 'Inprogess', text: 'Inprogess' },
   ];
   const [data] = useState([
     {
       id: 1,
-      Date: "walk-in-customer",
-      Name: "19 Nov 2022",
-      Reference: "SL0101",
-      Status: "Completed",
-      Payment: "Paid",
+      Date: '19 Nov 2022',
+      Name: customerName,
+      Reference: 'SL0101',
+      Status: 'Completed',
+      Payment: 'Paid',
       Total: 0,
       Paid: 0,
       Due: 100,
-      Biller: "Admin",
+      Biller: 'Admin',
     },
-    {
-      id: 2,
-      Date: "walk-in-customer",
-      Name: "19 Nov 2022",
-      Reference: "SL0102",
-      Status: "Pending",
-      Payment: "Paid",
-      Total: 0,
-      Paid: 0,
-      Due: 100,
-      Biller: "Admin",
-    },
-    // {
-    //   id:3,
-    //   Date: "walk-in-customer",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0103",
-    //   Status: "Completed",
-    //   Payment: "Paid",
-    //   Total: 0,
-    //   Paid: 100,
-    //   Due: 0,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:4,
-    //   Date: "Fred C. Rasmussen",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0104",
-    //   Status: "Pending",
-    //   Payment: "Due",
-    //   Total: 0,
-    //   Paid: 100,
-    //   Due: 0,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:5,
-    //   Date: "Thomas M. Martin",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0105",
-    //   Status: "Pending",
-    //   Payment: "Due",
-    //   Total: 0,
-    //   Paid: 0,
-    //   Due: 100,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:6,
-    //   Date: "Thomas M. Martin",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0106",
-    //   Status: "Completed",
-    //   Payment: "Paid",
-    //   Total: 0,
-    //   Paid: 0,
-    //   Due: 100,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:7,
-    //   Date: "walk-in-customer",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0107",
-    //   Status: "Completed",
-    //   Payment: "Paid",
-    //   Total: 0,
-    //   Paid: 0,
-    //   Due: 100,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:8,
-    //   Date: "walk-in-customer",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0108",
-    //   Status: "Pending",
-    //   Payment: "Due",
-    //   Total: 0,
-    //   Paid: 100,
-    //   Due: 0,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:9,
-    //   Date: "walk-in-customer",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0109",
-    //   Status: "Pending",
-    //   Payment: "Due",
-    //   Total: 0,
-    //   Paid: 100,
-    //   Due: 0,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:10,
-    //   Date: "walk-in-customer",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0110",
-    //   Status: "Pending",
-    //   Payment: "Due",
-    //   Total: 0,
-    //   Paid: 100,
-    //   Due: 0,
-    //   Biller: "Admin",
-    // },
-    // {
-    //   id:11,
-    //   Date: "walk-in-customer",
-    //   Name: "19 Nov 2022",
-    //   Reference: "SL0111",
-    //   Status: "Pending",
-    //   Payment: "Due",
-    //   Total: 0,
-    //   Paid: 0,
-    //   Due: 0,
-    //   Biller: "Admin",
-    // },
   ]);
 
   const columns = [
     {
-      title: "Costumer name",
-      dataIndex: "Date",
-      sorter: (a, b) => a.Date.length - b.Date.length,
+      title: 'Costumer name',
+      dataIndex: 'customer',
+      sorter: (a, b) => a.customer.length - b.customer.length,
     },
     {
-      title: "Date",
-      dataIndex: "Name",
-      sorter: (a, b) => a.Name.length - b.Name.length,
+      title: 'Date',
+      dataIndex: 'createdAt',
+      sorter: (a, b) => a.createdAt.length - b.createdAt.length,
     },
     {
-      title: "Reference",
-      dataIndex: "Reference",
-      sorter: (a, b) => a.Reference.length - b.Reference.length,
-    },
-    {
-      title: "Status",
-      dataIndex: "Status",
+      title: 'Status',
+      dataIndex: 'status',
       render: (text, record) => (
         <>
-          {text === "Pending" && (
+          {text === 'New' && <span className="badges bg-lightred">{text}</span>}
+          {text === 'In Progress' && (
+            <span className="badges bg-lightgreen">{text}</span>
+          )}
+          {text === 'Completed' && (
             <span className="badges bg-lightred">{text}</span>
           )}
-          {text === "Completed" && (
-            <span className="badges bg-lightgreen">{text}</span>
+          {text === 'Cancelled' && (
+            <span className="badges bg-lightred">{text}</span>
+          )}
+          {text === 'Refunded' && (
+            <span className="badges bg-lightred">{text}</span>
+          )}
+          {text === 'Hold On' && (
+            <span className="badges bg-lightred">{text}</span>
           )}
         </>
       ),
-      sorter: (a, b) => a.Status.length - b.Status.length,
+      sorter: (a, b) => a.status.length - b.status.length,
     },
     {
-      title: "Payment",
-      dataIndex: "Payment",
+      title: 'Pay Method',
+      dataIndex: 'paymethod',
       render: (text, record) => (
         <>
-          {text === "Paid" && (
+          {text === 'Cash' && (
             <span className="badges bg-lightgreen">{text}</span>
           )}
-          {text === "Due" && <span className="badges bg-lightred">{text}</span>}
+          {text === 'Debit' && (
+            <span className="badges bg-lightred">{text}</span>
+          )}
+          {text === 'Scan' && (
+            <span className="badges bg-lightred">{text}</span>
+          )}
         </>
       ),
-      sorter: (a, b) => a.Payment.length - b.Payment.length,
+      sorter: (a, b) => a.paymethod.length - b.paymethod.length,
     },
+    // {
+    //   title: 'Payment',
+    //   dataIndex: 'Payment',
+    //   render: (text, record) => (
+    //     <>
+    //       {text === 'Paid' && (
+    //         <span className="badges bg-lightgreen">{text}</span>
+    //       )}
+    //       {text === 'Due' && <span className="badges bg-lightred">{text}</span>}
+    //     </>
+    //   ),
+    //   sorter: (a, b) => a.Payment.length - b.Payment.length,
+    // },
     {
-      title: "Total",
-      dataIndex: "Total",
-      sorter: (a, b) => a.Total.length - b.Total.length,
+      title: 'Total',
+      dataIndex: 'totalPrice',
+      sorter: (a, b) => a.totalPrice.length - b.totalPrice.length,
     },
+    // {
+    //   title: 'Paid',
+    //   dataIndex: 'Paid',
+    //   render: (text, record) => (
+    //     <>
+    //       {text === 100 && <div className="text-green">{text}</div>}
+    //       {text === 0 && <div>{text}</div>}
+    //     </>
+    //   ),
+    //   sorter: (a, b) => a.Paid.length - b.Paid.length,
+    // },
+    // {
+    //   title: 'Due',
+    //   dataIndex: 'Due',
+    //   render: (text, record) => (
+    //     <>
+    //       {text === 100 && <div className="text-red">{text}</div>}
+    //       {text === 0 && <div>{text}</div>}
+    //     </>
+    //   ),
+    //   sorter: (a, b) => a.Due.length - b.Due.length,
+    // },
     {
-      title: "Paid",
-      dataIndex: "Paid",
+      title: 'Action',
       render: (text, record) => (
         <>
-          {text === 100 && <div className="text-green">{text}</div>}
-          {text === 0 && <div>{text}</div>}
-        </>
-      ),
-      sorter: (a, b) => a.Paid.length - b.Paid.length,
-    },
-    {
-      title: "Due",
-      dataIndex: "Due",
-      render: (text, record) => (
-        <>
-          {text === 100 && <div className="text-red">{text}</div>}
-          {text === 0 && <div>{text}</div>}
-        </>
-      ),
-      sorter: (a, b) => a.Due.length - b.Due.length,
-    },
-    {
-      title: "Biller",
-      dataIndex: "Biller",
-      sorter: (a, b) => a.Biller.length - b.Biller.length,
-    },
-    {
-      title: "Action",
-      render: (text, record) => (
-        <>
-          <div className="text-center">
-            <Link
-              className="action-set"
-              to="#"
-              data-bs-toggle="dropdown"
-              aria-expanded="true"
-            >
-              <i className="fa fa-ellipsis-v" aria-hidden="true" />
+          <div>
+            <Link>
+              <img src={Eye1} className="me-2" alt="img" />
             </Link>
-            <ul className="dropdown-menu">
-              <li>
-                <Link
-                  to="/dream-pos/sales/sales-details"
-                  className="dropdown-item"
-                >
-                  <img src={Eye1} className="me-2" alt="img" />
-                  Sale Detail
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/dream-pos/sales/edit-sales"
-                  className="dropdown-item"
-                >
-                  <img src={EditIcon} className="me-2" alt="img" />
-                  Edit Sale
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#showpayment"
-                >
-                  <img src={Dollar1} className="me-2" alt="img" />
-                  Show Payments
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#createpayment"
-                >
-                  <img src={plusCircle} className="me-2" alt="img" />
-                  Create Payment
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="dropdown-item">
-                  <img src={Download} className="me-2" alt="img" />
-                  Download pdf
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="dropdown-item confirm-text"
-                  onClick={confirmText}
-                >
-                  <img src={delete1} className="me-2" alt="img" />
-                  Delete Sale
-                </Link>
-              </li>
-            </ul>
+            <Link>
+              <img src={EditIcon} className="me-2" alt="img" />
+            </Link>
+            <Link>
+              <img src={Download} className="me-2" alt="img" />
+            </Link>
+            <Link>
+              <img src={delete1} className="me-2" alt="img" />
+            </Link>
           </div>
         </>
       ),
     },
   ];
+
+  useEffect(() => {
+    (async () => {
+      await api.get('/order').then(async (res) => {
+        const customers = [];
+        const ordersWithCustomers = await Promise.all(
+          res.data.map(async (order) => {
+            const customer = await api.get(`/customer/${order.customer}`);
+            customers.push(customer.data.customerName);
+            order.customer = customer.data.customerName;
+            order.createdAt = new Date(order.createdAt).toDateString();
+            return order;
+          })
+        );
+        setCustomerName(customers);
+        setOrderList(ordersWithCustomers);
+      });
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log(customerName, 'This is customer name list');
+  }, [customerName]);
+
   return (
     <>
       <div className="page-wrapper">
         <div className="content">
           <div className="page-header">
             <div className="page-title">
-              <h4>Sales List</h4>
-              <h6>Manage your Sales</h6>
+              <h4>Orders List</h4>
+              <h6>Manage your Orders</h6>
             </div>
             <div className="page-btn">
               <Link to="/dream-pos/sales/add-sales" className="btn btn-added">
                 <img src={PlusIcon} alt="img" className="me-1" />
-                Add Sales
+                Make Order
               </Link>
             </div>
           </div>
           {/* /product list */}
           <div className="card">
-            <div className="card-body">
+            <div className="card-body align-items-center justify-center">
               <Tabletop inputfilter={inputfilter} togglefilter={togglefilter} />
               {/* /Filter */}
               <div
-                className={`card mb-0 ${inputfilter ? "toggleCls" : ""}`}
+                className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
                 id="filter_inputs"
-                style={{ display: inputfilter ? "block" : "none" }}
+                style={{ display: inputfilter ? 'block' : 'none' }}
               >
                 <div className="card-body pb-0">
                   <div className="row">
@@ -398,7 +274,7 @@ const SalesList = (props) => {
                           className="select"
                           data={options}
                           options={{
-                            placeholder: "Choose Suppliers",
+                            placeholder: 'Choose Suppliers',
                           }}
                         />
                       </div>
@@ -415,7 +291,7 @@ const SalesList = (props) => {
               </div>
               {/* /Filter */}
               <div className="table-responsive">
-                <Table props={props} columns={columns} dataSource={data} />
+                <Table props={props} columns={columns} dataSource={orderList} />
               </div>
             </div>
           </div>
@@ -549,7 +425,7 @@ const SalesList = (props) => {
                         className="select"
                         data={options1}
                         options={{
-                          placeholder: "Choose Suppliers",
+                          placeholder: 'Choose Suppliers',
                         }}
                       />
                     </div>
@@ -557,7 +433,7 @@ const SalesList = (props) => {
                   <div className="col-lg-12">
                     <div className="form-group mb-0">
                       <label>Note</label>
-                      <textarea className="form-control" defaultValue={""} />
+                      <textarea className="form-control" defaultValue={''} />
                     </div>
                   </div>
                 </div>
@@ -640,7 +516,7 @@ const SalesList = (props) => {
                         className="select"
                         data={options1}
                         options={{
-                          placeholder: "Choose Suppliers",
+                          placeholder: 'Choose Suppliers',
                         }}
                       />
                     </div>
@@ -648,7 +524,7 @@ const SalesList = (props) => {
                   <div className="col-lg-12">
                     <div className="form-group mb-0">
                       <label>Note</label>
-                      <textarea className="form-control" defaultValue={""} />
+                      <textarea className="form-control" defaultValue={''} />
                     </div>
                   </div>
                 </div>

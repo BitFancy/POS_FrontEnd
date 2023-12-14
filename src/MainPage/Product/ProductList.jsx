@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
 import Table from '../../EntryFile/datatable';
 import Tabletop from '../../EntryFile/tabletop';
 import {
@@ -14,10 +13,11 @@ import {
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import api from '../../utils/api';
+import Spinner from '../Component/Spinner';
 
 const ProductList = () => {
   const [inputfilter, setInputfilter] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const togglefilter = (value) => {
     setInputfilter(value);
   };
@@ -27,7 +27,7 @@ const ProductList = () => {
       text: "You won't be able to revert this!",
       type: 'warning',
       showCancelButton: !0,
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#3085D6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
       confirmButtonClass: 'btn btn-primary',
@@ -43,9 +43,7 @@ const ProductList = () => {
         });
     });
   };
-
   const [data, setData] = useState([]);
-
   const columns = [
     {
       title: 'Product Name',
@@ -88,19 +86,25 @@ const ProductList = () => {
   ];
 
   useEffect(() => {
+    // Simulate loading data
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
     async function check() {
       const fetchData = await api.get('/product/');
       let inputData = fetchData.data;
       for (let i = 0; i < inputData.length; i++) {
-        console.log(inputData[i].category);
         for (let j = 0; j < inputData[i].category.length; j++) {
-          let temp = await api.get(`/category/${inputData[i].category[j]}`);
-          inputData[i].category[j] = `${temp.data}, `;
+          inputData[i].category[
+            j
+          ] = `${inputData[i].category[j].categoryName}, `;
         }
         inputData[i].category[inputData[i].category.length - 1] = inputData[
           i
         ].category[inputData[i].category.length - 1].slice(0, -2);
-        console.log(inputData[i].category);
         for (let k = 0; k < inputData[i].productType.length; k++) {
           switch (inputData[i].productType[k]) {
             case 0:
@@ -128,45 +132,51 @@ const ProductList = () => {
     }
     check();
   }, []);
-
   return (
     <>
-      <div className="page-wrapper">
-        <div className="content">
-          <div className="page-header">
-            <div className="page-title">
-              <h4>Products List</h4>
-              <h6>Manage your Products</h6>
-            </div>
-            <div className="page-btn">
-              <Link
-                to="/dream-pos/product/addproduct-product"
-                className="btn btn-added"
-              >
-                <img src={PlusIcon} alt="img" className="me-1" />
-                Add New Product
-              </Link>
-            </div>
-          </div>
-          {/* /product list */}
-          <div className="card">
-            <div className="card-body">
-              <Tabletop inputfilter={inputfilter} togglefilter={togglefilter} />
-              {/* /Filter */}
-              <div
-                className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
-                id="filter_inputs"
-                style={{ display: inputfilter ? 'block' : 'none' }}
-              ></div>
-              {/* /Filter */}
-              <div className="table-responsive">
-                <Table columns={columns} dataSource={data} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="page-wrapper">
+          <div className="content">
+            <div className="page-header">
+              <div className="page-title">
+                <h4>Products List</h4>
+                <h6>Manage your Products</h6>
+              </div>
+              <div className="page-btn">
+                <Link
+                  to="/dream-pos/product/addproduct-product"
+                  className="btn btn-added"
+                >
+                  <img src={PlusIcon} alt="img" className="me-1" />
+                  Add New Product
+                </Link>
               </div>
             </div>
+            {/* /product list */}
+            <div className="card">
+              <div className="card-body">
+                <Tabletop
+                  inputfilter={inputfilter}
+                  togglefilter={togglefilter}
+                />
+                {/* /Filter */}
+                <div
+                  className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
+                  id="filter_inputs"
+                  style={{ display: inputfilter ? 'block' : 'none' }}
+                ></div>
+                {/* /Filter */}
+                <div className="table-responsive">
+                  <Table columns={columns} dataSource={data} />
+                </div>
+              </div>
+            </div>
+            {/* /product list */}
           </div>
-          {/* /product list */}
         </div>
-      </div>
+      )}
     </>
   );
 };

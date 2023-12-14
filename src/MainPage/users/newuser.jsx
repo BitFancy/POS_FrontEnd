@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select2 from 'react-select2-wrapper';
 import { useNavigate } from 'react-router-dom';
 import 'react-select2-wrapper/css/select2.css';
@@ -26,17 +26,36 @@ const AddUser = () => {
   };
 
   const userRoles = [
-    { id: 1, text: 'Admin' },
-    { id: 2, text: 'User' },
+    { id: 'Admin', text: 'Admin' },
+    { id: 'User', text: 'User' },
   ];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const data = {
+    userName,
+    email,
+    password,
+    role,
+  };
+
+  useEffect(() => {
+    if (role === 1) {
+      setRole('Admin');
+    }
+    if (role === 2) {
+      console.log(role);
+      setRole('User');
+      console.log(role);
+    }
+  }, [role]);
+
+  const handleSubmit = async () => {
+    console.log(role);
+    console.log(data);
     if (password !== confirmPassword) {
       setPassError('Passwords do not match');
     } else {
       try {
-        await api.post('/users/register', { userName, email, password, role });
+        await api.post('/users/register', data);
         alertify.success('Successfully User Added');
         setPassError('');
         setUserName('');
@@ -61,7 +80,7 @@ const AddUser = () => {
             <h6>Add/Update User</h6>
           </div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <div>
           <div className="card">
             <div className="card-body">
               <div className="row">
@@ -142,7 +161,7 @@ const AddUser = () => {
                 </div>
                 <div className="col-lg-12">
                   <button
-                    onSubmit={handleSubmit}
+                    onClick={handleSubmit}
                     className="btn btn-submit me-2"
                   >
                     Submit
@@ -154,7 +173,7 @@ const AddUser = () => {
               </div>
             </div>
           </div>
-        </form>
+        </div>
         {/* /add */}
       </div>
     </div>

@@ -34,7 +34,6 @@ const AddProduct = () => {
     await api
       .post('/product/add', data)
       .then((res) => {
-        console.log('00000000000000000000000000000', res.data);
         alertify.success('Successfully Product Added');
         setProductName('');
         setCategory('');
