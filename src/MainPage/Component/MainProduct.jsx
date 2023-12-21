@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useOrderContext } from '../../context/OrderContext';
+import './index.css';
 
 const MainProduct = ({
   productId,
@@ -24,21 +25,36 @@ const MainProduct = ({
     handleSelected(productId, activeState[productId]);
   }, [isActive]);
   return (
-    <div
-      onClick={handleSubmit}
-      className="col-lg-2 col-sm-6 d-flex"
-      style={{ marginTop: '10px' }}
-    >
+    <div onClick={handleSubmit} className="" style={{ marginTop: '10px' }}>
       <div
-        className="productset flex-fill"
+        className="product-lists-main mb-3 d-flex justify-content-center"
         style={{
-          background: '#fe9f43',
-          border: `${activeState[productId] ? '2px solid #7367f0': 'none'}`,
+          width: '150px',
+          height: '70px',
+          // backgroundColor: `${
+          //   activeState[productId] ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0.3)'
+          // }`
+          // color: `${
+          //   activeState[productId] ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.6)'
+          // }`,
         }}
       >
-        <div className="productsetcontent">
-          <h4>{name}</h4>
-          <h6>{price}</h6>
+        <div>
+          <p
+            style={{
+              color: `${
+                activeState[productId]
+                  ? 'rgba(0, 0, 0, 0.7)'
+                  : 'rgba(0, 0, 0, 0.6)'
+              }`,
+              fontSize: activeState[productId] ? '19px' : '17px',
+              fontWeight: 'bold',
+              marginBottom: '0.5rem',
+            }}
+          >
+            {name}
+          </p>
+          <p className="card-text">£{price}</p>
         </div>
       </div>
     </div>

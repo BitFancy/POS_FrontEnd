@@ -11,6 +11,7 @@ import SubProductThree from '../../MainPage/Component/SubProductThree';
 import api from '../../utils/api';
 import Addon from '../../MainPage/Component/AddOn';
 import { useOrderContext } from '../../context/OrderContext';
+import './index.css';
 
 const Posleft2 = (props) => {
   const [mainProducts, setMainProducts] = useState([]);
@@ -20,6 +21,8 @@ const Posleft2 = (props) => {
   const [addOn, setAddOn] = useState([]);
   const [minus, setMinus] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [isCategoryActive, setIsCategoryActive] = useState({});
 
   // const { changeAction, setChangeAction } = useOrderContext();
 
@@ -39,54 +42,80 @@ const Posleft2 = (props) => {
     props.setActiveState({ ...tempActiveState });
   }, [props.productList]);
 
+  useEffect(() => {
+    (async () => {
+      const res = await api.get('/product');
+      setProducts(res.data);
+    })();
+  }, []);
+
   const handleSubmit = async (id) => {
     console.log('category id -', id);
-
-    await api.get('/product').then((res) => {
-      console.log('Res daa===================', res.data);
-      setMainProducts(
-        res.data.filter(
-          (item) =>
-            item.category.map((category) => category._id).includes(id) &&
-            item.productType.includes(1)
-        )
-      );
-      setSubProductOne(
-        res.data.filter(
-          (item) =>
-            item.category.map((category) => category._id).includes(id) &&
-            item.productType.includes(2)
-        )
-      );
-      setSubProductTwo(
-        res.data.filter(
-          (item) =>
-            item.category.map((category) => category._id).includes(id) &&
-            item.productType.includes(3)
-        )
-      );
-      setSubProductThree(
-        res.data.filter(
-          (item) =>
-            item.category.map((category) => category._id).includes(id) &&
-            item.productType.includes(4)
-        )
-      );
-      setAddOn(
-        res.data.filter(
-          (item) =>
-            item.category.map((category) => category._id).includes(id) &&
-            item.productType.includes(5)
-        )
-      );
-      setMinus(
-        res.data.filter(
-          (item) =>
-            item.category.map((category) => category._id).includes(id) &&
-            item.productType.includes(6)
-        )
-      );
+    const tempCategoryActive = { ...isCategoryActive };
+    Object.keys(tempCategoryActive).map((key) => {
+      tempCategoryActive[key] = false;
     });
+    setIsCategoryActive({ ...tempCategoryActive, [id]: true });
+
+    // const updatedActiveCategories = Object.keys(isCategoryActive).reduce(
+    //   (acc, key) => {
+    //     if (key === id) {
+    //       acc[key] = true;
+    //     } else {
+    //       acc[key] = false;
+    //     }
+    //     return acc;
+    //   },
+    //   {}
+    // );
+
+    // console.log(updatedActiveCategories);
+
+    // setIsCategoryActive(updatedActiveCategories);
+
+    setMainProducts(
+      products.filter(
+        (item) =>
+          item.category.map((category) => category._id).includes(id) &&
+          item.productType.includes(1)
+      )
+    );
+    setSubProductOne(
+      products.filter(
+        (item) =>
+          item.category.map((category) => category._id).includes(id) &&
+          item.productType.includes(2)
+      )
+    );
+    setSubProductTwo(
+      products.filter(
+        (item) =>
+          item.category.map((category) => category._id).includes(id) &&
+          item.productType.includes(3)
+      )
+    );
+    setSubProductThree(
+      products.filter(
+        (item) =>
+          item.category.map((category) => category._id).includes(id) &&
+          item.productType.includes(4)
+      )
+    );
+    setAddOn(
+      products.filter(
+        (item) =>
+          item.category.map((category) => category._id).includes(id) &&
+          item.productType.includes(5)
+      )
+    );
+    setMinus(
+      products.filter(
+        (item) =>
+          item.category.map((category) => category._id).includes(id) &&
+          item.productType.includes(6)
+      )
+    );
+    // });
   };
 
   useEffect(() => {
@@ -94,50 +123,51 @@ const Posleft2 = (props) => {
     console.log(props.categories, 'props.categories');
     const categoryIds = props.categories.map((category) => category.id);
     console.log('categoryIds---------', categoryIds);
+    setIsCategoryActive({ ...isCategoryActive, [categoryIds[0]]: true });
 
     setMainProducts(
-      props.products.filter(
+      products.filter(
         (item) =>
           item.category[0]._id === categoryIds[0] &&
           item.productType.includes(1)
       )
     );
     setSubProductOne(
-      props.products.filter(
+      products.filter(
         (item) =>
           item.category[0]._id === categoryIds[0] &&
           item.productType.includes(2)
       )
     );
     setSubProductTwo(
-      props.products.filter(
+      products.filter(
         (item) =>
           item.category[0]._id === categoryIds[0] &&
           item.productType.includes(3)
       )
     );
     setSubProductThree(
-      props.products.filter(
+      products.filter(
         (item) =>
           item.category[0]._id === categoryIds[0] &&
           item.productType.includes(4)
       )
     );
     setAddOn(
-      props.products.filter(
+      products.filter(
         (item) =>
           item.category[0]._id === categoryIds[0] &&
           item.productType.includes(5)
       )
     );
     setMinus(
-      props.products.filter(
+      products.filter(
         (item) =>
           item.category[0]._id === categoryIds[0] &&
           item.productType.includes(6)
       )
     );
-  }, [props.products]);
+  }, [products]);
 
   // const handleSelected = (id, isActive) => {
   //   if (isActive === true) {
@@ -202,95 +232,144 @@ const Posleft2 = (props) => {
   });
 
   return (
-    <div className="col-lg-6 col-sm-12 tabs_wrapper">
-      <div className="page-header ">
-        <div className="page-title">
-          <h4>Categories</h4>
-          <h6>Manage customer purchases</h6>
+    <div className="col-lg-7 col-sm-12 tabs_wrapper">
+      <div className="order-list">
+        <div className="orderid">
+          <h4>Product Menu</h4>
         </div>
       </div>
-
-      <ul className="tabs owl-carousel owl-theme owl-product  border-0">
-        {/* <OwlCarousel
-          className="owl-theme"
-          items={8}
-          margin={10}
-          dots={false}
-          nav
-        > */}
-        <div className="d-flex">
-          {props.categories.map((category, index) => (
-            <li
-              onClick={() => {
-                handleSubmit(category.id);
-              }}
-              key={index}
-              id={category.text}
-              className="item"
-            >
-              <div className="product-details ">
-                <img src={Product62} alt="img" />
-                <h6>{category.text}</h6>
+      <div className="card card-order" style={{ height: '800px' }}>
+        <div className="split-card"></div>
+        <div className="row">
+          <div className="col-3 border-end">
+            <div className="">
+              <div className="category-table">
+                {props.categories.map((category, index) => (
+                  <div
+                    onClick={() => {
+                      handleSubmit(category.id);
+                    }}
+                    key={index}
+                    id={category.text}
+                    className={`d-flex justify-content-center ${
+                      isCategoryActive[category.id]
+                        ? 'product-lists-category-selected'
+                        : 'product-lists'
+                    }`}
+                    style={{
+                      // transform: 'hover:scale(1.1)',
+                      boxShadow: '0px 2px 4px 2px rgba(0, 0, 0, 0.15)',
+                      margin: '1rem 2rem',
+                      border: '2px',
+                      borderTopLeftRadius: '1rem',
+                      borderBottomRightRadius: '1rem',
+                      color: `${
+                        isCategoryActive[category.id]
+                          ? 'rgba(0,0,0,0.7)'
+                          : 'rgba(0, 0, 0, 0.5)'
+                      }`,
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: `${
+                          isCategoryActive[category.id] ? '20px' : '18px'
+                        }`,
+                        fontWeight: 'bold',
+                        marginBottom: '0.5rem',
+                      }}
+                    >
+                      {category.text}
+                    </p>
+                  </div>
+                ))}
               </div>
-            </li>
-          ))}
-        </div>
-        {/* </OwlCarousel> */}
-      </ul>
-
-      {/* <div className="tabs_container"> */}
-      <div className="tab_content active">
-        {showMainProducts.length > 0 && (
-          <div className="row">
-            <div className="col-10">
-              <h4>Main Product</h4>
             </div>
-            <div className="col-2">
-              {props.productList.length > 0 && (
-                <div className="totalitem">
-                  <Link onClick={handleActiveClear}>Clear all</Link>
+          </div>
+          <div
+            className="col-9"
+            style={{ paddingBottom: '10px', height: '700px' }}
+          >
+            <div className="" style={{ padding: '0 2rem' }}>
+              <div className="tab_content active">
+                <div className="product-table">
+                  {/* {showMainProducts.length > 0 && (
+                    <div className="row">
+                      <div className="col-10">
+                        <h4>Products</h4>
+                      </div>
+                      <div className="col-2">
+                        {props.productList.length > 0 && (
+                          <div className="totalitem">
+                            <div onClick={handleActiveClear}>Clear all</div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )} */}
+                  {/* <div className="products"> */}
+                  <div className="row">
+                    <div className="col-3">
+                      <div className="row">{showMainProducts}</div>
+                      {/* </div> */}
+                      {/* <div className="split-card-product"></div> */}
+                      {/* {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>} */}
+                    </div>
+                    <div className="col-3">
+                      <div className="products">
+                        <div className="row ">{showSubProductOne}</div>
+                      </div>
+                      {/* <div className="split-card-product"></div> */}
+                      {/* {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>} */}
+                    </div>
+                    <div className="col-3">
+                      <div className="products">
+                        <div className="row ">{showSubProductTwo}</div>
+                      </div>
+                      {/* <div className="split-card-product"></div> */}
+                      {/* {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>} */}
+                    </div>
+                    <div className="col-3">
+                      <div className="products">
+                        <div className="row ">{showSubProductThree}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="split-card-product"></div> */}
+            </div>
+            <div
+              className="row"
+              style={{ marginBottom: '10px', padding: '20px 30px 0px 20px' }}
+            >
+              {addOn.length > 0 && (
+                <div className="col-6">
+                  <button
+                    className="btn btn-adds"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addon"
+                  >
+                    <i className="fa fa-plus me-2" />
+                    AddOn
+                  </button>
+                </div>
+              )}
+              {minus.length > 0 && (
+                <div className="col-6">
+                  <button
+                    to="#"
+                    className="btn btn-adds"
+                    data-bs-toggle="modal"
+                    data-bs-target="#minus"
+                  >
+                    <i className="fa fa-minus me-2" />
+                    Minus
+                  </button>
                 </div>
               )}
             </div>
           </div>
-        )}
-        <div className="products">
-          <div className="row">{showMainProducts}</div>
-        </div>
-        {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>}
-        <div className="products">
-          <div className="row ">{showSubProductOne}</div>
-        </div>
-        {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>}
-        <div className="products">
-          <div className="row ">{showSubProductTwo}</div>
-        </div>
-        {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>}
-        <div className="products">
-          <div className="row ">{showSubProductThree}</div>
-        </div>
-      </div>
-      <div className="row mt-5">
-        <div className="col-6">
-          <button
-            className="btn btn-adds"
-            data-bs-toggle="modal"
-            data-bs-target="#addon"
-          >
-            <i className="fa fa-plus me-2" />
-            AddOn
-          </button>
-        </div>
-        <div className="col-6">
-          <button
-            to="#"
-            className="btn btn-adds"
-            data-bs-toggle="modal"
-            data-bs-target="#minus"
-          >
-            <i className="fa fa-minus me-2" />
-            Minus
-          </button>
         </div>
       </div>
     </div>

@@ -8742,10 +8742,19 @@ span.select2-container.select2-container--default.select2-container--open {
 
 .product-lists {
   border: 1px solid #fafbfe;
-  box-shadow: 0px 4px 4px 0px rgba(237, 237, 237, 0.2509803922);
-  margin: 0 0 15px;
+  box-shadow: 4px 4px 1px 1px rgba(220, 220, 220, 1);
+  margin: 10px 10px 15px 15px;
   padding: 15px;
+  text-align: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 @media (max-width: 568px) {
   .product-lists {
     flex-direction: column;
@@ -8811,8 +8820,17 @@ span.select2-container.select2-container--default.select2-container--open {
   top: 2px;
 }
 
+.category-table {
+  height: 75vh;
+  overflow: auto;
+}
 .product-table {
-  height: 60vh;
+  height: 69vh;
+  overflow: auto;
+}
+
+.dish-table {
+  height: 59vh;
   overflow: auto;
 }
 
@@ -9229,7 +9247,9 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .totalitem {
-  margin-bottom: 15px;
+  color: red;
+  margin-bottom: 0px;
+  cursor: pointer;
 }
 .totalitem h4 {
   padding: 7px 13px;
@@ -9246,7 +9266,7 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .card.card-order {
-  border: 0;
+  border: 2;
 }
 
 .btn-adds {

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useOrderContext } from '../../context/OrderContext';
+import './index.css';
 
 const SubProductThree = ({
   productId,
@@ -11,7 +12,6 @@ const SubProductThree = ({
 }) => {
   const { changeAction } = useOrderContext();
   const [isActive, setIsActive] = useState(false);
-
   const handleSubmit = () => {
     setIsActive(!isActive);
     setActiveState({ ...activeState, [productId]: !activeState[productId] });
@@ -27,19 +27,29 @@ const SubProductThree = ({
   return (
     <div
       onClick={handleSubmit}
-      className="col-lg-2 col-sm-6 d-flex"
+      // className="col-lg-3 col-sm-6 d-flex"
+      // className="col-lg-3 col-sm-6 d-flex"
       style={{ marginTop: '10px' }}
     >
       <div
-        className="productset flex-fill"
+        className="product-lists-subthree mb-3 d-flex justify-content-center"
         style={{
-          background: '#663300',
-          border: `${activeState[productId] ? '2px solid #7367f0' : 'none'}`,
+          width: '150px',
+          height: '70px',
+          color: `${activeState[productId] ? 'red' : 'black'}`,
         }}
       >
-        <div className="productsetcontent">
-          <h4>{name}</h4>
-          <h6>{price}</h6>
+        <div>
+          <p
+            style={{
+              fontSize: '17px',
+              fontWeight: 'bold',
+              marginBottom: '0.5rem',
+            }}
+          >
+            {name}
+          </p>
+          <p className="card-text">£{price}</p>
         </div>
       </div>
     </div>

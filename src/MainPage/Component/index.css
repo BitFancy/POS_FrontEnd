@@ -1,3 +1,64 @@
 .isSelected {
   border: 2px solid #7367f0 !important;
 }
+
+.product-lists-category-selected {
+  border: 1px solid #fafbfe;
+  box-shadow: 4px 4px 4px 4px rgba(220, 220, 220, 0.5);
+  margin: 10px 10px 15px 15px;
+  padding: 15px;
+  text-align: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #ddd;
+}
+.product-lists-main {
+  border: 2px solid rgba(223, 222, 222, 0.5);
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  margin: 0 15px;
+  padding: 15px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 92, 92, 0.2);
+}
+
+.product-lists-subone {
+  border: 2px solid rgba(223, 222, 222, 0.5);
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  margin: 0 15px;
+  padding: 15px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 92, 92, 0.2);
+}
+.product-lists-subtwo {
+  border: 2px solid rgba(223, 222, 222, 0.5);
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  margin: 0 15px;
+  padding: 15px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 92, 92, 0.2);
+}
+.product-lists-subthree {
+  border: 2px solid rgba(223, 222, 222, 0.5);
+  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  margin: 0 15px;
+  padding: 15px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 92, 92, 0.2);
+}

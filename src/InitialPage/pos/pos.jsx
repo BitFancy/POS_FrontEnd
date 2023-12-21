@@ -274,10 +274,10 @@ const Pos = () => {
                 setActiveState={setActiveState}
                 handleSelected={handleSelected}
               />
-              <div className="col-lg-3 col-sm-12">
+              <div className="col-lg-2 col-sm-12">
                 <div className="order-list">
                   <div className="orderid">
-                    <h4>Product List</h4>
+                    <h4>Dish</h4>
                   </div>
                 </div>
                 <div className="card card-order">
@@ -286,7 +286,7 @@ const Pos = () => {
                     <div className="totalitem">
                       <h4>Total items : {productList.length}</h4>
                     </div>
-                    <div className="product-table">
+                    <div className="dish-table">
                       {productList.length > 0 &&
                         productList.map((product, index) => (
                           <div key={index}>
@@ -296,7 +296,7 @@ const Pos = () => {
                             {product.productType.includes(6) && (
                               <span>Minus</span>
                             )}
-                            <div className="product-lists">
+                            <div className="product-lists-dish">
                               <div className="row align-items-center">
                                 <div className="col-lg-5">
                                   <div className="productimg">
