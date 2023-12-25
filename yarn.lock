@@ -2109,6 +2109,21 @@
     react "^16.8.6"
     react-dom "^16.8.6"
 
+"@react-thermal-printer/image@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@react-thermal-printer/image/-/image-0.11.1.tgz#939f63f987e40fa51dc2ab32a76c682ff0173e4e"
+  integrity sha512-ocGGjZdb2n4CWfrbGPlhus45bwh2Tu8Oc1Juiyq775kZ+ux1QRzvADEX4/aMUMYOXmZs2MK0ckWOa8LqcxmtCQ==
+  dependencies:
+    floyd-steinberg "^1.0.6"
+
+"@react-thermal-printer/printer@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@react-thermal-printer/printer/-/printer-0.14.0.tgz#56a36427170d60552bcc69b46478c755838b3968"
+  integrity sha512-eiS3bao+PfUl9Tywy+acQAycSft4MeUWq4gvDe5AvsiH1XJjG/ogGEagcWmkQzTtSOt+qp5AjSTPQ0415tM4nQ==
+  dependencies:
+    "@react-thermal-printer/image" "^0.11.1"
+    iconv-lite "^0.6.3"
+
 "@restart/context@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@restart/context/-/context-2.1.4.tgz#a99d87c299a34c28bd85bb489cb07bfd23149c02"
@@ -6770,6 +6785,11 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.3.tgz#c1283ac9f27b368abc1e36d1ff7b04501a30356b"
   integrity sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==
 
+floyd-steinberg@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/floyd-steinberg/-/floyd-steinberg-1.0.6.tgz#9c0f53f43bccd828552883d85fcec658c3da95dc"
+  integrity sha512-gzlre+taSQzEY+nCusbHJFQ3zHXBkRAX4fe3szssPY/N/t1ClBX9hnHZM4o8ZvpdqLLUPEavuZ/Noj71ZaA8+A==
+
 flush-write-stream@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/flush-write-stream/-/flush-write-stream-1.1.1.tgz#8dd7d873a1babc207d94ead0c2e0e44276ebf2e8"
@@ -7705,7 +7725,7 @@ iconv-lite@0.4.24, iconv-lite@^0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
-iconv-lite@^0.6.2:
+iconv-lite@^0.6.2, iconv-lite@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.6.3.tgz#a52f80bf38da1952eb5c681790719871a1a72501"
   integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
@@ -12562,6 +12582,15 @@ react-swipeable@^6.2.0:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-6.2.2.tgz#52ba570f3a7a90db7093094ec476f3d151f727d1"
   integrity sha512-Oz7nSFrssvq2yvy05aNL3F+yBUqSvLsK6x1mu+rQFOpMdQVnt4izKt1vyjvvTb70q6GQOaSpaB6qniROW2MAzQ==
+
+react-thermal-printer@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/react-thermal-printer/-/react-thermal-printer-0.17.0.tgz#c35f7961d469005b5f7d99e77fd20f10f67e0566"
+  integrity sha512-C6/4p7FkCUy0PUXH+gIKDdNdNYddhIHaCKaeyhCGixWLNlil2K5pTS9DQWic8GBqNTRdOmrpIUTKvqTMOpEZqQ==
+  dependencies:
+    "@react-thermal-printer/image" "^0.11.1"
+    "@react-thermal-printer/printer" "^0.14.0"
+    classnames "^2.3.1"
 
 react-toastify@8.0.0:
   version "8.0.0"

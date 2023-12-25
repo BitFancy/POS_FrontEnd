@@ -25,24 +25,23 @@ const SubProductThree = ({
     handleSelected(productId, activeState[productId]);
   }, [isActive]);
   return (
-    <div
-      onClick={handleSubmit}
-      // className="col-lg-3 col-sm-6 d-flex"
-      // className="col-lg-3 col-sm-6 d-flex"
-      style={{ marginTop: '10px' }}
-    >
+    <div onClick={handleSubmit} className="" style={{ marginTop: '10px' }}>
       <div
         className="product-lists-subthree mb-3 d-flex justify-content-center"
         style={{
-          width: '150px',
+          // width: '140px',
           height: '70px',
-          color: `${activeState[productId] ? 'red' : 'black'}`,
         }}
       >
         <div>
           <p
             style={{
-              fontSize: '17px',
+              color: `${
+                activeState[productId]
+                  ? 'rgba(255, 100, 39, 0.6)'
+                  : 'rgba(0, 0, 0, 0.6)'
+              }`,
+              fontSize: activeState[productId] ? '19px' : '17px',
               fontWeight: 'bold',
               marginBottom: '0.5rem',
             }}

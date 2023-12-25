@@ -18,6 +18,7 @@ import Spinner from '../Component/Spinner';
 const ProductList = () => {
   const [inputfilter, setInputfilter] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [productData, setProductData] = useState({});
   const togglefilter = (value) => {
     setInputfilter(value);
   };
@@ -44,6 +45,7 @@ const ProductList = () => {
     });
   };
   const [data, setData] = useState([]);
+
   const columns = [
     {
       title: 'Product Name',
@@ -67,23 +69,28 @@ const ProductList = () => {
     },
     {
       title: 'Action',
-      render: () => (
-        <>
+      render: (data) => {
+        return (
           <>
-            <Link className="me-3" to="/dream-pos/product/product-details">
+            <Link
+              className="me-3"
+              onClick={() => handleViewProduct(data)}
+              to={`/dream-pos/product/product-details/${data._id}`}
+            >
               <img src={EyeIcon} alt="img" />
             </Link>
-            {/* {/* <Link className="me-3" to="/dream-pos/product/editproduct-product">
-              <img src={EditIcon} alt="img" />
-            </Link> */}
             <Link className="confirm-text" to="#" onClick={confirmText}>
               <img src={DeleteIcon} alt="img" />
             </Link>
           </>
-        </>
-      ),
+        );
+      },
     },
   ];
+
+  const handleViewProduct = (data) => {
+    setProductData(data);
+  };
 
   useEffect(() => {
     // Simulate loading data
@@ -132,6 +139,10 @@ const ProductList = () => {
     }
     check();
   }, []);
+
+  useEffect(() => {
+    console.log('data', data);
+  });
   return (
     <>
       {loading ? (

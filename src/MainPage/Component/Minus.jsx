@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
 import { useOrderContext } from '../../context/OrderContext';
+import './index.css';
 
 const Minus = ({
   activeState,
@@ -39,7 +40,7 @@ const Minus = ({
   return (
     <>
       <div className="modal-header">
-        <h5 className="modal-title">Addon</h5>
+        <h5 className="modal-title">Minus</h5>
         <button
           type="button"
           className="close"
@@ -57,24 +58,29 @@ const Minus = ({
               className="col-lg-2 col-sm-12 col-12 d-flwx"
               onClick={() => handleSubmit(minus._id)}
             >
-              <div
-                className="productset flex-fill"
-                style={{
-                  background: '#fe9f43',
-                  border: `${
-                    activeState[minus._id] ? '2px solid #7367f0' : 'none'
-                  }`,
-                }}
-              >
-                <div className="productsetcontent">
-                  <h4>{minus.productName}</h4>
-                  <h6>{minus.price}</h6>
+              <div className="product-lists-main mb-3 d-flex justify-content-center">
+                <div>
+                  <p
+                    style={{
+                      color: `${
+                        activeState[minus._id]
+                          ? 'rgba(255, 100, 39, 0.6)'
+                          : 'rgba(0, 0, 0, 0.6)'
+                      }`,
+                      fontSize: activeState[minus._id] ? '19px' : '17px',
+                      fontWeight: 'bold',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    {minus.productName}
+                  </p>
+                  <p>£{minus.price}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="col-lg-12">
+        <div className="col-lg-12 d-flex justify-content-center">
           <div to="#" className="btn btn-submit me-2" data-bs-dismiss="modal">
             Minus
           </div>

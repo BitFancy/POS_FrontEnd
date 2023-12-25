@@ -8821,25 +8821,28 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .category-table {
-  height: 75vh;
+  height: 80vh;
   overflow: auto;
 }
+
 .product-table {
-  height: 69vh;
+  margin: auto;
+  padding: auto;
+  height: 73vh;
   overflow: auto;
 }
 
 .dish-table {
-  height: 59vh;
+  height: 61vh;
   overflow: auto;
 }
 
 .order-table {
-  height: 27.3vh;
+  height: 28vh;
   overflow: auto;
 }
 
-@media (max-width: 991.98px) {
+/* @media (max-width: 991.98px) {
   .product-table {
     height: auto;
   }
@@ -8848,7 +8851,7 @@ span.select2-container.select2-container--default.select2-container--open {
   .order-table {
     height: auto;
   }
-}
+} */
 
 .btn-set {
   margin: 15px 0 25px;

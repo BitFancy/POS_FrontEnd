@@ -1,5 +1,14 @@
 .product-lists:hover {
-  background-color: #ddd;
+  /* background-color: #ddd; */
+  position: relative;
+  left: -1rem;
+}
+
+.product-lists {
+  /* background-color: #ddd; */
+  position: relative;
+  left: 1rem;
+  transition: all 0.3s;
 }
 
 .split-card-product {
@@ -26,6 +35,10 @@
   border-radius: 20px;
   top: -10px;
   right: -10px;
+}
+.customcolor {
+
+  color: rgba(255, 100, 39, 0.6)
 }
 
 .overflow-veritcal {

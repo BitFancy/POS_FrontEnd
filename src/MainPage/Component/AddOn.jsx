@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../utils/api';
 import { useOrderContext } from '../../context/OrderContext';
+import './index.css';
 
 const Addon = ({
   activeState,
@@ -19,11 +20,11 @@ const Addon = ({
     setAddonId(addonid);
     setActiveState({ ...activeState, [addonid]: !activeState[addonid] });
   };
-  
+
   useEffect(() => {
     handleSelected(addonId, activeState[addonId]);
   }, [isActive]);
-  
+
   useEffect(() => {
     setIsActive(false);
   }, [changeAction]);
@@ -57,24 +58,29 @@ const Addon = ({
               className="col-lg-2 col-sm-12 col-12 d-flwx"
               onClick={() => handleSubmit(addon._id)}
             >
-              <div
-                className="productset flex-fill"
-                style={{
-                  background: '#fe9f43',
-                  border: `${
-                    activeState[addon._id] ? '2px solid #7367f0' : 'none'
-                  }`,
-                }}
-              >
-                <div className="productsetcontent">
-                  <h4>{addon.productName}</h4>
-                  <h6>{addon.price}</h6>
+              <div className="product-lists-main mb-3 d-flex justify-content-center">
+                <div>
+                  <p
+                    style={{
+                      color: `${
+                        activeState[addon._id]
+                          ? 'rgba(255, 100, 39, 0.6)'
+                          : 'rgba(0, 0, 0, 0.6)'
+                      }`,
+                      fontSize: activeState[addon._id] ? '19px' : '17px',
+                      fontWeight: 'bold',
+                      marginBottom: '0.5rem',
+                    }}
+                  >
+                    {addon.productName}
+                  </p>
+                  <p>£{addon.price}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="col-lg-12">
+        <div className="col-lg-12 d-flex justify-content-center">
           <div to="#" className="btn btn-submit me-2" data-bs-dismiss="modal">
             Addon
           </div>

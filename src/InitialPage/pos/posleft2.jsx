@@ -101,20 +101,8 @@ const Posleft2 = (props) => {
           item.productType.includes(4)
       )
     );
-    setAddOn(
-      products.filter(
-        (item) =>
-          item.category.map((category) => category._id).includes(id) &&
-          item.productType.includes(5)
-      )
-    );
-    setMinus(
-      products.filter(
-        (item) =>
-          item.category.map((category) => category._id).includes(id) &&
-          item.productType.includes(6)
-      )
-    );
+    setAddOn(products.filter((item) => item.productType.includes(5)));
+    setMinus(products.filter((item) => item.productType.includes(6)));
     // });
   };
 
@@ -153,20 +141,8 @@ const Posleft2 = (props) => {
           item.productType.includes(4)
       )
     );
-    setAddOn(
-      products.filter(
-        (item) =>
-          item.category[0]._id === categoryIds[0] &&
-          item.productType.includes(5)
-      )
-    );
-    setMinus(
-      products.filter(
-        (item) =>
-          item.category[0]._id === categoryIds[0] &&
-          item.productType.includes(6)
-      )
-    );
+    setAddOn(products.filter((item) => item.productType.includes(5)));
+    setMinus(products.filter((item) => item.productType.includes(6)));
   }, [products]);
 
   // const handleSelected = (id, isActive) => {
@@ -261,8 +237,7 @@ const Posleft2 = (props) => {
                       boxShadow: '0px 2px 4px 2px rgba(0, 0, 0, 0.15)',
                       margin: '1rem 2rem',
                       border: '2px',
-                      borderTopLeftRadius: '1rem',
-                      borderBottomRightRadius: '1rem',
+                      borderRadius: '6rem 1rem 6rem 2rem',
                       color: `${
                         isCategoryActive[category.id]
                           ? 'rgba(0,0,0,0.7)'
@@ -291,9 +266,8 @@ const Posleft2 = (props) => {
             style={{ paddingBottom: '10px', height: '700px' }}
           >
             <div className="" style={{ padding: '0 2rem' }}>
-              <div className="tab_content active">
-                <div className="product-table">
-                  {/* {showMainProducts.length > 0 && (
+              <div className="product-table">
+                {/* {showMainProducts.length > 0 && (
                     <div className="row">
                       <div className="col-10">
                         <h4>Products</h4>
@@ -307,33 +281,26 @@ const Posleft2 = (props) => {
                       </div>
                     </div>
                   )} */}
-                  {/* <div className="products"> */}
-                  <div className="row">
-                    <div className="col-3">
-                      <div className="row">{showMainProducts}</div>
-                      {/* </div> */}
-                      {/* <div className="split-card-product"></div> */}
-                      {/* {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>} */}
-                    </div>
-                    <div className="col-3">
-                      <div className="products">
-                        <div className="row ">{showSubProductOne}</div>
-                      </div>
-                      {/* <div className="split-card-product"></div> */}
-                      {/* {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>} */}
-                    </div>
-                    <div className="col-3">
-                      <div className="products">
-                        <div className="row ">{showSubProductTwo}</div>
-                      </div>
-                      {/* <div className="split-card-product"></div> */}
-                      {/* {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>} */}
-                    </div>
-                    <div className="col-3">
-                      <div className="products">
-                        <div className="row ">{showSubProductThree}</div>
-                      </div>
-                    </div>
+                {/* <div className="products"> */}
+                <div className="row">
+                  <div className="col-3">
+                    {showMainProducts}
+                    {/* </div> */}
+                    {/* <div className="split-card-product"></div> */}
+                    {/* {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>} */}
+                  </div>
+                  <div className="col-3">
+                    <div className="products">{showSubProductOne}</div>
+                    {/* <div className="split-card-product"></div> */}
+                    {/* {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>} */}
+                  </div>
+                  <div className="col-3">
+                    <div className="products">{showSubProductTwo}</div>
+                    {/* <div className="split-card-product"></div> */}
+                    {/* {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>} */}
+                  </div>
+                  <div className="col-3">
+                    <div className="products">{showSubProductThree}</div>
                   </div>
                 </div>
               </div>

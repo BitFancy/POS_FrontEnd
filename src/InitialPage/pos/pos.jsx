@@ -298,24 +298,27 @@ const Pos = () => {
                             )}
                             <div className="product-lists-dish">
                               <div className="row align-items-center">
-                                <div className="col-lg-5">
+                                <div className="col-lg-12">
                                   <div className="productimg">
                                     <div className="productcontent">
                                       <h4>{product.productName}</h4>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="col-lg-5">
+                                <div className="col-lg-10">
                                   <div className="input-group">
                                     <span className="input-group-text">£</span>
                                     <input
                                       type="text"
-                                      className="form-control"
+                                      className="form-control text-end"
                                       aria-label="Amount (to the nearest dollar)"
                                       value={product.price}
                                       onChange={(e) =>
                                         handlePriceChange(index, e.target.value)
                                       }
+                                      style={{
+                                        padding: '6px 3px',
+                                      }}
                                     />
                                   </div>
                                 </div>

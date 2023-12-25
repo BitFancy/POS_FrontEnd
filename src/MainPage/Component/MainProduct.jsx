@@ -29,24 +29,20 @@ const MainProduct = ({
       <div
         className="product-lists-main mb-3 d-flex justify-content-center"
         style={{
-          width: '150px',
+          // width: '140px',
           height: '70px',
-          // backgroundColor: `${
-          //   activeState[productId] ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0.3)'
-          // }`
-          // color: `${
-          //   activeState[productId] ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.6)'
-          // }`,
+          boxShadow: `${
+            activeState[productId]
+              ? '0px 0px 15px 0px rgba(0, 0, 0, 0.7)'
+              : ''
+          }`,
         }}
       >
         <div>
           <p
             style={{
-              color: `${
-                activeState[productId]
-                  ? 'rgba(0, 0, 0, 0.7)'
-                  : 'rgba(0, 0, 0, 0.6)'
-              }`,
+              color: `${activeState[productId] ? 'white' : 'white'}`,
+
               fontSize: activeState[productId] ? '19px' : '17px',
               fontWeight: 'bold',
               marginBottom: '0.5rem',

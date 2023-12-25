@@ -15,15 +15,19 @@
 }
 .product-lists-main {
   border: 2px solid rgba(223, 222, 222, 0.5);
-  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
+
   border-radius: 0.5rem;
   margin: 0 15px;
-  padding: 15px;
+  padding: 5px;
   text-align: center;
   align-items: center;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 92, 92, 0.2);
+  color: white;
+  transition: all  0.3s;
+  background-color: rgba(255, 88, 88, 0.705);
+}
+.product-lists-main:hover {
+  scale: 1.1;
 }
 
 .product-lists-subone {
@@ -31,34 +35,34 @@
   box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   margin: 0 15px;
-  padding: 15px;
+  padding: 5px;
   text-align: center;
   align-items: center;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 92, 92, 0.2);
+  background-color: rgba(92, 176, 255, 0.4);
 }
 .product-lists-subtwo {
   border: 2px solid rgba(223, 222, 222, 0.5);
   box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   margin: 0 15px;
-  padding: 15px;
+  padding: 5px;
   text-align: center;
   align-items: center;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 92, 92, 0.2);
+  background-color: rgba(86, 255, 108, 0.4);
 }
 .product-lists-subthree {
   border: 2px solid rgba(223, 222, 222, 0.5);
   box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   margin: 0 15px;
-  padding: 15px;
+  padding: 5px;
   text-align: center;
   align-items: center;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 92, 92, 0.2);
+  background-color: rgba(255, 234, 41, 0.4);
 }
