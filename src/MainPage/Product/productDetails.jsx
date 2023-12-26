@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { barcode1, Printer, Product69 } from '../../EntryFile/imagePath';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { any } from 'prop-types';
 import api from '../../utils/api';
+import ReactToPrint from 'react-to-print';
+
 
 const ProductDetails = () => {
   const { productData, productId } = useParams();
@@ -15,11 +17,12 @@ const ProductDetails = () => {
   const [productPrice, setProductPrice] = React.useState('');
   const [createdAt, setCreatedAt] = React.useState('');
   const [updatedAt, setUpdatedAt] = React.useState('');
+  const history = useHistory();
+  const ref = useRef();
 
   useEffect(() => {
     (async () => {
       const response = await api.get(`/product/${productId}`);
-      // console.log(response.data, 'product data');
 
       for (let j = 0; j < response.data.category.length; j++) {
         console.log(response.data.category[j], 'category');
@@ -68,6 +71,10 @@ const ProductDetails = () => {
     console.log('productId-', productId);
   }, []);
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
     <div className="page-wrapper">
       <div className="content">
@@ -76,8 +83,20 @@ const ProductDetails = () => {
             <h4>Product Details</h4>
             <h6>Full details of a product</h6>
           </div>
+          <button type="button" class="btn btn-secondary" onClick={goBack}>
+            Back
+          </button>
+          <ReactToPrint
+            bodyClass="print-agreement"
+            content={() => ref.current}
+            trigger={() => (
+              <button type="primary" class="btn btn-primary">
+                Print
+              </button>
+            )}
+          />
         </div>
-        <div className="row">
+        <div ref={ref} className="row">
           <div className="col-lg-12 col-sm-12">
             <div className="card">
               <div className="card-body">

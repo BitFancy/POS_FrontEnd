@@ -14,6 +14,7 @@ import Select2 from "react-select2-wrapper";
 import "react-select2-wrapper/css/select2.css";
 
 const SalesDetail = () => {
+  
   const options = [
     { id: 1, text: "Completed", text: "Completed" },
     { id: 2, text: "Inprogess", text: "Inprogess" },

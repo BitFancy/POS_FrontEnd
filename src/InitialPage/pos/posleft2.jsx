@@ -80,6 +80,7 @@ const Posleft2 = (props) => {
           item.productType.includes(1)
       )
     );
+
     setSubProductOne(
       products.filter(
         (item) =>

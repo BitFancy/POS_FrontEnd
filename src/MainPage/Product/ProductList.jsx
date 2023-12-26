@@ -14,37 +14,29 @@ import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import api from '../../utils/api';
 import Spinner from '../Component/Spinner';
+import alertify from 'alertifyjs';
 
 const ProductList = () => {
   const [inputfilter, setInputfilter] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
   const [productData, setProductData] = useState({});
   const togglefilter = (value) => {
     setInputfilter(value);
   };
-  const confirmText = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      type: 'warning',
-      showCancelButton: !0,
-      confirmButtonColor: '#3085D6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-      confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn btn-danger ml-1',
-      buttonsStyling: !1,
-    }).then(function (t) {
-      t.value &&
-        Swal.fire({
-          type: 'success',
-          title: 'Deleted!',
-          text: 'Your file has been deleted.',
-          confirmButtonClass: 'btn btn-success',
+  const confirmDelete = (id) => {
+    alertify.confirm(
+      'Delete Product',
+      'Are you sure you want to delete this product?',
+      function () {
+        api.delete(`/product/delete/${id}`).then((response) => {
+          setData(data.filter((item) => item._id !== id));
         });
-    });
+        alertify.success('Product deleted successfully');
+      },
+      function () {}
+    );
   };
-  const [data, setData] = useState([]);
 
   const columns = [
     {
@@ -79,7 +71,11 @@ const ProductList = () => {
             >
               <img src={EyeIcon} alt="img" />
             </Link>
-            <Link className="confirm-text" to="#" onClick={confirmText}>
+            <Link
+              className="confirm-text"
+              to="#"
+              onClick={() => confirmDelete(data._id)}
+            >
               <img src={DeleteIcon} alt="img" />
             </Link>
           </>

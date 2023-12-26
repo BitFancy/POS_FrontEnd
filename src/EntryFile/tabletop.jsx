@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import ReactTooltip from "react-tooltip";
-import {Link} from "react-router-dom";
+import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
+import { Link } from 'react-router-dom';
 import {
-    ClosesIcon,
-    Excel,
-    Filter,
-    Pdf,
-    Printer,
-    Search    
-  } from "../EntryFile/imagePath";
+  ClosesIcon,
+  Excel,
+  Filter,
+  Pdf,
+  Printer,
+  Search,
+} from '../EntryFile/imagePath';
 
-const Tabletop = ({inputfilter,togglefilter}) => {
+const Tabletop = ({ inputfilter, togglefilter }) => {
   return (
     <div className="table-top">
       <div className="search-set">
         <div className="search-path">
           <a
             className={` btn ${
-              inputfilter ? "btn-filter setclose" : "btn-filter"
+              inputfilter ? 'btn-filter setclose' : 'btn-filter'
             } `}
             id="filter_search"
             onClick={() => togglefilter(!inputfilter)}
@@ -39,7 +39,7 @@ const Tabletop = ({inputfilter,togglefilter}) => {
           </Link> */}
         </div>
       </div>
-      <div className="wordset">
+      {/* <div className="wordset">
         <ul>
           <ReactTooltip place="top" type="dark" effect="solid" />
           <li>
@@ -58,7 +58,7 @@ const Tabletop = ({inputfilter,togglefilter}) => {
             </a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
