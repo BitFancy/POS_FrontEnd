@@ -29,6 +29,7 @@ import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import api from '../../utils/api';
 import ReactToPrint from 'react-to-print';
+import FeatherIcon from 'feather-icons-react';
 
 const SalesList = (props) => {
   const ref = useRef();
@@ -40,8 +41,8 @@ const SalesList = (props) => {
   const [payMethod, setPayMethod] = useState([]);
   const [orderStatus, setOrderStatus] = useState([]);
   const [orderPrice, setOrderPrice] = useState([]);
-
   const [orderList, setOrderList] = useState([]);
+  const [orderDetail, setOrderDetail] = useState({});
 
   let [isOpen, setIsOpen] = useState(true);
 
@@ -49,8 +50,8 @@ const SalesList = (props) => {
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
+  function handleSetOrderDetail(text) {
+    setOrderDetail(text);
   }
 
   const togglefilter = (value) => {
@@ -185,24 +186,18 @@ const SalesList = (props) => {
     // },
     {
       title: 'Action',
-      render: (text, record) => (
+      render: (order) => (
         <>
           <div>
-            <Link>
+            <Link
+              className="me-2"
+              data-bs-toggle="modal"
+              onClick={() => handleSetOrderDetail(order)}
+              data-bs-target="#order-details"
+            >
               <img src={Eye1} className="me-2" alt="img" />
             </Link>
-            <Link>
-              <img src={EditIcon} className="me-2" alt="img" />
-            </Link>
-            <ReactToPrint
-              bodyClass="print-agreement"
-              content={() => ref.current}
-              trigger={() => (
-                <Link>
-                  <img src={Printer} className="me-2" alt="img" />
-                </Link>
-              )}
-            />
+
             <Link>
               <img src={DeleteIcon} className="me-2" alt="img" />
             </Link>
@@ -250,7 +245,7 @@ const SalesList = (props) => {
                 Make Order
               </Link>
             </div>
-            <div className="fixed inset-0 flex items-center justify-center">
+            {/* <div className="fixed inset-0 flex items-center justify-center">
               <button
                 type="button"
                 onClick={openModal}
@@ -258,7 +253,7 @@ const SalesList = (props) => {
               >
                 Open dialog
               </button>
-            </div>
+            </div> */}
           </div>
           {/* /product list */}
           <div className="card" ref={ref}>
@@ -559,60 +554,122 @@ const SalesList = (props) => {
           </div>
         </div>
       </>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Payment successful
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
+      <div
+        className="modal fade"
+        id="order-details"
+        tabIndex={-1}
+        aria-labelledby="create"
+        aria-hidden="true"
+      >
+        <div
+          className="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
+          <div className="modal-content">
+            <div className="row" ref={ref}>
+              <div className="bill-container">
+                <div className="col-lg-12 col-sm-12">
+                  <div className="card">
+                    <div className="text-center mt-3 mb-2 font-weight-bold">
+                      <h2>Restaurant Receipt</h2>
+                    </div>
+                    {/* <div className="text-center mt-2 mb-2 font-weight-bold text-yellow">
+                    <h4>Authentic Food At its Finest!</h4>
+                  </div> */}
+                    <div className="card-body">
+                      <div className="table-responsive">
+                        <div>
+                          <div className="d-flex justify-content-center mb-3 align-items-center px-5">
+                            <p>
+                              Customer :{' '}
+                              <span className="font-weight-bold">
+                                {orderDetail.customer}
+                              </span>
+                            </p>
+                          </div>
+                          <div className="d-flex justify-content-center mb-3 align-items-center px-5">
+                            <p>PayMethod : {orderDetail.paymethod} </p>
+                          </div>
+                          <div className="d-flex justify-content-center mb-3 align-items-center px-5">
+                            <p>Time : {orderDetail.createdAt}</p>
+                          </div>
+                        </div>
+                        <table className="table mb-0">
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>List of Items</th>
+                              <th>Quantity</th>
+                              <th>Unit Cost</th>
+                              <th>Amount</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {console.log(!(orderDetail === null))}
+                            {/* {console.log(orderDetail.dishes)} */}
+                            {/* {console.log(orderDetail.dishes.length)} */}
+                            {!(orderDetail === null) &&
+                              // orderDetail.dishes.length > 0 &&
+                              orderDetail.dishes !== undefined &&
+                              orderDetail.dishes.map((orderDishes, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td>{orderDishes.dishName}</td>
+                                  <td>{orderDishes.counter}</td>
+                                  <td>£{orderDishes.dishPrice}</td>
+                                  <td>
+                                    £
+                                    {orderDishes.dishPrice *
+                                      orderDishes.counter}
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                        <tfoot className="d-flex justify-content-end px-5 mt-2">
+                          <span>Total Price : £{orderDetail.totalPrice}</span>
+                        </tfoot>
+                      </div>
+                      <div className="text-center mt-2 mb-2 font-weight-bold text-yellow">
+                        <h5>Eat As much As You Like!</h5>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-end p-2">
+              <div className="px-3 border-end">
+                <Link className="d-flex align-items-center">
+                  <FeatherIcon icon="edit" />
+                  <span className="px-2">Edit</span>
+                </Link>
+              </div>
+              <div className="px-3 border-end">
+                <ReactToPrint
+                  bodyClass="print-agreement"
+                  content={() => ref.current}
+                  trigger={() => (
+                    <Link className="d-flex align-items-center">
+                      <FeatherIcon icon="printer" />
+                      <span className="px-2">Print</span>
+                    </Link>
+                  )}
+                />
+              </div>
+              <div className="px-3">
+                <Link
+                  className="d-flex align-items-center"
+                  data-bs-dismiss="modal"
+                >
+                  <FeatherIcon icon="x" />
+                  <span className="px-2">Close</span>
+                </Link>
+              </div>
             </div>
           </div>
-        </Dialog>
-      </Transition>
+        </div>
+      </div>
     </>
   );
 };

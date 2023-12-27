@@ -55,10 +55,10 @@ const Addon = ({
           {addons.map((addon, index) => (
             <div
               key={index}
-              className="col-lg-2 col-sm-12 col-12 d-flwx"
+              className="col-lg-2 col-sm-12 col-12 d-flex"
               onClick={() => handleSubmit(addon._id)}
             >
-              <div className="product-lists-main mb-3 d-flex justify-content-center">
+              <div className="product-lists-main mb-3 d-flex justify-content-center ">
                 <div>
                   <p
                     style={{
@@ -70,6 +70,7 @@ const Addon = ({
                       fontSize: activeState[addon._id] ? '19px' : '17px',
                       fontWeight: 'bold',
                       marginBottom: '0.5rem',
+                      
                     }}
                   >
                     {addon.productName}

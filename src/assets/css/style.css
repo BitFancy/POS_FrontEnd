@@ -8826,8 +8826,8 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .product-table {
-  margin: auto;
-  padding: auto;
+  margin: 5px;
+  padding: 5px;
   height: 73vh;
   overflow: auto;
 }

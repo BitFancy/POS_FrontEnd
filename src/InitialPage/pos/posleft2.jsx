@@ -238,7 +238,7 @@ const Posleft2 = (props) => {
                       boxShadow: '0px 2px 4px 2px rgba(0, 0, 0, 0.15)',
                       margin: '1rem 2rem',
                       border: '2px',
-                      borderRadius: '6rem 1rem 6rem 2rem',
+                      // borderRadius: '6rem 1rem 6rem 2rem',
                       color: `${
                         isCategoryActive[category.id]
                           ? 'rgba(0,0,0,0.7)'
@@ -266,9 +266,9 @@ const Posleft2 = (props) => {
             className="col-9"
             style={{ paddingBottom: '10px', height: '700px' }}
           >
-            <div className="" style={{ padding: '0 2rem' }}>
-              <div className="product-table">
-                {/* {showMainProducts.length > 0 && (
+            {/* <div className=""> */}
+            <div className="product-table m-2">
+              {/* {showMainProducts.length > 0 && (
                     <div className="row">
                       <div className="col-10">
                         <h4>Products</h4>
@@ -282,31 +282,32 @@ const Posleft2 = (props) => {
                       </div>
                     </div>
                   )} */}
-                {/* <div className="products"> */}
-                <div className="row">
-                  <div className="col-3">
-                    {showMainProducts}
-                    {/* </div> */}
-                    {/* <div className="split-card-product"></div> */}
-                    {/* {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>} */}
-                  </div>
-                  <div className="col-3">
-                    <div className="products">{showSubProductOne}</div>
-                    {/* <div className="split-card-product"></div> */}
-                    {/* {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>} */}
-                  </div>
-                  <div className="col-3">
-                    <div className="products">{showSubProductTwo}</div>
-                    {/* <div className="split-card-product"></div> */}
-                    {/* {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>} */}
-                  </div>
-                  <div className="col-3">
-                    <div className="products">{showSubProductThree}</div>
-                  </div>
-                </div>
+              {/* <div className="products"> */}
+              {/* <div className="row"> */}
+              {/* <div className=""> */}
+              <div className="flex-wrap d-flex">
+                {showMainProducts}
+                {/* </div> */}
+                {/* <div className="split-card-product"></div> */}
+                {/* {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>} */}
               </div>
-              {/* <div className="split-card-product"></div> */}
+              {/* </div> */}
+              <div className="flex-wrap d-flex mt-3">
+                {showSubProductOne}
+
+                {/* <div className="split-card-product"></div> */}
+                {/* {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>} */}
+              </div>
+              <div className="flex-wrap d-flex mt-3">
+                {showSubProductTwo}
+                {/* <div className="split-card-product"></div> */}
+                {/* {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>} */}
+              </div>
+              <div className="flex-wrap d-flex mt-3">{showSubProductThree}</div>
+              {/* </div> */}
             </div>
+            {/* <div className="split-card-product"></div> */}
+            {/* </div> */}
             <div
               className="row"
               style={{ marginBottom: '10px', padding: '20px 30px 0px 20px' }}

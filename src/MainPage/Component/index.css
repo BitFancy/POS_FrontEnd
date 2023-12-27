@@ -15,54 +15,65 @@
 }
 .product-lists-main {
   border: 2px solid rgba(223, 222, 222, 0.5);
-
   border-radius: 0.5rem;
-  margin: 0 15px;
+  /* padding: 5px; */
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s;
+  background-color: rgb(249, 178, 50);
+}
+
+.product-lists-subone {
+  border: 2px solid rgba(223, 222, 222, 0.5);
+  border-radius: 0.5rem;
+  padding: 3px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s;
+  background-color: rgb(150, 193, 31);
+}
+.product-lists-subtwo {
+  border: 2px solid rgba(223, 222, 222, 0.5);
+  border-radius: 0.5rem;
   padding: 5px;
   text-align: center;
   align-items: center;
   cursor: pointer;
   color: white;
-  transition: all  0.3s;
-  background-color: rgba(255, 88, 88, 0.705);
-}
-.product-lists-main:hover {
-  scale: 1.1;
-}
-
-.product-lists-subone {
-  border: 2px solid rgba(223, 222, 222, 0.5);
-  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
-  border-radius: 0.5rem;
-  margin: 0 15px;
-  padding: 5px;
-  text-align: center;
-  align-items: center;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(92, 176, 255, 0.4);
-}
-.product-lists-subtwo {
-  border: 2px solid rgba(223, 222, 222, 0.5);
-  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
-  border-radius: 0.5rem;
-  margin: 0 15px;
-  padding: 5px;
-  text-align: center;
-  align-items: center;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(86, 255, 108, 0.4);
+  transition: all 0.3s;
+  background-color: rgb(248, 234, 27);
 }
 .product-lists-subthree {
   border: 2px solid rgba(223, 222, 222, 0.5);
-  box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
-  margin: 0 15px;
   padding: 5px;
   text-align: center;
   align-items: center;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 234, 41, 0.4);
+  color: white;
+  transition: all 0.3s;
+  background-color: rgb(176, 127, 74);
+}
+
+.product-lists-main:hover {
+  scale: 1.1;
+}
+.product-lists-subone:hover {
+  scale: 1.1;
+}
+.product-lists-subtwo:hover {
+  scale: 1.1;
+}
+.product-lists-subthree:hover {
+  scale: 1.1;
+}
+.product-lists-addon:hover {
+  scale: 1.1;
+}
+.product-lists-minus:hover {
+  scale: 1.1;
 }

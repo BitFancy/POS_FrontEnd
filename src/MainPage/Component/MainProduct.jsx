@@ -25,32 +25,29 @@ const MainProduct = ({
     handleSelected(productId, activeState[productId]);
   }, [isActive]);
   return (
-    <div onClick={handleSubmit} className="" style={{ marginTop: '10px' }}>
+    <div onClick={handleSubmit} className="col-2 p-1 m-0">
       <div
-        className="product-lists-main mb-3 d-flex justify-content-center"
+        className="product-lists-main d-flex justify-content-center"
         style={{
           // width: '140px',
           height: '70px',
           boxShadow: `${
-            activeState[productId]
-              ? '0px 0px 15px 0px rgba(0, 0, 0, 0.7)'
-              : ''
+            activeState[productId] ? '0px 0px 15px 0px rgba(0, 0, 0, 0.7)' : ''
           }`,
         }}
       >
-        <div>
+        <div className="d-flex align-items-center lh-1">
           <p
             style={{
               color: `${activeState[productId] ? 'white' : 'white'}`,
-
               fontSize: activeState[productId] ? '19px' : '17px',
               fontWeight: 'bold',
-              marginBottom: '0.5rem',
+              maxWidth: '100px',
             }}
           >
             {name}
           </p>
-          <p className="card-text">£{price}</p>
+          {/* <p className="card-text">£{price}</p> */}
         </div>
       </div>
     </div>

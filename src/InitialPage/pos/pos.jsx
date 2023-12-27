@@ -298,14 +298,14 @@ const Pos = () => {
                             )}
                             <div className="product-lists-dish">
                               <div className="row align-items-center">
-                                <div className="col-lg-12">
+                                <div className="col-lg-10">
                                   <div className="productimg">
                                     <div className="productcontent">
                                       <h4>{product.productName}</h4>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="col-lg-10">
+                                {/* <div className="col-lg-10">
                                   <div className="input-group">
                                     <span className="input-group-text">£</span>
                                     <input
@@ -321,7 +321,7 @@ const Pos = () => {
                                       }}
                                     />
                                   </div>
-                                </div>
+                                </div> */}
                                 <div className="col-lg-2">
                                   <Link
                                     className="confirm-text"
@@ -398,14 +398,13 @@ const Pos = () => {
                     <div className="totalitem">
                       <h4>Total items : {dishes.length}</h4>
                       <h6 onClick={removeOrderList} className="cursorHand">
-                        Clear all
+                        <Link>Clear all</Link>
                       </h6>
                     </div>
                     <div className="order-table">
                       {dishes.length > 0 &&
                         dishes.map((dish, index) => (
-                          <ul className="product-lists" key={index}>
-                            {console.log(dish, 'dish dish dish dish dish')}
+                          <ul className="product-lists-order" key={index}>
                             <div className="row align-items-center">
                               <div className="col-lg-6">
                                 <li>

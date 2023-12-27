@@ -11,6 +11,17 @@
   transition: all 0.3s;
 }
 
+.product-lists-order {
+  border: 1px solid #fafbfe;
+  box-shadow: 4px 4px 1px 1px rgba(220, 220, 220, 1);
+  margin: 10px 10px 15px 15px;
+  padding: 15px;
+  text-align: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .split-card-product {
   margin: 0 0 15px;
   border: 1px dashed #eee;
@@ -37,8 +48,7 @@
   right: -10px;
 }
 .customcolor {
-
-  color: rgba(255, 100, 39, 0.6)
+  color: rgba(255, 100, 39, 0.6);
 }
 
 .overflow-veritcal {
