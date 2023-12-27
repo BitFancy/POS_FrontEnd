@@ -267,7 +267,7 @@ const Posleft2 = (props) => {
             style={{ paddingBottom: '10px', height: '700px' }}
           >
             {/* <div className=""> */}
-            <div className="product-table m-2">
+            <div className="product-table m-2 d-flex flex-column justify-content-between">
               {/* {showMainProducts.length > 0 && (
                     <div className="row">
                       <div className="col-10">
@@ -282,38 +282,23 @@ const Posleft2 = (props) => {
                       </div>
                     </div>
                   )} */}
-              {/* <div className="products"> */}
-              {/* <div className="row"> */}
-              {/* <div className=""> */}
-              <div className="flex-wrap d-flex">
-                {showMainProducts}
-                {/* </div> */}
-                {/* <div className="split-card-product"></div> */}
-                {/* {showSubProductOne.length > 0 && <h4>Sub Product 1</h4>} */}
+              <div>
+                <div className="flex-wrap d-flex">{showMainProducts}</div>
+                <div className="flex-wrap d-flex mt-3">{showSubProductOne}</div>
               </div>
-              {/* </div> */}
-              <div className="flex-wrap d-flex mt-3">
-                {showSubProductOne}
-
-                {/* <div className="split-card-product"></div> */}
-                {/* {showSubProductTwo.length > 0 && <h4>Sub Product 2</h4>} */}
+              <div>
+                <div className="flex-wrap d-flex mt-3">{showSubProductTwo}</div>
+                <div className="flex-wrap d-flex mt-3">
+                  {showSubProductThree}
+                </div>
               </div>
-              <div className="flex-wrap d-flex mt-3">
-                {showSubProductTwo}
-                {/* <div className="split-card-product"></div> */}
-                {/* {showSubProductThree.length > 0 && <h4>Sub Product 3</h4>} */}
-              </div>
-              <div className="flex-wrap d-flex mt-3">{showSubProductThree}</div>
-              {/* </div> */}
             </div>
-            {/* <div className="split-card-product"></div> */}
-            {/* </div> */}
             <div
-              className="row"
-              style={{ marginBottom: '10px', padding: '20px 30px 0px 20px' }}
+              className="row p-0 m-0 d-flex justify-content-end border-top"
+              style={{ marginBottom: '10px', padding: '20px 20px 0px 20px' }}
             >
               {addOn.length > 0 && (
-                <div className="col-6">
+                <div className="col-4 mt-2">
                   <button
                     className="btn btn-adds"
                     data-bs-toggle="modal"
@@ -325,7 +310,7 @@ const Posleft2 = (props) => {
                 </div>
               )}
               {minus.length > 0 && (
-                <div className="col-6">
+                <div className="col-4 mt-2">
                   <button
                     to="#"
                     className="btn btn-adds"

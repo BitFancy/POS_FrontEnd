@@ -745,6 +745,19 @@
     color: $__white;
   }
 }
+.btn-adds-customer {
+  border: 2px solid #28c76f;
+  color: #28c76f;
+  width: 100%;
+  padding: 7px;
+  border-radius: 5px;
+  font-weight: $__semibold;
+  margin-bottom: 20px;
+  &:hover {
+    background: #28c76f;
+    color: $__white;
+  }
+}
 .order-list {
   @extend %display-flex;
   @extend %align-items-center;

@@ -34,6 +34,7 @@ import {
 import alertify from 'alertifyjs';
 import { Button } from 'reactstrap';
 import ButtonGroup from 'antd/lib/button/button-group';
+import './index.css';
 
 const Pos = () => {
   const [dishes, setDishes] = useState([]);
@@ -339,7 +340,7 @@ const Pos = () => {
                     </div>
                   </div>
                   <div className="split-card"></div>
-                  <div className="card-body pt-0 pb-2">
+                  <div className="card-body pt-2 pb-2">
                     <div className="setvalue">
                       <ul>
                         <li className="total-value">
@@ -348,12 +349,15 @@ const Pos = () => {
                         </li>
                       </ul>
                     </div>
-                    <div
+                    {/* <div
                       onClick={handleSubmit}
                       className="btn-totallabel cursorHand"
                     >
                       <h5>Submit</h5>
-                    </div>
+                    </div> */}
+                    <button onClick={handleSubmit} className="btn btn-adds">
+                      Submit
+                    </button>
                   </div>
                 </div>
               </div>
@@ -366,7 +370,7 @@ const Pos = () => {
                 <div className="card card-order">
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-lg-12">
+                      <div className="col-lg-8">
                         <div className="select-split ">
                           <div className="select-group w-100">
                             <Select2
@@ -381,14 +385,28 @@ const Pos = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-12">
+                      <div className="col-4">
                         <Link
-                          className="btn btn-adds"
+                          className="btn btn-adds-customer"
                           data-bs-toggle="modal"
                           data-bs-target="#create"
+                          style={{
+                            color: '#28c76f',
+                            border: '2px solid #28c76f',
+                          }}
+                          onMouseEnter={() => {
+                            this.setState({
+                              color: '#fff',
+                            });
+                          }}
+                          onMouseLeave={() => {
+                            this.setState({
+                              color: '#28c76f',
+                            });
+                          }}
                         >
                           <i className="fa fa-plus me-2" />
-                          Add Customer
+                          Add
                         </Link>
                       </div>
                     </div>
@@ -471,7 +489,7 @@ const Pos = () => {
                     </div>
                   </div>
                   <div className="split-card"></div>
-                  <div className="card-body pt-0 pb-2">
+                  <div className="card-body pt-2 pb-2">
                     <div className="setvalue">
                       <ul>
                         <li className="total-value">
@@ -516,12 +534,18 @@ const Pos = () => {
                         ))}
                       </ul>
                     </div>
-                    <div
+                    {/* <div
                       onClick={handleMakeOrder}
                       className="btn-totallabel cursorHand"
                     >
                       <h5>Checkout</h5>
-                    </div>
+                    </div> */}
+                    <button
+                      onClick={handleMakeOrder}
+                      className="btn btn-adds mt-2"
+                    >
+                      Checkout
+                    </button>
                   </div>
                 </div>
               </div>

@@ -32,7 +32,7 @@ const SubProductThree = ({
           // width: '140px',
           height: '70px',
           boxShadow: `${
-            activeState[productId] ? '0px 0px 15px 0px rgba(0, 0, 0, 0.7)' : ''
+            activeState[productId] ? '0px 0px 10px 0px rgba(0, 0, 0, 0.7)' : ''
           }`,
         }}
       >

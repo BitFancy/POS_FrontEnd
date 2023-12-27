@@ -1803,7 +1803,7 @@ div#global-loader,
   font-size: 18px;
   font-weight: 700;
   color: #212b36;
-  margin: 0 0 20px;
+  /* margin: 0 0 20px; */
 }
 @media (max-width: 991.98px) {
   .card .card-header .card-title {
@@ -8838,7 +8838,7 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .order-table {
-  height: 28vh;
+  height: 34.3vh;
   overflow: auto;
 }
 
@@ -9279,7 +9279,7 @@ span.select2-container.select2-container--default.select2-container--open {
   padding: 10px;
   border-radius: 5px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 3px;
 }
 .btn-adds:hover {
   background: #28c76f;
