@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import POSLeft2 from './posleft2';
 import Transactions from './transactions';
+import FeatherIcon from 'feather-icons-react';
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import {
@@ -23,6 +24,7 @@ import {
   delete2,
   ellipise1,
   scanner1,
+  PlusIcon,
 } from '../../EntryFile/imagePath';
 import Addon from '../../MainPage/Component/AddOn';
 import Minus from '../../MainPage/Component/Minus';
@@ -366,6 +368,16 @@ const Pos = () => {
                   <div className="orderid">
                     <h4>Order List</h4>
                   </div>
+
+                  <Link
+                    to="/dream-pos/product/addproduct-product"
+                    // className="btn btn-added"
+                    className="d-flex align-items-center"
+                  >
+                    <span style={{ fontWeight: 'bold' }}>Go Order Lists </span>
+                    <FeatherIcon icon="arrow-right" />
+                  </Link>
+                  {/* </div> */}
                 </div>
                 <div className="card card-order">
                   <div className="card-body">

@@ -86,7 +86,7 @@ const ProductDetails = () => {
           <button type="button" class="btn btn-secondary" onClick={goBack}>
             Back
           </button>
-          <ReactToPrint
+          {/* <ReactToPrint
             bodyClass="print-agreement"
             content={() => ref.current}
             trigger={() => (
@@ -94,7 +94,7 @@ const ProductDetails = () => {
                 Print
               </button>
             )}
-          />
+          /> */}
         </div>
         <div ref={ref} className="row">
           <div className="col-lg-12 col-sm-12">
