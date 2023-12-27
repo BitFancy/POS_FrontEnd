@@ -6727,9 +6727,9 @@ span.select2-container.select2-container--default.select2-container--open {
   -ms-transform: translateY(-50%);
   background: #fe9f43;
   border-radius: 5px 0px 0px 5px;
-  z-index: 3;
+  z-index: 2;
   width: 47px;
-  min-height: 170px;
+  min-height: 120px;
   -webkit-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
   transition: all 0.3s ease;

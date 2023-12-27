@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   close_icon,
   layout_01,
@@ -10,20 +10,20 @@ import {
   sidebar_icon_02,
   sidebar_icon_03,
   sun_icon,
-} from "../../EntryFile/imagePath";
-import { Link } from "react-router-dom";
+} from '../../EntryFile/imagePath';
+import { Link } from 'react-router-dom';
 
 const RightSideBar = () => {
   const [preview, setPreview] = useState(false);
   const [preview1, setPreview1] = useState(false);
 
   const Darks = () => {
-    const Themes = document.querySelector("body");
-    console.log(Themes.setAttribute("data-theme", "dark"));
+    const Themes = document.querySelector('body');
+    console.log(Themes.setAttribute('data-theme', 'dark'));
   };
   const Lights = () => {
-    const Themes = document.querySelector("body");
-    console.log(Themes.setAttribute("data-theme", ""));
+    const Themes = document.querySelector('body');
+    console.log(Themes.setAttribute('data-theme', ''));
   };
 
   function refreshPage() {
@@ -58,26 +58,14 @@ const RightSideBar = () => {
               <img src={sidebar_icon_02} className="feather-five" alt="" />
             </Link>
           </li>
-
-          <li className="sidebar-icons">
-            <a
-              href="https://themeforest.net/item/dreamspos-pos-inventory-management-admin-dashboard-template/38834413"
-              target="_blank"
-              data-bs-toggle="tooltip"
-              data-bs-placement="left"
-              data-bs-original-title="Tooltip on left"
-            >
-              <img src={sidebar_icon_03} className="feather-five" alt="" />
-            </a>
-          </li>
         </ul>
       </div>
 
       <div
         className={`${
           preview === true
-            ? "sidebar-settings preview-toggle show-settings"
-            : "sidebar-settings preview-toggle"
+            ? 'sidebar-settings preview-toggle show-settings'
+            : 'sidebar-settings preview-toggle'
         }`}
       >
         <div className="sidebar-content sticky-sidebar-one">
@@ -97,7 +85,7 @@ const RightSideBar = () => {
             <div className="switch-wrapper">
               <div id="dark-mode-toggle">
                 <span className="light-mode active" onClick={Lights}>
-                  {" "}
+                  {' '}
                   <img src={sun_icon} className="me-2" alt="" /> Light
                 </span>
 
@@ -120,7 +108,7 @@ const RightSideBar = () => {
                       >
                         <Link to="/dream-pos/dashboard" className="layout-link">
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">LTR</span>
@@ -132,7 +120,7 @@ const RightSideBar = () => {
                 </div>
               </div>
 
-              <div className="col-xl-6 ere">
+              {/* <div className="col-xl-6 ere">
                 <div className="layout-wrap">
                   <div className="d-flex align-items-center">
                     <div className="status-toggle d-flex align-items-center me-2">
@@ -153,7 +141,7 @@ const RightSideBar = () => {
                     <img className="img-fliud" src={layout_rtl} alt="layout" />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="row  ">
@@ -172,7 +160,7 @@ const RightSideBar = () => {
                           className="layout-link"
                         >
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Boxed</span>
@@ -199,7 +187,7 @@ const RightSideBar = () => {
                           className="layout-link"
                         >
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Collapsed</span>
@@ -218,8 +206,8 @@ const RightSideBar = () => {
       <div
         className={`${
           preview1 === true
-            ? "sidebar-settings nav-toggle show-settings"
-            : "sidebar-settings nav-toggle"
+            ? 'sidebar-settings nav-toggle show-settings'
+            : 'sidebar-settings nav-toggle'
         }`}
       >
         <div className="sidebar-content sticky-sidebar-one">
@@ -249,7 +237,7 @@ const RightSideBar = () => {
                       >
                         <Link to="/dream-pos/dashboard" className="layout-link">
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Vertical</span>
@@ -273,7 +261,7 @@ const RightSideBar = () => {
                       >
                         <Link to="/dream-pos/index-one" className="layout-link">
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Horizontal</span>
@@ -300,7 +288,7 @@ const RightSideBar = () => {
                           className="layout-link"
                         >
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Collapsed</span>
@@ -327,7 +315,7 @@ const RightSideBar = () => {
                           className="layout-link"
                         >
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Modern</span>
@@ -351,7 +339,7 @@ const RightSideBar = () => {
                       >
                         <Link to="/dream-pos/index-two" className="layout-link">
                           checkbox
-                        </Link>{" "}
+                        </Link>{' '}
                       </label>
                     </div>
                     <span className="status-text">Boxed</span>
