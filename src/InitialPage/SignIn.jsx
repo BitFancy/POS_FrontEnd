@@ -53,11 +53,8 @@ const SignInPage = (props) => {
       .post('/users/login', user)
       .then((res) => {
         console.log(res.data);
-        window.localStorage.setItem('token', res.data.token);
         setAuthToken(res.data.token);
-        // if (res.data.message) {
-        //   alert(res.data.message);
-        // }
+        window.localStorage.setItem('token', res.data.token);
       })
       .then(() => {
         if (window.localStorage.token) {
@@ -69,11 +66,6 @@ const SignInPage = (props) => {
         alert(err);
       });
   };
-
-  //   const onSubmit = (data) => {
-  //     console.log(JSON.stringify(data, null, 2));
-  //     // useNavigate('/dream-pos/dashboard')
-  //   };
 
   return (
     <>
