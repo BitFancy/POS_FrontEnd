@@ -370,7 +370,7 @@ const Pos = () => {
                   </div>
 
                   <Link
-                    to="/dream-pos/product/addproduct-product"
+                    to="/dream-pos/sales/saleslist"
                     // className="btn btn-added"
                     className="d-flex align-items-center"
                   >
