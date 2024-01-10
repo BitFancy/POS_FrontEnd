@@ -27,9 +27,10 @@ import {
 } from '../../EntryFile/imagePath';
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
-import api from '../../utils/api';
+import { api } from '../../utils/api';
 import ReactToPrint from 'react-to-print';
 import FeatherIcon from 'feather-icons-react';
+import LoadingSpinner from '../../InitialPage/Sidebar/LoadingSpinner';
 
 const SalesList = (props) => {
   const ref = useRef();
@@ -101,31 +102,31 @@ const SalesList = (props) => {
       dataIndex: 'createdAt',
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      render: (text, record) => (
-        <>
-          {text === 'New' && <span className="badges bg-lightred">{text}</span>}
-          {text === 'In Progress' && (
-            <span className="badges bg-lightgreen">{text}</span>
-          )}
-          {text === 'Completed' && (
-            <span className="badges bg-lightred">{text}</span>
-          )}
-          {text === 'Cancelled' && (
-            <span className="badges bg-lightred">{text}</span>
-          )}
-          {text === 'Refunded' && (
-            <span className="badges bg-lightred">{text}</span>
-          )}
-          {text === 'Hold On' && (
-            <span className="badges bg-lightred">{text}</span>
-          )}
-        </>
-      ),
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
+    // {
+    //   title: 'Status',
+    //   dataIndex: 'status',
+    //   render: (text, record) => (
+    //     <>
+    //       {text === 'New' && <span className="badges bg-lightred">{text}</span>}
+    //       {text === 'In Progress' && (
+    //         <span className="badges bg-lightgreen">{text}</span>
+    //       )}
+    //       {text === 'Completed' && (
+    //         <span className="badges bg-lightred">{text}</span>
+    //       )}
+    //       {text === 'Cancelled' && (
+    //         <span className="badges bg-lightred">{text}</span>
+    //       )}
+    //       {text === 'Refunded' && (
+    //         <span className="badges bg-lightred">{text}</span>
+    //       )}
+    //       {text === 'Hold On' && (
+    //         <span className="badges bg-lightred">{text}</span>
+    //       )}
+    //     </>
+    //   ),
+    //   sorter: (a, b) => a.status.length - b.status.length,
+    // },
     {
       title: 'Pay Method',
       dataIndex: 'paymethod',
@@ -207,28 +208,76 @@ const SalesList = (props) => {
     },
   ];
 
+  // useEffect(() => {
+  //   (async () => {
+  //     await api.get('/order').then(async (res) => {
+  //       const customers = [];
+  //       const ordersWithCustomers = await Promise.all(
+  //         res.data.map(async (order) => {
+  //           const customer = await api.get(`/customer/${order.customer}`);
+  //           customers.push(customer.data.customerName);
+  //           order.customer = customer.data.customerName;
+  //           order.createdAt = new Date(order.createdAt).toDateString();
+  //           return order;
+  //         })
+  //       );
+  //       setCustomerName(customers);
+  //       setOrderList(ordersWithCustomers);
+  //     });
+  //   })();
+  // }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const res = await api.get('/order');
+  //     const orderData = res.data;
+  //     const customerIds = orderData.map((order) => order.customer);
+  //     const customerRes = await api.get(
+  //       `/customer?ids=${customerIds.join(',')}`
+  //     );
+  //     const customerData = customerRes.data;
+
+  //     const ordersWithCustomers = orderData.map((order) => {
+  //       const customer = customerData.find(
+  //         (customer) => customer._id === order.customer
+  //       );
+  //       order.customer = customer.customerName;
+  //       order.createdAt = new Date(order.createdAt).toDateString();
+  //       const customers = customerData.map((customer) => customer.customerName);
+  //       setCustomerName(customers);
+  //       return order;
+  //     });
+  //     setOrderList(ordersWithCustomers);
+  //   })();
+  // }, []);
+
   useEffect(() => {
     (async () => {
-      await api.get('/order').then(async (res) => {
-        const customers = [];
-        const ordersWithCustomers = await Promise.all(
-          res.data.map(async (order) => {
-            const customer = await api.get(`/customer/${order.customer}`);
-            customers.push(customer.data.customerName);
-            order.customer = customer.data.customerName;
-            order.createdAt = new Date(order.createdAt).toDateString();
-            return order;
-          })
+      try {
+        const orderRes = await api.get('/order');
+        const customerIds = orderRes.data.map((order) => order.customer);
+        const customerRes = await api.get(
+          `/customer?ids=${customerIds.join(',')}`
         );
-        setCustomerName(customers);
+        const customerData = customerRes.data.reduce((acc, customer) => {
+          acc[customer._id] = customer.customerName;
+          return acc;
+        }, {});
+
+        const ordersWithCustomers = orderRes.data.map((order) => ({
+          ...order,
+          customer: customerData[order.customer],
+          createdAt: new Date(order.createdAt).toDateString(),
+        }));
+
         setOrderList(ordersWithCustomers);
-      });
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(customerName, 'This is customer name list');
-  }, [customerName]);
+  if (!orderList.length) return <LoadingSpinner />;
 
   return (
     <>

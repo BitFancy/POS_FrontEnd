@@ -12,8 +12,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Redirect, useHistory } from 'react-router-dom';
-import api from '../utils/api';
-import setAuthToken from '../utils/setAuthToken';
+import { api, setAuthToken } from '../utils/api';
 
 const SignInPage = (props) => {
   const [email, setemail] = useState('');

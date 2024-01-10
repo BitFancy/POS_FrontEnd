@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-select2-wrapper/css/select2.css';
 import { Upload } from '../../EntryFile/imagePath';
 import alertify from 'alertifyjs';
-import api from '../../utils/api';
+import { api } from '../../utils/api';
 
 const AddUser = () => {
   const [passwordShown, setPasswordShown] = useState(false);

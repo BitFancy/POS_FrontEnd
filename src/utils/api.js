@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Create an instance of axios
-const api = axios.create({
+export const api = axios.create({
   // baseURL: 'https://restaurant-pos-service.onrender.com/api',
   baseURL: 'http://localhost:5000/api',
   headers: {
@@ -9,6 +9,16 @@ const api = axios.create({
     'x-auth-token': localStorage.getItem('token'),
   },
 });
+
+export const setAuthToken = (token) => {
+  if (token) {
+    api.defaults.headers.common['x-auth-token'] = token;
+    localStorage.setItem('token', token);
+    // } else {
+    //   delete api.defaults.headers.common['x-auth-token'];
+    //   localStorage.removeItem('token');
+  }
+};
 /*
   NOTE: intercept any error responses from the api
  and check if the token is no longer valid.
@@ -26,5 +36,3 @@ const api = axios.create({
 //     return Promise.reject(err);
 //   }
 // );
-
-export default api;

@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
+// import * as React from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import { barcode1, Printer, Product69 } from '../../EntryFile/imagePath';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { any } from 'prop-types';
-import api from '../../utils/api';
+import { api } from '../../utils/api';
 import ReactToPrint from 'react-to-print';
 
-
 const ProductDetails = () => {
-  const { productData, productId } = useParams();
+  const { productId } = useParams();
   const [productName, setProductName] = React.useState('');
   const [productCategory, setProductCategory] = React.useState('');
   const [productType, setProductType] = React.useState('');
@@ -20,10 +20,12 @@ const ProductDetails = () => {
   const history = useHistory();
   const ref = useRef();
 
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await api.get(`/product/${productId}`);
   useEffect(() => {
     (async () => {
-      const response = await api.get(`/product/${productId}`);
-
+      const response = await api.get(`/product/product-detail/${productId}`);
       for (let j = 0; j < response.data.category.length; j++) {
         console.log(response.data.category[j], 'category');
         response.data.category[
@@ -39,7 +41,7 @@ const ProductDetails = () => {
       response.data.updatedAt = new Date(
         response.data.updatedAt
       ).toDateString();
-      switch (response.data.productType) {
+      switch (response.data.productType[0]) {
         case 0:
           response.data.productType = 'Main Product';
           break;
@@ -67,7 +69,6 @@ const ProductDetails = () => {
       setUpdatedAt(response.data.updatedAt);
     })();
     console.log('useEffect');
-    console.log('productData-', productData);
     console.log('productId-', productId);
   }, []);
 

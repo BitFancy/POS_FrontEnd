@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Table from "../../EntryFile/datatable";
-import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useEffect, useState } from 'react';
+import Table from '../../EntryFile/datatable';
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
   ClosesIcon,
   Excel,
@@ -15,10 +15,10 @@ import {
   PlusIcon,
   EditIcon,
   DeleteIcon,
-} from "../../EntryFile/imagePath";
-import Select2 from "react-select2-wrapper";
-import "react-select2-wrapper/css/select2.css";
-import api from "../../utils/api";
+} from '../../EntryFile/imagePath';
+import Select2 from 'react-select2-wrapper';
+import 'react-select2-wrapper/css/select2.css';
+import { api } from '../../utils/api';
 
 const UserLists = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -26,8 +26,8 @@ const UserLists = () => {
   const [userList, setUserList] = useState([]);
 
   const options = [
-    { id: 1, text: "Disable", text: "Disable" },
-    { id: 2, text: "Enable", text: "Enable" },
+    { id: 1, text: 'Disable', text: 'Disable' },
+    { id: 2, text: 'Enable', text: 'Enable' },
   ];
   const togglefilter = (value) => {
     setInputfilter(value);
@@ -35,45 +35,48 @@ const UserLists = () => {
 
   useEffect(() => {
     // console.log(data);
-    ( async () => {
-      await api.get("/users/all").then((res) => {
-        console.log("user list ------------------------------------>>  ", res.data);
+    (async () => {
+      await api.get('/users/all').then((res) => {
+        console.log(
+          'user list ------------------------------------>>  ',
+          res.data
+        );
         res.data.map((user) => {
-          if(user.role === 1) {
-            user.role = 'Admin'
+          if (user.role === 1) {
+            user.role = 'Admin';
           } else {
             user.role = 'User';
           }
           user.createdAt = new Date(user.createdAt).toDateString();
-        })
+        });
         setUserList(res.data);
       });
     })();
-  }, [])
+  }, []);
 
   const columns = [
     {
-      title: "User Name",
-      dataIndex: "userName",
+      title: 'User Name',
+      dataIndex: 'userName',
       sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: 'Email',
+      dataIndex: 'email',
       sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-      title: "Role",
-      dataIndex: "role",
+      title: 'Role',
+      dataIndex: 'role',
       sorter: (a, b) => a.Role.length - b.Role.length,
     },
     {
-      title: "Created On",
-      dataIndex: "createdAt",
+      title: 'Created On',
+      dataIndex: 'createdAt',
       sorter: (a, b) => a.On.length - b.On.length,
     },
     {
-      title: "Action",
+      title: 'Action',
       render: (text, record) => (
         <>
           <Link className="me-3" to="newuseredit">
@@ -110,7 +113,7 @@ const UserLists = () => {
                 <div className="search-path">
                   <a
                     className={` btn ${
-                      inputfilter ? "btn-filter setclose" : "btn-filter"
+                      inputfilter ? 'btn-filter setclose' : 'btn-filter'
                     } `}
                     id="filter_search"
                     onClick={() => togglefilter(!inputfilter)}
@@ -166,9 +169,9 @@ const UserLists = () => {
             </div>
             {/* /Filter */}
             <div
-              className={`card mb-0 ${inputfilter ? "toggleCls" : ""}`}
+              className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
               id="filter_inputs"
-              style={{ display: inputfilter ? "block" : "none" }}
+              style={{ display: inputfilter ? 'block' : 'none' }}
             >
               <div className="card-body pb-0">
                 <div className="row">
@@ -206,7 +209,7 @@ const UserLists = () => {
                         className="select"
                         data={options}
                         options={{
-                          placeholder: "Select",
+                          placeholder: 'Select',
                         }}
                       />
                     </div>

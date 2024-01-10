@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Upload } from '../../EntryFile/imagePath';
-import api from '../../utils/api';
+import {api} from '../../utils/api';
 import alertify from 'alertifyjs';
 
 const AddCategory = () => {

@@ -23,7 +23,8 @@ import {
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import Swal from 'sweetalert2';
-import api from '../../utils/api';
+import { api } from '../../utils/api';
+import LoadingSpinner from '../../InitialPage/Sidebar/LoadingSpinner';
 
 const options = [
   { id: 1, text: 'Choose Category', text: 'Choose Category' },
@@ -108,6 +109,10 @@ const CategoryList = () => {
       ),
     },
   ];
+
+  if (!categoryList.length) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>

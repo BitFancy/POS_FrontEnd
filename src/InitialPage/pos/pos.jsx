@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import React from 'react';
-import Header from './posheader';
+// import Header from './posheader';
+import Header from '../Sidebar/Header';
 import { Link } from 'react-router-dom';
+import ReactToPrint from 'react-to-print';
+// import { DateTimeFormatter } from 'react-intl';
 import Swal from 'sweetalert2';
 import POSLeft2 from './posleft2';
 import Transactions from './transactions';
@@ -28,21 +31,16 @@ import {
 } from '../../EntryFile/imagePath';
 import Addon from '../../MainPage/Component/AddOn';
 import Minus from '../../MainPage/Component/Minus';
-import api from '../../utils/api';
-import {
-  OrderContextProvider,
-  useOrderContext,
-} from '../../context/OrderContext';
+import { api } from '../../utils/api';
 import alertify from 'alertifyjs';
-import { Button } from 'reactstrap';
-import ButtonGroup from 'antd/lib/button/button-group';
 import './index.css';
+import TimeDate from '../../MainPage/DateTime/Date';
+import TimeClock from '../../MainPage/DateTime/Clock';
+import LoadingSpinner from '../Sidebar/LoadingSpinner';
 
 const Pos = () => {
+  const ref = useRef();
   const [dishes, setDishes] = useState([]);
-  const [counter, setCounter] = useState(1);
-  const [counter1, setCounter1] = useState(0);
-  const [counter2, setCounter2] = useState(0);
   const [isActive, setIsActive] = useState('');
 
   const [customers, setCustomers] = useState([]);
@@ -62,32 +60,14 @@ const Pos = () => {
   const [productIdList, setProductIdList] = useState([]);
   const [isPayActive, setIsPayActive] = useState(false);
   const [isStatusActive, setIsStatusActive] = useState(false);
+  const [distance, setDistance] = useState(0);
+  const [direction, setDirection] = useState('');
+  const date = new Date();
 
-  // useEffect(() => {
-  //   $('ul.tabs li').click(function () {
-  //     var $this = $(this);
-  //     var $theTab = $(this).attr('id');
-  //     console.log('This is console tab name-----', $theTab);
-  //     if ($this.hasClass('active')) {
-  //     } else {
-  //       $this
-  //         .closest('.tabs_wrapper')
-  //         .find('ul.tabs li, .tabs_container .tab_content')
-  //         .removeClass('active');
-  //       $(
-  //         '.tabs_container .tab_content[data-tab="' +
-  //           $theTab +
-  //           '"], ul.tabs li[id="' +
-  //           $theTab +
-  //           '"]'
-  //       ).addClass('active');
-  //     }
-  //   });
-  //   $(document).on('click', '.productset', function () {
-  //     $(this).toggleClass('active');
-  //   });
-  // });
-
+  useEffect(() => {
+    console.log(customers, '----------customer-----------');
+  }, [customers]);
+  
   useEffect(() => {
     (async () => {
       const res = await api.get('/category/all');
@@ -160,14 +140,14 @@ const Pos = () => {
   ];
 
   const paymethods = ['Cash', 'Debit', 'Scan'];
-  const orderStatus = [
-    'New',
-    'In Progress',
-    'Completed',
-    'Cancelled',
-    'Refunded',
-    'Hold On',
-  ];
+  // const orderStatus = [
+  //   'New',
+  //   'In Progress',
+  //   'Completed',
+  //   'Cancelled',
+  //   'Refunded',
+  //   'Hold On',
+  // ];
 
   const handlePriceChange = (index, value) => {
     const updatedPrices = [...productList];
@@ -178,10 +158,11 @@ const Pos = () => {
   // const { changeAction, setChangeAction } = useOrderContext();
 
   const handleSubmit = () => {
-    const mainlist = productList.filter(
-      (item) => item.productType.includes(1) || item.productType.includes(2)
-    );
-    const dishname = mainlist.reduce((acc, product) => {
+    // const mainlist = productList.filter(
+    //   (item) => item.productType.includes(1) || item.productType.includes(2)
+    // );
+
+    const dishname = productList.reduce((acc, product) => {
       return acc + ' ' + product.productName;
     }, '');
 
@@ -216,12 +197,13 @@ const Pos = () => {
   };
 
   const handleMakeOrder = async () => {
+    console.log('customer======', customer);
     if (orderData.customer === '') {
       alertify.warning('Please select the customer!');
     } else if (orderData.paymethod === '') {
       alertify.warning('Please select the paymethod!');
-    } else if (orderData.status === '') {
-      alertify.warning('Please select the order status!');
+      // } else if (orderData.status === '') {
+      //   alertify.warning('Please select the order status!');
     } else {
       await api
         .post('/order/add', orderData)
@@ -252,14 +234,21 @@ const Pos = () => {
     setIsPayActive(paymethod);
   };
 
-  const handleStatus = (orderStatus) => {
-    setStatus(orderStatus);
-    setIsStatusActive(orderStatus);
-  };
+  // const handleStatus = (orderStatus) => {
+  //   setStatus(orderStatus);
+  //   setIsStatusActive(orderStatus);
+  // };
 
   const removeOrderList = () => {
     setDishes([]);
   };
+
+  console.log(productList, 'productList');
+  console.log(productList.length, 'productList length');
+
+  if (!products.length) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
@@ -370,7 +359,7 @@ const Pos = () => {
                   </div>
 
                   <Link
-                    to="/dream-pos/product/addproduct-product"
+                    to="/dream-pos/sales/saleslist"
                     // className="btn btn-added"
                     className="d-flex align-items-center"
                   >
@@ -527,7 +516,7 @@ const Pos = () => {
                         ))}
                       </ul>
                     </div>
-                    <div className="btn-pos">
+                    {/* <div className="btn-pos">
                       <ul>
                         {orderStatus.map((orderStatus, index) => (
                           <li
@@ -545,7 +534,7 @@ const Pos = () => {
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </div> */}
                     {/* <div
                       onClick={handleMakeOrder}
                       className="btn-totallabel cursorHand"
@@ -554,10 +543,21 @@ const Pos = () => {
                     </div> */}
                     <button
                       onClick={handleMakeOrder}
+                      data-bs-toggle="modal"
                       className="btn btn-adds mt-2"
+                      data-bs-target="#order-details"
                     >
                       Checkout
                     </button>
+
+                    {/* <Link
+                      className="me-2"
+                      data-bs-toggle="modal"
+                      onClick={() => handleSetOrderDetail(order)}
+                      data-bs-target="#order-details"
+                    >
+                      <img src={Eye1} className="me-2" alt="img" />
+                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -608,6 +608,142 @@ const Pos = () => {
         </div>
       </div>
       <Transactions />
+      <div
+        className="modal fade"
+        id="order-details"
+        tabIndex={-1}
+        aria-labelledby="create"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog" role="document">
+          {/* <div className="modal-content"> */}
+          <div className="bill-modal d-flex flex-column justify-content-between">
+            <div
+              className="bill-receipt d-flex flex-column justify-content-between"
+              ref={ref}
+            >
+              <div>
+                <div className="text-center mt-5 mb-2 font-weight-bold">
+                  <h2>Restaurant Receipt</h2>
+                </div>
+                <div className="table-responsive">
+                  {/* <div className="d-flex justify-content-between"> */}
+                  <div className="px-5">
+                    <div className="mt-4 pb-3 border-bottom">
+                      <div className="d-flex justify-content-between pb-2">
+                        <span>Restaurant : </span>
+                        <span>YGO </span>
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <span>Address : </span>
+                        <span>xxx</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-between mt-2 mb-3 align-items-center px-5">
+                    <span>Customer : </span>
+                    <span className="font-weight-bold">
+                      {customers.map((list) => {
+                        if (list.id === customer) {
+                          return list.text;
+                        }
+                      })}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-between mb-3 align-items-center px-5">
+                    <span>PayMethod : </span>
+                    <span>{paymethod}</span>
+                  </div>
+                  <div className="d-flex justify-content-between mb-3 align-items-center px-5">
+                    {/* <p>Time : {date.toISOString()}</p>*/}
+                    <span>Time : </span>
+                    <span>
+                      {<TimeDate />} {<TimeClock />}
+                    </span>
+                  </div>
+                  {/* </div> */}
+                  <div className="px-4 pt-2">
+                    <table className="table mb-0 p-5">
+                      <thead>
+                        <tr>
+                          <th style={{ width: '80%' }}>List of Items</th>
+                          <th>Quantity</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody className="table-striped">
+                        {dishes.map((dish, index) => (
+                          <tr key={index}>
+                            <td
+                              className="d-flex flex-wrap text-wrap"
+                              style={{
+                                width: '80%',
+                                wordWrap: 'break-word',
+                                minWidth: '100px',
+                                maxWidth: '300px',
+                              }}
+                            >
+                              {index + 1}.{dish.dishName}
+                            </td>
+                            <td className="text-end">{dish.counter}</td>
+                            <td className="text-end">
+                              £{dish.dishPrice * dish.counter}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-3 border-top mx-5">
+                    <tfoot className="d-flex justify-content-between mt-2">
+                      <span>Total Price : </span>
+                      <span>£{totalPrice}</span>
+                    </tfoot>
+                    <tfoot className="d-flex justify-content-between mt-2">
+                      <span>Distance : </span>
+                      <span>North East, 5km</span>
+                    </tfoot>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center mt-3 mb-2 font-weight-bold text-yellow">
+                <h5>THANK YOU FOR DINING WITH US!</h5>
+                <h5>PLEASE COME AGAIN</h5>
+              </div>
+            </div>
+            <div className="d-flex justify-content-center p-3">
+              {/* <div className="px-3 border-end">
+                <Link className="d-flex align-items-center">
+                  <FeatherIcon icon="edit" />
+                  <span className="px-2">Edit</span>
+                </Link>
+              </div> */}
+              <div className="px-3 border-end">
+                <ReactToPrint
+                  bodyClass="print-agreement"
+                  content={() => ref.current}
+                  trigger={() => (
+                    <Link className="d-flex align-items-center">
+                      <FeatherIcon icon="printer" />
+                      <span className="px-2">Print</span>
+                    </Link>
+                  )}
+                />
+              </div>
+              <div className="px-3">
+                <Link
+                  className="d-flex align-items-center"
+                  data-bs-dismiss="modal"
+                >
+                  <FeatherIcon icon="x" />
+                  <span className="px-2">Close</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* </div> */}
+      </div>
     </>
   );
 };

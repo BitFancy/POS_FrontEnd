@@ -12,15 +12,18 @@ import {
 } from '../../EntryFile/imagePath';
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
-import api from '../../utils/api';
+import { api } from '../../utils/api';
 import Spinner from '../Component/Spinner';
 import alertify from 'alertifyjs';
+import LoadingSpinner from '../../InitialPage/Sidebar/LoadingSpinner';
+// import useProduct from '../../hooks/useProduct';
 
 const ProductList = () => {
   const [inputfilter, setInputfilter] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [productData, setProductData] = useState({});
+
+  // const [productData, setProductData] = useState({});
   const togglefilter = (value) => {
     setInputfilter(value);
   };
@@ -66,7 +69,6 @@ const ProductList = () => {
           <>
             <Link
               className="me-3"
-              onClick={() => handleViewProduct(data)}
               to={`/dream-pos/product/product-details/${data._id}`}
             >
               <img src={EyeIcon} alt="img" />
@@ -84,9 +86,9 @@ const ProductList = () => {
     },
   ];
 
-  const handleViewProduct = (data) => {
-    setProductData(data);
-  };
+  // const handleViewProduct = (data) => {
+  //   setProductData(data);
+  // };
 
   useEffect(() => {
     // Simulate loading data
@@ -96,7 +98,7 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    async function check() {
+    (async () => {
       const fetchData = await api.get('/product/');
       let inputData = fetchData.data;
       for (let i = 0; i < inputData.length; i++) {
@@ -132,58 +134,46 @@ const ProductList = () => {
         }
       }
       setData(inputData);
-    }
-    check();
+    })();
   }, []);
 
-  useEffect(() => {
-    console.log('data', data);
-  });
+  if (!data.length) {
+    return <LoadingSpinner />;
+  }
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className="page-wrapper">
-          <div className="content">
-            <div className="page-header">
-              <div className="page-title">
-                <h4>Products List</h4>
-                <h6>Manage your Products</h6>
-              </div>
-              <div className="page-btn">
-                <Link
-                  to="/dream-pos/product/addproduct-product"
-                  className="btn btn-added"
-                >
-                  <img src={PlusIcon} alt="img" className="me-1" />
-                  Add New Product
-                </Link>
+      <div className="page-wrapper">
+        <div className="content">
+          <div className="page-header">
+            <div className="page-title">
+              <h4>Products List</h4>
+              <h6>Manage your Products</h6>
+            </div>
+            <div className="page-btn">
+              <Link
+                to="/dream-pos/product/addproduct-product"
+                className="btn btn-added"
+              >
+                <img src={PlusIcon} alt="img" className="me-1" />
+                Add New Product
+              </Link>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-body">
+              <Tabletop inputfilter={inputfilter} togglefilter={togglefilter} />
+              <div
+                className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
+                id="filter_inputs"
+                style={{ display: inputfilter ? 'block' : 'none' }}
+              ></div>
+              <div className="table-responsive">
+                <Table columns={columns} dataSource={data} />
               </div>
             </div>
-            {/* /product list */}
-            <div className="card">
-              <div className="card-body">
-                <Tabletop
-                  inputfilter={inputfilter}
-                  togglefilter={togglefilter}
-                />
-                {/* /Filter */}
-                <div
-                  className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
-                  id="filter_inputs"
-                  style={{ display: inputfilter ? 'block' : 'none' }}
-                ></div>
-                {/* /Filter */}
-                <div className="table-responsive">
-                  <Table columns={columns} dataSource={data} />
-                </div>
-              </div>
-            </div>
-            {/* /product list */}
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

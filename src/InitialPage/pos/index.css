@@ -11,6 +11,21 @@
   transition: all 0.3s;
 }
 
+.bill-modal {
+  pointer-events: auto;
+  position: relative;
+  background-color: #fff;
+  width: 50vh;
+  min-height: 90vh;
+}
+
+.bill-receipt {
+  position: relative;
+  background-color: #fff;
+  width: 50vh;
+  min-height: 80vh;
+}
+
 .btn-adds-customer {
   border: 2px solid #28c76f;
   color: #28c76f;

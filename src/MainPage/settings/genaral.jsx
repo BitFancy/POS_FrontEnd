@@ -1,22 +1,17 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import Select2 from "react-select2-wrapper";
-import "react-select2-wrapper/css/select2.css";
-import { Upload } from "../../EntryFile/imagePath";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Select2 from 'react-select2-wrapper';
+import 'react-select2-wrapper/css/select2.css';
+import { Upload } from '../../EntryFile/imagePath';
 
 const GenaralSettings = () => {
-    const options = [
-        { id: 1, text: "Choose Time Zone", text: "Choose Time Zone" },
-        { id: 2, text: "USD Time Zone", text: "USD Time Zone" },
-      ];
-    const options1 = [
-        { id: 1, text: "INR", text: "INR" },
-        { id: 2, text: "USA", text: "USA" },
-      ];
-    const options2 = [
-        { id: 1, text: "DD/MM/YYYY", text: "DD/MM/YYYY" },
-        { id: 2, text: "MM/DD/YYYY", text: "MM/DD/YYYY" },
-      ];
+  const [restaurantName, setRestaurantName] = useState('');
+  const [restaurantEmail, setRestaurantEmail] = useState('');
+  const [restaurantPhone, setRestaurantPhone] = useState('');
+  const [restaurantAddress, setRestaurantAddress] = useState('');
+  const [restaurantZipCode, setRestaurantZipCode] = useState('');
+  const [restaurantLogo, setRestaurantLogo] = useState('');
+
   return (
     <div className="page-wrapper">
       <div className="content">
@@ -26,7 +21,6 @@ const GenaralSettings = () => {
             <h6>Manage General Setting</h6>
           </div>
         </div>
-        {/* /add */}
         <div className="card">
           <div className="card-body">
             <div className="row">
@@ -35,55 +29,16 @@ const GenaralSettings = () => {
                   <label>
                     Restaurant Name <span className="manitory">*</span>
                   </label>
-                  <input type="text" placeholder="Enter Restaurant Name" />
+                  <input type="text" />
                 </div>
               </div>
-              <div className="col-lg-3 col-sm-6 col-12">
-                <div className="form-group">
-                  <label>Time Zone </label>
-                  <Select2
-                    className="select"
-                    data={options}
-                    options={{
-                      placeholder: "Choose Time Zone",
-                    }}
-                  />                  
-                </div>
-              </div>
-              <div className="col-lg-3 col-sm-6 col-12">
-                <div className="form-group">
-                  <label>
-                    Currency <span className="manitory">*</span>
-                  </label>
-                  <Select2
-                    className="select"
-                    data={options1}
-                    options={{
-                      placeholder: "Choose Currency",
-                    }}
-                  />                   
-                </div>
-              </div>
-              {/* <div className="col-lg-3 col-sm-6 col-12">
-                <div className="form-group">
-                  <label>
-                    Date Format<span className="manitory">*</span>
-                  </label>
-                  <Select2
-                    className="select"
-                    data={options2}
-                    options={{
-                      placeholder: "Choose Date Format",
-                    }}
-                  />                  
-                </div>
-              </div> */}
+
               <div className="col-lg-3 col-sm-6 col-12">
                 <div className="form-group">
                   <label>
                     Email<span className="manitory">*</span>
                   </label>
-                  <input type="text" placeholder="Enter email" />
+                  <input type="text" />
                 </div>
               </div>
               <div className="col-lg-3 col-sm-6 col-12">
@@ -91,20 +46,30 @@ const GenaralSettings = () => {
                   <label>
                     Phone<span className="manitory">*</span>
                   </label>
-                  <input type="text" placeholder="Enter Phone" />
+                  <input type="text" />
                 </div>
               </div>
-              <div className="col-lg-6 col-sm-12">
+              <div className="col-lg-3 col-sm-12">
                 <div className="form-group">
                   <label>
-                    Address<span className="manitory">*</span>{" "}
+                    Zip Code<span className="manitory">*</span>{' '}
                   </label>
-                  <input type="text" placeholder="Enter Address" />
+                  <input type="text" />
+                </div>
+              </div>
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label>
+                    Address<span className="manitory">*</span>{' '}
+                  </label>
+                  <input type="text" />
                 </div>
               </div>
               <div className="col-lg-12">
                 <div className="form-group">
-                  <label>Restaurant Logo</label>
+                  <label>
+                    Restaurant Logo<span className="manitory">*</span>{' '}
+                  </label>
                   <div className="image-upload">
                     <input type="file" />
                     <div className="image-uploads">
@@ -117,7 +82,7 @@ const GenaralSettings = () => {
               <div className="row">
                 <div className="col-lg-12">
                   <Link to="#" className="btn btn-submit me-2">
-                    Submit
+                    Save
                   </Link>
                   <Link to="#" className="btn btn-cancel">
                     Cancel
@@ -127,7 +92,6 @@ const GenaralSettings = () => {
             </div>
           </div>
         </div>
-        {/* /add */}
       </div>
     </div>
   );

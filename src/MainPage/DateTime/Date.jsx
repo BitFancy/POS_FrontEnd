@@ -5,15 +5,16 @@ const TimeDate = () => {
 
   useEffect(() => {
     const date = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
     setCurrentDayOfWeek(date.toLocaleString('en-US', options));
   }, []);
 
-  return (
-    <div>
-      <p>{currentDayOfWeek}</p>
-    </div>
-  );
+  return <span>{currentDayOfWeek}</span>;
 };
 
 export default TimeDate;

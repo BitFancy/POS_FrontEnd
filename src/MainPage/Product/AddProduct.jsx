@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Upload } from '../../EntryFile/imagePath';
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
-import api from '../../utils/api';
+import {api} from '../../utils/api';
 import alertify from 'alertifyjs';
 
 const productTypes = [

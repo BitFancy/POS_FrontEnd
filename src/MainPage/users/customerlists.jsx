@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Table from "../../EntryFile/datatable";
-import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useEffect, useState } from 'react';
+import Table from '../../EntryFile/datatable';
+import { Link } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {
   ClosesIcon,
   Excel,
@@ -15,10 +15,10 @@ import {
   PlusIcon,
   EditIcon,
   DeleteIcon,
-} from "../../EntryFile/imagePath";
-import Select2 from "react-select2-wrapper";
-import "react-select2-wrapper/css/select2.css";
-import api from "../../utils/api";
+} from '../../EntryFile/imagePath';
+import Select2 from 'react-select2-wrapper';
+import 'react-select2-wrapper/css/select2.css';
+import { api } from '../../utils/api';
 
 const CustomerLists = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -26,8 +26,8 @@ const CustomerLists = () => {
   const [customerList, setCustomerList] = useState([]);
 
   const options = [
-    { id: 1, text: "Disable", text: "Disable" },
-    { id: 2, text: "Enable", text: "Enable" },
+    { id: 1, text: 'Disable', text: 'Disable' },
+    { id: 2, text: 'Enable', text: 'Enable' },
   ];
   const togglefilter = (value) => {
     setInputfilter(value);
@@ -35,55 +35,55 @@ const CustomerLists = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await api.get("/customer").then((res) => {
-        console.log("customer list ----->>  ", res.data);
+      await api.get('/customer').then((res) => {
+        console.log('customer list ----->>  ', res.data);
         res.data.map((customer) => {
           customer.createdAt = new Date(customer.createdAt).toDateString();
-        })
+        });
         setCustomerList(res.data);
       });
-    }
+    };
     fetchData();
-  }, [])
+  }, []);
 
   const columns = [
     {
-      title: "Customer Name",
-      dataIndex: "customerName",
+      title: 'Customer Name',
+      dataIndex: 'customerName',
       sorter: (a, b) => a.customerName.length - b.customerName.length,
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: 'Email',
+      dataIndex: 'email',
       sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-      title: "Phone",
-      dataIndex: "phoneNumber",
+      title: 'Phone',
+      dataIndex: 'phoneNumber',
       sorter: (a, b) => a.phoneNumber.length - b.phoneNumber.length,
     },
     {
-      title: "City",
-      dataIndex: "city",
+      title: 'City',
+      dataIndex: 'city',
       sorter: (a, b) => a.city.length - b.city.length,
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: 'Address',
+      dataIndex: 'address',
       sorter: (a, b) => a.address.length - b.address.length,
     },
     {
-      title: "Zip Code",
-      dataIndex: "zipCode",
+      title: 'Zip Code',
+      dataIndex: 'zipCode',
       sorter: (a, b) => a.zipCode.length - b.zipCode.length,
     },
     {
-      title: "Created On",
-      dataIndex: "createdAt",
+      title: 'Created On',
+      dataIndex: 'createdAt',
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
     },
     {
-      title: "Action",
+      title: 'Action',
       render: (text, record) => (
         <>
           <Link className="me-3" to="newuseredit">
@@ -120,7 +120,7 @@ const CustomerLists = () => {
                 <div className="search-path">
                   <a
                     className={` btn ${
-                      inputfilter ? "btn-filter setclose" : "btn-filter"
+                      inputfilter ? 'btn-filter setclose' : 'btn-filter'
                     } `}
                     id="filter_search"
                     onClick={() => togglefilter(!inputfilter)}
@@ -176,9 +176,9 @@ const CustomerLists = () => {
             </div>
             {/* /Filter */}
             <div
-              className={`card mb-0 ${inputfilter ? "toggleCls" : ""}`}
+              className={`card mb-0 ${inputfilter ? 'toggleCls' : ''}`}
               id="filter_inputs"
-              style={{ display: inputfilter ? "block" : "none" }}
+              style={{ display: inputfilter ? 'block' : 'none' }}
             >
               <div className="card-body pb-0">
                 <div className="row">
@@ -216,7 +216,7 @@ const CustomerLists = () => {
                         className="select"
                         data={options}
                         options={{
-                          placeholder: "Select",
+                          placeholder: 'Select',
                         }}
                       />
                     </div>

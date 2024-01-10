@@ -8,7 +8,7 @@ import MainProduct from '../../MainPage/Component/MainProduct';
 import SubProductOne from '../../MainPage/Component/SubProductOne';
 import SubProductTwo from '../../MainPage/Component/SubProductTwo';
 import SubProductThree from '../../MainPage/Component/SubProductThree';
-import api from '../../utils/api';
+import {api} from '../../utils/api';
 import Addon from '../../MainPage/Component/AddOn';
 import { useOrderContext } from '../../context/OrderContext';
 import './index.css';
