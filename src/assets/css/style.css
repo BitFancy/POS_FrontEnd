@@ -8829,6 +8829,7 @@ span.select2-container.select2-container--default.select2-container--open {
   margin: 5px;
   padding: 5px;
   height: 73vh;
+  max-height: 800px;
   overflow: auto;
 }
 
@@ -8838,7 +8839,7 @@ span.select2-container.select2-container--default.select2-container--open {
 }
 
 .order-table {
-  height: 42.1vh;
+  height: 38vh;
   overflow: auto;
 }
 

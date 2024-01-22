@@ -11,11 +11,16 @@ import Error404 from '../MainPage/ErrorPage/Error404';
 import Error500 from '../MainPage/ErrorPage/Error500';
 import HomeThree from '../MainPage/Home/home3';
 
-import {setAuthToken} from '../utils/api';
+import { setAuthToken } from '../utils/api';
 import { OrderContextProvider } from '../context/OrderContext';
 import ProductProvider from '../context/ProductContext';
 import { Product } from '../EntryFile/imagePath';
 import { UserContextProvider } from '../context/UserContext';
+
+// if (localStorage.token) {
+//   // if there is a token set axios headers for all requests
+//   setAuthToken(localStorage.token);
+// }
 
 export default function App(props) {
   useEffect(() => {
@@ -27,10 +32,6 @@ export default function App(props) {
       location.pathname.includes('forgetPassword')
     ) {
       $('body').addClass('account-page');
-    }
-    if (localStorage.token) {
-      // if there is a token set axios headers for all requests
-      setAuthToken(localStorage.token);
     }
   }, []);
   const { location } = props;
@@ -48,7 +49,6 @@ export default function App(props) {
             <Route path="/forgetPassword" component={ForgetPassword} />
             <Route path="/signUp" component={SignUp} />
             <Route path="/dream-pos" component={DefaultLayout} />
-
             <Route path="/error-404" component={Error404} />
             <Route path="/error-500" component={Error500} />
             <Route path="/pos" component={Pos} />

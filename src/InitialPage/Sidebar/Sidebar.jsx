@@ -5,12 +5,14 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import FeatherIcon from 'feather-icons-react';
 import { UserContext } from '../../context/UserContext';
 import LoadingSpinner from './LoadingSpinner';
+import useAuth from '../../hooks/useAuth';
 
 const Sidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState('');
   const [path, setPath] = useState('');
   const history = useHistory();
-  const user = useContext(UserContext);
+  const { user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const toggleSidebar = (value) => {
     setSideMenu(value);
@@ -51,8 +53,15 @@ const Sidebar = (props) => {
     return '';
   }
 
+  // if (!user) {
+  //   return <LoadingSpinner />;
+  // }
+
+  console.log(isAuthenticated, '-==========----=-=-=-=-=-=- is authenticated');
+
+  console.log(user, '======================this is side bar user ----------');
   if (!user) {
-    return <LoadingSpinner />;
+    return '<LoadingSpinner />';
   }
 
   return (

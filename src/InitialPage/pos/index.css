@@ -33,7 +33,8 @@
   padding: 7px;
   border-radius: 5px;
   font-weight: 600;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
+  max-height: 98.5px;
 }
 
 .product-lists-order {

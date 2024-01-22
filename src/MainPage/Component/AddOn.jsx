@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {api} from '../../utils/api';
+import { api } from '../../utils/api';
 import { useOrderContext } from '../../context/OrderContext';
 import './index.css';
 
@@ -70,7 +70,6 @@ const Addon = ({
                       fontSize: activeState[addon._id] ? '19px' : '17px',
                       fontWeight: 'bold',
                       marginBottom: '0.5rem',
-                      
                     }}
                   >
                     {addon.productName}

@@ -6,14 +6,17 @@ export const api = axios.create({
   baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
-    'x-auth-token': localStorage.getItem('token'),
+    // 'x-auth-token': localStorage.getItem('token'),
   },
 });
 
 export const setAuthToken = (token) => {
   if (token) {
+    console.log(localStorage.token, 'thisis setauthtoken before');
+    // console.log(token, 'thisis setauthtoken');
     api.defaults.headers.common['x-auth-token'] = token;
     localStorage.setItem('token', token);
+    console.log(localStorage.token, 'thisis setauthtoken after');
     // } else {
     //   delete api.defaults.headers.common['x-auth-token'];
     //   localStorage.removeItem('token');

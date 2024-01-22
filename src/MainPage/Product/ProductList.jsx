@@ -137,9 +137,9 @@ const ProductList = () => {
     })();
   }, []);
 
-  if (!data.length) {
-    return <LoadingSpinner />;
-  }
+  // if (!data.length) {
+  //   return <LoadingSpinner />;
+  // }
   return (
     <>
       <div className="page-wrapper">

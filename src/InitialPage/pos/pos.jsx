@@ -42,7 +42,7 @@ const Pos = () => {
   const ref = useRef();
   const [dishes, setDishes] = useState([]);
   const [isActive, setIsActive] = useState('');
-
+  const [orderType, setOrderType] = useState('');
   const [customers, setCustomers] = useState([]);
   const [customer, setCustomer] = useState('');
   const [orderPrice, setOrderPrice] = useState('');
@@ -67,7 +67,7 @@ const Pos = () => {
   useEffect(() => {
     console.log(customers, '----------customer-----------');
   }, [customers]);
-  
+
   useEffect(() => {
     (async () => {
       const res = await api.get('/category/all');
@@ -126,9 +126,10 @@ const Pos = () => {
     })();
   }, []);
 
-  const options = [
-    { id: 1, text: 'Walk-in Customer', text: 'Walk-in Customer' },
-    { id: 2, text: 'Chris Moris', text: 'Chris Moris' },
+  const orderTypes = [
+    { id: 1, text: 'Dine-in', text: 'Dine-in' },
+    { id: 2, text: 'TakeOut', text: 'TakeOut' },
+    { id: 2, text: 'Delivery', text: 'Delivery' },
   ];
   const options1 = [
     { id: 1, text: 'Product', text: 'Product' },
@@ -189,6 +190,7 @@ const Pos = () => {
   }, [dishes]);
 
   const orderData = {
+    orderType,
     customer,
     dishes,
     totalPrice,
@@ -198,7 +200,9 @@ const Pos = () => {
 
   const handleMakeOrder = async () => {
     console.log('customer======', customer);
-    if (orderData.customer === '') {
+    if (orderData.orderType === '') {
+      alertify.warning('Please select the order type!');
+    } else if (orderData.customer === '') {
       alertify.warning('Please select the customer!');
     } else if (orderData.paymethod === '') {
       alertify.warning('Please select the paymethod!');
@@ -208,8 +212,8 @@ const Pos = () => {
       await api
         .post('/order/add', orderData)
         .then((res) => {
-          alertify.success('Successfully Order Added!');
-          setDishes([]);
+          // alertify.success('Successfully Order Added!');
+          // setDishes([]);
         })
         .catch((err) => {
           console.log(err);
@@ -240,6 +244,11 @@ const Pos = () => {
   // };
 
   const removeOrderList = () => {
+    setDishes([]);
+  };
+
+  const printOrder = () => {
+    alertify.success('Successfully Order Added!');
     setDishes([]);
   };
 
@@ -370,30 +379,86 @@ const Pos = () => {
                 </div>
                 <div className="card card-order">
                   <div className="card-body">
-                    <div className="row">
-                      <div className="col-lg-8">
-                        <div className="select-split ">
-                          <div className="select-group w-100">
-                            <Select2
-                              className="select"
-                              data={customers}
-                              options={{
-                                placeholder: 'Select Customer',
-                              }}
-                              onChange={(e) => setCustomer(e.target.value)}
-                              value={customer}
-                            />
-                          </div>
+                    <div className="select-split">
+                      <div className="w-25">Order Type:</div>
+                      <div className="select-group w-75">
+                        <Select2
+                          className="select"
+                          data={orderTypes}
+                          options={{
+                            placeholder: 'Select Order Type',
+                          }}
+                          onChange={(e) => setOrderType(e.target.value)}
+                          value={orderType}
+                        />
+                      </div>
+                    </div>
+                    {/* <div className="d-flex align-items-center">
+                      <div className="w-25">Customer:</div>
+                      <div className="w-70 d-flex justify-content-between">
+                        <div className="select-group">
+                          <Select2
+                            className="select"
+                            data={customers}
+                            options={{
+                              placeholder: 'Select Customer',
+                            }}
+                            onChange={(e) => setCustomer(e.target.value)}
+                            value={customer}
+                          />
+                        </div>
+                        <div>
+                          <Link
+                            className="btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#create"
+                            style={{
+                              color: '#28c76f',
+                              border: '2px solid #28c76f',
+                            }}
+                            onMouseEnter={() => {
+                              this.setState({
+                                color: '#fff',
+                              });
+                            }}
+                            onMouseLeave={() => {
+                              this.setState({
+                                color: '#28c76f',
+                              });
+                            }}
+                          >
+                            <i className="fa fa-plus me-2" />
+                            New
+                          </Link>
                         </div>
                       </div>
-                      <div className="col-4">
+                    </div> */}
+                    <div className="d-flex align-items-center">
+                      <div className="w-25">Customer:</div>
+                      <div className="w-75 d-flex justify-content-between">
+                        <div
+                          className="select-group"
+                          style={{ minWidth: '65%' }}
+                        >
+                          <Select2
+                            className="select"
+                            data={customers}
+                            options={{
+                              placeholder: 'Select Customer',
+                            }}
+                            onChange={(e) => setCustomer(e.target.value)}
+                            value={customer}
+                          />
+                        </div>
                         <Link
-                          className="btn btn-adds-customer"
+                          className="btn"
                           data-bs-toggle="modal"
-                          data-bs-target="#create"
+                          data-bs-target="#newCustomer"
                           style={{
                             color: '#28c76f',
                             border: '2px solid #28c76f',
+                            minWidth: '25%',
+                            minHight: '',
                           }}
                           onMouseEnter={() => {
                             this.setState({
@@ -407,7 +472,7 @@ const Pos = () => {
                           }}
                         >
                           <i className="fa fa-plus me-2" />
-                          Add
+                          New
                         </Link>
                       </div>
                     </div>
@@ -567,6 +632,80 @@ const Pos = () => {
       </div>
       <div
         className="modal fade"
+        id="newCustomer"
+        tabIndex={-1}
+        aria-labelledby="newCustomer"
+        aria-hidden="true"
+      >
+        <div
+          className="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">New Customer</h5>
+              <button
+                type="button"
+                className="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="row">
+                <div className="col-lg-6 col-sm-12 col-12">
+                  <div className="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-sm-12 col-12">
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-sm-12 col-12">
+                  <div className="form-group">
+                    <label>Phone</label>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-sm-12 col-12">
+                  <div className="form-group">
+                    <label>Country</label>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-sm-12 col-12">
+                  <div className="form-group">
+                    <label>City</label>
+                    <input type="text" />
+                  </div>
+                </div>
+                <div className="col-lg-6 col-sm-12 col-12">
+                  <div className="form-group">
+                    <label>Address</label>
+                    <input type="text" />
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-12">
+                <Link to="#" className="btn btn-submit me-2">
+                  Submit
+                </Link>
+                <Link to="#" className="btn btn-cancel" data-bs-dismiss="modal">
+                  Cancel
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
         id="addon"
         tabIndex={-1}
         aria-labelledby="create"
@@ -586,6 +725,7 @@ const Pos = () => {
           </div>
         </div>
       </div>
+
       <div
         className="modal fade"
         id="minus"
@@ -718,7 +858,7 @@ const Pos = () => {
                   <span className="px-2">Edit</span>
                 </Link>
               </div> */}
-              <div className="px-3 border-end">
+              <div className="px-3 border-end" onClick={printOrder}>
                 <ReactToPrint
                   bodyClass="print-agreement"
                   content={() => ref.current}

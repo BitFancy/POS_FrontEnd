@@ -98,6 +98,11 @@ const SalesList = (props) => {
       sorter: (a, b) => a.customer.length - b.customer.length,
     },
     {
+      title: 'Order Type',
+      dataIndex: 'orderType',
+      sorter: (a, b) => a.orderType.length - b.orderType.length,
+    },
+    {
       title: 'Date',
       dataIndex: 'createdAt',
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,

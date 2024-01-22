@@ -15,13 +15,15 @@ import TimeClock from '../../MainPage/DateTime/Clock';
 import TimeDate from '../../MainPage/DateTime/Date';
 import { UserContext } from '../../context/UserContext';
 import LoadingSpinner from './LoadingSpinner';
+import useAuth from '../../hooks/useAuth';
 
 const Header = (props) => {
   const history = useHistory();
   const [searchBar, SetSearchBar] = useState(false);
   const [toggle, SetToggle] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const user = useContext(UserContext);
+  const { user, isAuthenticated } = useAuth();
 
   const handlesidebar = () => {
     document.body.classList.toggle('mini-sidebar');
@@ -45,7 +47,8 @@ const Header = (props) => {
     window.localStorage.removeItem('token');
     history.push('/signIn');
   };
-   
+
+  console.log(isAuthenticated, 'isauthenticated');
   if (!user) {
     return <LoadingSpinner />;
   }
@@ -53,9 +56,6 @@ const Header = (props) => {
   return (
     <>
       <div className="header">
-        {/* Logo */}
-        {/* Header Menu */}
-
         <div className="d-flex justify-content-between">
           <div
             className={`header-left ${toggle ? '' : 'active'}`}

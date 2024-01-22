@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   LoginImage,
   Logo,
@@ -13,10 +13,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Redirect, useHistory } from 'react-router-dom';
 import { api, setAuthToken } from '../utils/api';
+import { UserContext } from '../context/UserContext';
+import alertify from 'alertifyjs';
+import useAuth from '../hooks/useAuth';
 
 const SignInPage = (props) => {
+  const currentUser = useContext(UserContext);
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [eye, seteye] = useState(true);
 
@@ -41,38 +47,66 @@ const SignInPage = (props) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
+  const handleSubmit = async () => {
     const user = {
       email: email,
       password: password,
     };
-    console.log(user);
-    await api
-      .post('/users/login', user)
-      .then((res) => {
-        console.log(res.data);
-        window.localStorage.setItem('token', res.data.token);
-        setAuthToken(res.data.token);
-        // if (res.data.message) {
-        //   alert(res.data.message);
-        // }
-      })
-      .then(() => {
-        if (window.localStorage.token) {
-          history.push('/dream-pos/product/productlist-product');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
-  };
+    // console.log(user);
+    // await api
+    //   .post('/users/login', user)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     // localStorage.setItem('token', res.data.token);
+    //     console.log(currentUser, 'this is current user');
+    //     setAuthToken(res.data.token);
+    //     // if (res.data.message) {
+    //     //   alert(res.data.message);
+    //     // }
+    //   })
+    //   .then(() => {
+    //     if (window.localStorage.token) {
+    //       console.log(currentUser, 'this is current user after then');
+    //       history.push('/dream-pos/product/productlist-product');
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     alert(err);
+    //   });
 
-  //   const onSubmit = (data) => {
-  //     console.log(JSON.stringify(data, null, 2));
-  //     // useNavigate('/dream-pos/dashboard')
-  //   };
+    //-----------------------new signin------------------
+
+    try {
+      // setLoginButtonClicked(true);
+      setIsLoading(true);
+      // if (user.email == '' || user.password == '') {
+      //   showToast('Please fill in all the information!', 'error');
+      // } else if (!validator.isEmail(user.email)) {
+      //   showToast('Invalid email format!', 'error');
+      // } else {
+      // delete values.confirm;
+      if (!localStorage.getItem('loginEmail')) {
+        localStorage.setItem('loginEmail', user.email);
+      } else {
+        localStorage.removeItem('loginEmail');
+        localStorage.setItem('loginEmail', user.email);
+      }
+      await login(user);
+      alertify.success('Signin success!');
+      history.push('/pos');
+      // }
+    } catch (err) {
+      let msg = 'Login failed';
+      if (err.response) {
+        msg = err.response.data.errors[0].msg;
+      }
+      alertify.error(msg);
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>

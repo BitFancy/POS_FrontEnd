@@ -1,13 +1,25 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { api } from '../utils/api';
+import { setAuthToken } from '../utils/api';
 
 export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  if (localStorage.token) {
+    // if there is a token set axios headers for all requests
+    setAuthToken(localStorage.token);
+    console.log(
+      'user context token adfadfadfadddddddddddddddd----------',
+      localStorage.token
+    );
+  }
+
   useEffect(() => {
+    // const token = localStorage.token;
     const token = localStorage.getItem('token');
+    console.log('token in user context', token);
     if (token) {
       (async () => {
         try {
