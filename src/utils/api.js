@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an instance of axios
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: 'https://restaurant-pos-service.onrender.com/api',
   // baseURL: 'http://localhost:5000/api',
   headers: {
