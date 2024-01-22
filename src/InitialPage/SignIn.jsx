@@ -52,7 +52,6 @@ const SignInPage = (props) => {
       email: email,
       password: password,
     };
-<<<<<<< HEAD
     // console.log(user);
     // await api
     //   .post('/users/login', user)
@@ -109,27 +108,6 @@ const SignInPage = (props) => {
     }
   };
 
-=======
-    console.log(user);
-    await api
-      .post('/users/login', user)
-      .then((res) => {
-        console.log(res.data);
-        setAuthToken(res.data.token);
-        window.localStorage.setItem('token', res.data.token);
-      })
-      .then(() => {
-        if (window.localStorage.token) {
-          history.push('/dream-pos/product/productlist-product');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
-  };
-
->>>>>>> 53a7d9608cf618f51e2f45e5b4ee0a0114dff458
   return (
     <>
       <div className="main-wrapper">
