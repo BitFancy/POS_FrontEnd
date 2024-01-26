@@ -37,6 +37,7 @@ import './index.css';
 import TimeDate from '../../MainPage/DateTime/Date';
 import TimeClock from '../../MainPage/DateTime/Clock';
 import LoadingSpinner from '../Sidebar/LoadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const Pos = () => {
   const ref = useRef();
@@ -62,11 +63,14 @@ const Pos = () => {
   const [isStatusActive, setIsStatusActive] = useState(false);
   const [distance, setDistance] = useState(0);
   const [direction, setDirection] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [houseNumber, setHouseNumber] = useState('');
+  const [streetName, setStreetName] = useState('');
+  const [postCode, setPostCode] = useState('');
   const date = new Date();
-
-  useEffect(() => {
-    console.log(customers, '----------customer-----------');
-  }, [customers]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     (async () => {
@@ -78,7 +82,6 @@ const Pos = () => {
         if (i === res.data.length - 1) {
           setCategories([...tempData]);
         }
-        console.log(tempData, 'tempData');
       }
 
       const res2 = await api.get('/product');
@@ -115,7 +118,6 @@ const Pos = () => {
   useEffect(() => {
     (async () => {
       await api.get('/customer').then((res) => {
-        console.log(res.data);
         res.data.forEach((row) => {
           setCustomers((prevCustomer) => [
             ...prevCustomer,
@@ -127,9 +129,9 @@ const Pos = () => {
   }, []);
 
   const orderTypes = [
-    { id: 1, text: 'Dine-in', text: 'Dine-in' },
-    { id: 2, text: 'TakeOut', text: 'TakeOut' },
-    { id: 2, text: 'Delivery', text: 'Delivery' },
+    { id: 1, text: 'Dine-in', text: t('order_type.dine-in') },
+    { id: 2, text: 'TakeOut', text: t('order_type.takeout') },
+    { id: 2, text: 'Delivery', text: t('order_type.delivery') },
   ];
   const options1 = [
     { id: 1, text: 'Product', text: 'Product' },
@@ -140,7 +142,7 @@ const Pos = () => {
     { id: 2, text: 'Inclusive', text: 'Inclusive' },
   ];
 
-  const paymethods = ['Cash', 'Debit', 'Scan'];
+  const paymethods = [t('cash'), t('debit'), t('scan')];
   // const orderStatus = [
   //   'New',
   //   'In Progress',
@@ -181,13 +183,43 @@ const Pos = () => {
     setProductList([]);
   };
 
+  const handleAddCustomer = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.get(`/postcode/${postCode}`);
+      console.log(response.data, 'res data');
+      console.log('Postcode found');
+      await api.post('/customer/add', {
+        customerName,
+        email,
+        phoneNumber,
+        houseNumber,
+        streetName,
+        postCode,
+      });
+      alertify.success('Successfully Customer Added');
+      setCustomerName('');
+      setEmail('');
+      setPhoneNumber('');
+      setHouseNumber('');
+      setStreetName('');
+      setPostCode('');
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        console.log('Postcode not found');
+        alertify.warning('PostCode invalid!');
+      } else if (error.response && error.response.status === 400) {
+        alertify.warning('Customer Already Exists');
+      } else {
+        console.error('An error occurred:', error);
+      }
+    }
+  };
+
   useEffect(() => {
     setProductIdList(productList.map((product) => product._id));
   }, [productList]);
-
-  useEffect(() => {
-    console.log('This is dish list ------>>>>> ', dishes);
-  }, [dishes]);
 
   const orderData = {
     orderType,
@@ -199,7 +231,6 @@ const Pos = () => {
   };
 
   const handleMakeOrder = async () => {
-    console.log('customer======', customer);
     if (orderData.orderType === '') {
       alertify.warning('Please select the order type!');
     } else if (orderData.customer === '') {
@@ -216,7 +247,6 @@ const Pos = () => {
           // setDishes([]);
         })
         .catch((err) => {
-          console.log(err);
           alertify.warning('Some error!');
         });
     }
@@ -252,9 +282,6 @@ const Pos = () => {
     setDishes([]);
   };
 
-  console.log(productList, 'productList');
-  console.log(productList.length, 'productList length');
-
   if (!products.length) {
     return <LoadingSpinner />;
   }
@@ -278,24 +305,26 @@ const Pos = () => {
               <div className="col-lg-2 col-sm-12">
                 <div className="order-list">
                   <div className="orderid">
-                    <h4>Dish</h4>
+                    <h4>{t('pos.dish')}</h4>
                   </div>
                 </div>
                 <div className="card card-order">
                   <div className="split-card"></div>
                   <div className="card-body pt-0">
                     <div className="totalitem">
-                      <h4>Total items : {productList.length}</h4>
+                      <h4>
+                        {t('pos.total_items')} : {productList.length}
+                      </h4>
                     </div>
                     <div className="dish-table">
                       {productList.length > 0 &&
                         productList.map((product, index) => (
                           <div key={index}>
                             {product.productType.includes(5) && (
-                              <span>Addon</span>
+                              <span>{t('pos.addon')}</span>
                             )}
                             {product.productType.includes(6) && (
-                              <span>Minus</span>
+                              <span>{t('pos.minus')}</span>
                             )}
                             <div className="product-lists-dish">
                               <div className="row align-items-center">
@@ -344,7 +373,7 @@ const Pos = () => {
                     <div className="setvalue">
                       <ul>
                         <li className="total-value">
-                          <h5>Total</h5>
+                          <h5>{t('pos.total')}</h5>
                           <h6>£{totalProdutPrice}</h6>
                         </li>
                       </ul>
@@ -356,7 +385,7 @@ const Pos = () => {
                       <h5>Submit</h5>
                     </div> */}
                     <button onClick={handleSubmit} className="btn btn-adds">
-                      Submit
+                      {t('submit')}
                     </button>
                   </div>
                 </div>
@@ -364,7 +393,7 @@ const Pos = () => {
               <div className="col-lg-3 col-sm-12">
                 <div className="order-list">
                   <div className="orderid">
-                    <h4>Order List</h4>
+                    <h4>{t('pos.order_list')}</h4>
                   </div>
 
                   <Link
@@ -372,7 +401,9 @@ const Pos = () => {
                     // className="btn btn-added"
                     className="d-flex align-items-center"
                   >
-                    <span style={{ fontWeight: 'bold' }}>Go Order Lists </span>
+                    <span style={{ fontWeight: 'bold' }}>
+                      {t('pos.go_order_list')}{' '}
+                    </span>
                     <FeatherIcon icon="arrow-right" />
                   </Link>
                   {/* </div> */}
@@ -380,13 +411,13 @@ const Pos = () => {
                 <div className="card card-order">
                   <div className="card-body">
                     <div className="select-split">
-                      <div className="w-25">Order Type:</div>
+                      <div className="w-25">{t('pos.order_type')}:</div>
                       <div className="select-group w-75">
                         <Select2
                           className="select"
                           data={orderTypes}
                           options={{
-                            placeholder: 'Select Order Type',
+                            placeholder: t('pos.select_order_type'),
                           }}
                           onChange={(e) => setOrderType(e.target.value)}
                           value={orderType}
@@ -434,7 +465,7 @@ const Pos = () => {
                       </div>
                     </div> */}
                     <div className="d-flex align-items-center">
-                      <div className="w-25">Customer:</div>
+                      <div className="w-25">{t('pos.customer')}:</div>
                       <div className="w-75 d-flex justify-content-between">
                         <div
                           className="select-group"
@@ -444,7 +475,7 @@ const Pos = () => {
                             className="select"
                             data={customers}
                             options={{
-                              placeholder: 'Select Customer',
+                              placeholder: t('pos.select_customer'),
                             }}
                             onChange={(e) => setCustomer(e.target.value)}
                             value={customer}
@@ -472,7 +503,7 @@ const Pos = () => {
                           }}
                         >
                           <i className="fa fa-plus me-2" />
-                          New
+                          {t('new')}
                         </Link>
                       </div>
                     </div>
@@ -480,9 +511,11 @@ const Pos = () => {
                   <div className="split-card"></div>
                   <div className="card-body pt-0">
                     <div className="totalitem">
-                      <h4>Total items : {dishes.length}</h4>
+                      <h4>
+                        {t('pos.total_items')} : {dishes.length}
+                      </h4>
                       <h6 onClick={removeOrderList} className="cursorHand">
-                        <Link>Clear all</Link>
+                        <Link>{t('clear_all')}</Link>
                       </h6>
                     </div>
                     <div className="order-table">
@@ -559,7 +592,7 @@ const Pos = () => {
                     <div className="setvalue">
                       <ul>
                         <li className="total-value">
-                          <h5>Total</h5>
+                          <h5>{t('pos.total')}</h5>
                           <h6>£{totalPrice}</h6>
                         </li>
                       </ul>
@@ -612,7 +645,7 @@ const Pos = () => {
                       className="btn btn-adds mt-2"
                       data-bs-target="#order-details"
                     >
-                      Checkout
+                      {t('pos.checkout')}
                     </button>
 
                     {/* <Link
@@ -643,7 +676,7 @@ const Pos = () => {
         >
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">New Customer</h5>
+              <h5 className="modal-title">{t('customers.add_button')}</h5>
               <button
                 type="button"
                 className="close"
@@ -657,47 +690,81 @@ const Pos = () => {
               <div className="row">
                 <div className="col-lg-6 col-sm-12 col-12">
                   <div className="form-group">
-                    <label>Customer Name</label>
-                    <input type="text" />
+                    <label>{t('add_customer.customer_name')}</label>
+                    <input
+                      type="text"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-12 col-12">
                   <div className="form-group">
-                    <label>Email</label>
-                    <input type="text" />
+                    <label>{t('email')}</label>
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-12 col-12">
                   <div className="form-group">
-                    <label>Phone</label>
-                    <input type="text" />
+                    <label>{t('phone')}</label>
+                    <input
+                      type="text"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-12 col-12">
                   <div className="form-group">
-                    <label>Country</label>
-                    <input type="text" />
+                    <label>{t('house_number')}</label>
+                    <input
+                      type="text"
+                      value={houseNumber}
+                      onChange={(e) => setHouseNumber(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-12 col-12">
                   <div className="form-group">
-                    <label>City</label>
-                    <input type="text" />
+                    <label>{t('street_name')}</label>
+                    <input
+                      type="text"
+                      value={streetName}
+                      onChange={(e) => setStreetName(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-lg-6 col-sm-12 col-12">
                   <div className="form-group">
-                    <label>Address</label>
-                    <input type="text" />
+                    <label>{t('postcode')}</label>
+                    <input
+                      type="text"
+                      value={postCode}
+                      onChange={(e) => setPostCode(e.target.value)}
+                      className="form-control"
+                    />
                   </div>
                 </div>
               </div>
               <div className="col-lg-12">
-                <Link to="#" className="btn btn-submit me-2">
-                  Submit
+                <Link
+                  to="#"
+                  className="btn btn-submit me-2"
+                  onClick={handleAddCustomer}
+                >
+                  {t('submit')}
                 </Link>
                 <Link to="#" className="btn btn-cancel" data-bs-dismiss="modal">
-                  Cancel
+                  {t('cancel')}
                 </Link>
               </div>
             </div>

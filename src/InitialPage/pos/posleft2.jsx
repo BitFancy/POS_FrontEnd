@@ -11,6 +11,7 @@ import SubProductThree from '../../MainPage/Component/SubProductThree';
 import { api } from '../../utils/api';
 import Addon from '../../MainPage/Component/AddOn';
 import { useOrderContext } from '../../context/OrderContext';
+import { useTranslation } from 'react-i18next';
 import './index.css';
 
 const Posleft2 = (props) => {
@@ -23,6 +24,7 @@ const Posleft2 = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [products, setProducts] = useState([]);
   const [isCategoryActive, setIsCategoryActive] = useState({});
+  const { t } = useTranslation();
 
   // const { changeAction, setChangeAction } = useOrderContext();
 
@@ -50,7 +52,6 @@ const Posleft2 = (props) => {
   }, []);
 
   const handleSubmit = async (id) => {
-    console.log('category id -', id);
     const tempCategoryActive = { ...isCategoryActive };
     Object.keys(tempCategoryActive).map((key) => {
       tempCategoryActive[key] = false;
@@ -108,10 +109,7 @@ const Posleft2 = (props) => {
   };
 
   useEffect(() => {
-    console.log(props.products, 'props.products');
-    console.log(props.categories, 'props.categories');
     const categoryIds = props.categories.map((category) => category.id);
-    console.log('categoryIds---------', categoryIds);
     setIsCategoryActive({ ...isCategoryActive, [categoryIds[0]]: true });
 
     setMainProducts(
@@ -212,7 +210,7 @@ const Posleft2 = (props) => {
     <div className="col-lg-7 col-sm-12 tabs_wrapper">
       <div className="order-list">
         <div className="orderid">
-          <h4>Product Menu</h4>
+          <h4>{t('pos.product_menu')}</h4>
         </div>
       </div>
       <div className="card card-order" style={{ height: '800px' }}>
@@ -305,7 +303,7 @@ const Posleft2 = (props) => {
                     data-bs-target="#addon"
                   >
                     <i className="fa fa-plus me-2" />
-                    AddOn
+                    {t('pos.addon')}
                   </button>
                 </div>
               )}
@@ -318,7 +316,7 @@ const Posleft2 = (props) => {
                     data-bs-target="#minus"
                   >
                     <i className="fa fa-minus me-2" />
-                    Minus
+                    {t('pos.minus')}
                   </button>
                 </div>
               )}

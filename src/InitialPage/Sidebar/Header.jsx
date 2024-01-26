@@ -3,14 +3,14 @@ import {
   Logo,
   SmallLogo,
   FlagUS,
-  FlagES,
-  FlagDE,
+  FlagCN,
   Logout,
   LogoWhite,
   Avatar1,
 } from '../../EntryFile/imagePath';
 import { Link, useHistory } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
+import { useTranslation } from 'react-i18next';
 import TimeClock from '../../MainPage/DateTime/Clock';
 import TimeDate from '../../MainPage/DateTime/Date';
 import { UserContext } from '../../context/UserContext';
@@ -21,6 +21,14 @@ const Header = (props) => {
   const history = useHistory();
   const [searchBar, SetSearchBar] = useState(false);
   const [toggle, SetToggle] = useState(false);
+  const { t, i18n } = useTranslation();
+  const [activeLanguage, setActiveLanguage] = useState('en');
+
+  const handleLanguageChange = (lag) => {
+    i18n.changeLanguage(lag);
+    setActiveLanguage(lag);
+  };
+
   // const [isLoading, setIsLoading] = useState(false);
 
   const { user, isAuthenticated } = useAuth();
@@ -48,7 +56,6 @@ const Header = (props) => {
     history.push('/signIn');
   };
 
-  console.log(isAuthenticated, 'isauthenticated');
   if (!user) {
     return <LoadingSpinner />;
   }
@@ -66,7 +73,8 @@ const Header = (props) => {
               to="/dream-pos/product/productlist-product"
               className="logo logo-normal"
             >
-              <img src={Logo} alt="" />
+              {/* <img src={Logo} alt="" /> */}
+              <strong>{t('app_name')}</strong>
             </Link>
             <Link
               to="/dream-pos/product/productlist-product"
@@ -112,18 +120,44 @@ const Header = (props) => {
                   role="button"
                 >
                   <FeatherIcon icon="globe" />
+                  {/* <span>{i18n.language}</span> */}
                 </Link>
                 <div className="dropdown-menu dropdown-menu-right">
-                  <Link to="#" className="dropdown-item active">
-                    <img src={FlagUS} alt="" height={16} /> English
+                  <Link
+                    to="#"
+                    value={'en'}
+                    className={`dropdown-item ${
+                      activeLanguage === 'en' ? 'active' : ''
+                    }`}
+                    onClick={() => handleLanguageChange('en')}
+                  >
+                    <img src={FlagUS} alt="" height={16} />
+                    {t('english')}
                   </Link>
-                  <Link to="#" className="dropdown-item">
-                    <img src={FlagES} alt="" height={16} /> Spanish
-                  </Link>
-                  <Link to="#" className="dropdown-item">
-                    <img src={FlagDE} alt="" height={16} /> German
+                  <Link
+                    to="#"
+                    value={'cn'}
+                    className={`dropdown-item ${
+                      activeLanguage === 'cn' ? 'active' : ''
+                    }`}
+                    onClick={() => handleLanguageChange('cn')}
+                  >
+                    <img src={FlagCN} alt="" height={16} /> {t('chinese')}
                   </Link>
                 </div>
+                {/* <div className="select">
+                  <select
+                    value={i18n.language}
+                    onChange={(e) => i18n.changeLanguage(e.target.value)}
+                  >
+                    <option value={'en'}>
+                      <img src={FlagUS} alt="" height={16} /> English
+                    </option>
+                    <option value={'cn'}>
+                      <img src={FlagCN} alt="" height={16} /> Chinese
+                    </option>
+                  </select>
+                </div> */}
               </div>
               <div className="nav-item dropdown has-arrow main-drop">
                 <Link
@@ -160,14 +194,14 @@ const Header = (props) => {
                       to="/dream-pos/profile/user-profile"
                     >
                       <FeatherIcon icon="user" />
-                      My Profile
+                      {t('profile')}
                     </Link>
                     <Link
                       className="dropdown-item"
                       to="/dream-pos/settings/generalsettings"
                     >
                       <FeatherIcon icon="settings" />
-                      Settings
+                      {t('settings')}
                     </Link>
                     <hr className="m-0" />
                     <button
@@ -175,7 +209,7 @@ const Header = (props) => {
                       onClick={handleLogoutClicked}
                     >
                       <img src={Logout} className="me-2" alt="img" />
-                      Logout
+                      {t('logout')}
                     </button>
                   </div>
                 </div>

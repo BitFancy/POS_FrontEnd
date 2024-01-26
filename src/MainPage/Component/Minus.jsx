@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {api} from '../../utils/api';
+import { api } from '../../utils/api';
 import { useOrderContext } from '../../context/OrderContext';
+import { useTranslation } from 'react-i18next';
 import './index.css';
 
 const Minus = ({
@@ -14,6 +15,7 @@ const Minus = ({
   const [minuses, setMinuses] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const [minusId, setMinusId] = useState('');
+  const { t } = useTranslation();
 
   const handleSubmit = (minusid) => {
     setIsActive(!isActive);
@@ -40,7 +42,7 @@ const Minus = ({
   return (
     <>
       <div className="modal-header">
-        <h5 className="modal-title">Minus</h5>
+        <h5 className="modal-title">{t('minus')}</h5>
         <button
           type="button"
           className="close"
@@ -55,26 +57,33 @@ const Minus = ({
           {minuses.map((minus, index) => (
             <div
               key={index}
-              className="col-lg-2 col-sm-12 col-12 d-flwx"
+              className="col-2 p-1 m-0"
               onClick={() => handleSubmit(minus._id)}
             >
-              <div className="product-lists-main mb-3 d-flex justify-content-center">
-                <div>
+              <div
+                className="product-lists-main d-flex justify-content-center"
+                style={{
+                  // width: '140px',
+                  height: '70px',
+                  boxShadow: `${
+                    activeState[minus._id]
+                      ? '0px 0px 10px 0px rgba(0, 0, 0, 0.8)'
+                      : ''
+                  }`,
+                }}
+              >
+                <div className="d-flex align-items-center lh-1">
                   <p
                     style={{
-                      color: `${
-                        activeState[minus._id]
-                          ? 'rgba(255, 100, 39, 0.6)'
-                          : 'rgba(0, 0, 0, 0.6)'
-                      }`,
+                      color: `${activeState[minus._id] ? 'white' : 'white'}`,
                       fontSize: activeState[minus._id] ? '19px' : '17px',
                       fontWeight: 'bold',
-                      marginBottom: '0.5rem',
+                      maxWidth: '100px',
                     }}
                   >
                     {minus.productName}
                   </p>
-                  <p>£{minus.price}</p>
+                  {/* <p className="card-text">£{price}</p> */}
                 </div>
               </div>
             </div>
@@ -82,10 +91,10 @@ const Minus = ({
         </div>
         <div className="col-lg-12 d-flex justify-content-center">
           <div to="#" className="btn btn-submit me-2" data-bs-dismiss="modal">
-            Minus
+            {t('minus')}
           </div>
           <div to="#" className="btn btn-cancel" data-bs-dismiss="modal">
-            Close
+            {t('close')}
           </div>
         </div>
       </div>

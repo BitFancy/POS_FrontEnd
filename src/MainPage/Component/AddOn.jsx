@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { api } from '../../utils/api';
 import { useOrderContext } from '../../context/OrderContext';
 import './index.css';
+import { useTranslation } from 'react-i18next';
 
 const Addon = ({
   activeState,
@@ -14,6 +15,7 @@ const Addon = ({
   const [addons, setAddons] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const [addonId, setAddonId] = useState('');
+  const { t } = useTranslation();
 
   const handleSubmit = (addonid) => {
     setIsActive(!isActive);
@@ -40,7 +42,7 @@ const Addon = ({
   return (
     <>
       <div className="modal-header">
-        <h5 className="modal-title">Addon</h5>
+        <h5 className="modal-title">{t('addon')}</h5>
         <button
           type="button"
           className="close"
@@ -55,26 +57,33 @@ const Addon = ({
           {addons.map((addon, index) => (
             <div
               key={index}
-              className="col-lg-2 col-sm-12 col-12 d-flex"
+              className="col-2 p-1 m-0"
               onClick={() => handleSubmit(addon._id)}
             >
-              <div className="product-lists-main mb-3 d-flex justify-content-center ">
-                <div>
+              <div
+                className="product-lists-main d-flex justify-content-center"
+                style={{
+                  // width: '140px',
+                  height: '70px',
+                  boxShadow: `${
+                    activeState[addon._id]
+                      ? '0px 0px 10px 0px rgba(0, 0, 0, 0.8)'
+                      : ''
+                  }`,
+                }}
+              >
+                <div className="d-flex align-items-center lh-1">
                   <p
                     style={{
-                      color: `${
-                        activeState[addon._id]
-                          ? 'rgba(255, 100, 39, 0.6)'
-                          : 'rgba(0, 0, 0, 0.6)'
-                      }`,
+                      color: `${activeState[addon._id] ? 'white' : 'white'}`,
                       fontSize: activeState[addon._id] ? '19px' : '17px',
                       fontWeight: 'bold',
-                      marginBottom: '0.5rem',
+                      maxWidth: '100px',
                     }}
                   >
                     {addon.productName}
                   </p>
-                  <p>£{addon.price}</p>
+                  {/* <p className="card-text">£{price}</p> */}
                 </div>
               </div>
             </div>
@@ -82,10 +91,10 @@ const Addon = ({
         </div>
         <div className="col-lg-12 d-flex justify-content-center">
           <div to="#" className="btn btn-submit me-2" data-bs-dismiss="modal">
-            Addon
+            {t('addon')}
           </div>
           <div to="#" className="btn btn-cancel" data-bs-dismiss="modal">
-            Close
+            {t('close')}
           </div>
         </div>
       </div>

@@ -16,12 +16,14 @@ import { api } from '../../utils/api';
 import Spinner from '../Component/Spinner';
 import alertify from 'alertifyjs';
 import LoadingSpinner from '../../InitialPage/Sidebar/LoadingSpinner';
+import { useTranslation } from 'react-i18next';
 // import useProduct from '../../hooks/useProduct';
 
 const ProductList = () => {
   const [inputfilter, setInputfilter] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const { t } = useTranslation();
 
   // const [productData, setProductData] = useState({});
   const togglefilter = (value) => {
@@ -43,27 +45,27 @@ const ProductList = () => {
 
   const columns = [
     {
-      title: 'Product Name',
+      title: t('products.table.product_name'),
       dataIndex: 'productName',
       sorter: (a, b) => a.productName.length - b.productName.length,
     },
     {
-      title: 'Category',
+      title: t('products.table.category'),
       dataIndex: 'category',
       sorter: (a, b) => a.category.length - b.category.length,
     },
     {
-      title: 'Product type',
+      title: t('products.table.product_type'),
       dataIndex: 'productType',
       sorter: (a, b) => a.unit.length - b.unit.length,
     },
     {
-      title: 'Price',
+      title: t('price'),
       dataIndex: 'price',
       sorter: (a, b) => a.price.length - b.price.length,
     },
     {
-      title: 'Action',
+      title: t('action'),
       render: (data) => {
         return (
           <>
@@ -146,8 +148,8 @@ const ProductList = () => {
         <div className="content">
           <div className="page-header">
             <div className="page-title">
-              <h4>Products List</h4>
-              <h6>Manage your Products</h6>
+              <h4>{t('products.title')}</h4>
+              <h6>{t('products.description')}</h6>
             </div>
             <div className="page-btn">
               <Link
@@ -155,7 +157,7 @@ const ProductList = () => {
                 className="btn btn-added"
               >
                 <img src={PlusIcon} alt="img" className="me-1" />
-                Add New Product
+                {t('products.add_button')}
               </Link>
             </div>
           </div>

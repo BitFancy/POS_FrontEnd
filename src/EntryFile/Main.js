@@ -22,7 +22,6 @@ import { UserContext } from '../context/UserContext';
 if (localStorage.token) {
   // if there is a token set axios headers for all requests
   setAuthToken(localStorage.token);
-  console.log('asdfasfsadf');
 }
 
 const MainApp = () => {

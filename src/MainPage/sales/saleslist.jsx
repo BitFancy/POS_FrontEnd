@@ -31,6 +31,7 @@ import { api } from '../../utils/api';
 import ReactToPrint from 'react-to-print';
 import FeatherIcon from 'feather-icons-react';
 import LoadingSpinner from '../../InitialPage/Sidebar/LoadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const SalesList = (props) => {
   const ref = useRef();
@@ -44,6 +45,7 @@ const SalesList = (props) => {
   const [orderPrice, setOrderPrice] = useState([]);
   const [orderList, setOrderList] = useState([]);
   const [orderDetail, setOrderDetail] = useState({});
+  const { t } = useTranslation();
 
   let [isOpen, setIsOpen] = useState(true);
 
@@ -93,17 +95,17 @@ const SalesList = (props) => {
 
   const columns = [
     {
-      title: 'Costumer name',
+      title: t('orders.table.customer_name'),
       dataIndex: 'customer',
       sorter: (a, b) => a.customer.length - b.customer.length,
     },
     {
-      title: 'Order Type',
+      title: t('orders.table.order_type'),
       dataIndex: 'orderType',
       sorter: (a, b) => a.orderType.length - b.orderType.length,
     },
     {
-      title: 'Date',
+      title: t('created_at'),
       dataIndex: 'createdAt',
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
     },
@@ -133,7 +135,7 @@ const SalesList = (props) => {
     //   sorter: (a, b) => a.status.length - b.status.length,
     // },
     {
-      title: 'Pay Method',
+      title: t('orders.table.payment_method'),
       dataIndex: 'paymethod',
       render: (text, record) => (
         <>
@@ -164,7 +166,7 @@ const SalesList = (props) => {
     //   sorter: (a, b) => a.Payment.length - b.Payment.length,
     // },
     {
-      title: 'Total',
+      title: t('price'),
       dataIndex: 'totalPrice',
       sorter: (a, b) => a.totalPrice.length - b.totalPrice.length,
     },
@@ -191,7 +193,7 @@ const SalesList = (props) => {
     //   sorter: (a, b) => a.Due.length - b.Due.length,
     // },
     {
-      title: 'Action',
+      title: t('action'),
       render: (order) => (
         <>
           <div>
@@ -290,13 +292,13 @@ const SalesList = (props) => {
         <div className="content">
           <div className="page-header">
             <div className="page-title">
-              <h4>Orders List</h4>
-              <h6>Manage your Orders</h6>
+              <h4>{t('orders.title')}</h4>
+              <h6>{t('orders.description')}</h6>
             </div>
             <div className="page-btn">
               <Link to="/dream-pos/sales/add-sales" className="btn btn-added">
                 <img src={PlusIcon} alt="img" className="me-1" />
-                Make Order
+                {t('orders.make_order')}
               </Link>
             </div>
             {/* <div className="fixed inset-0 flex items-center justify-center">
@@ -659,11 +661,7 @@ const SalesList = (props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {console.log(!(orderDetail === null))}
-                            {/* {console.log(orderDetail.dishes)} */}
-                            {/* {console.log(orderDetail.dishes.length)} */}
                             {!(orderDetail === null) &&
-                              // orderDetail.dishes.length > 0 &&
                               orderDetail.dishes !== undefined &&
                               orderDetail.dishes.map((orderDishes, index) => (
                                 <tr key={index}>

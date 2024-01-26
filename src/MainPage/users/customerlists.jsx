@@ -19,11 +19,13 @@ import {
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import { api } from '../../utils/api';
+import { useTranslation } from 'react-i18next';
 
 const CustomerLists = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [inputfilter, setInputfilter] = useState(false);
   const [customerList, setCustomerList] = useState([]);
+  const { t } = useTranslation();
 
   const options = [
     { id: 1, text: 'Disable', text: 'Disable' },
@@ -36,7 +38,6 @@ const CustomerLists = () => {
   useEffect(() => {
     const fetchData = async () => {
       await api.get('/customer').then((res) => {
-        console.log('customer list ----->>  ', res.data);
         res.data.map((customer) => {
           customer.createdAt = new Date(customer.createdAt).toDateString();
         });
@@ -48,42 +49,42 @@ const CustomerLists = () => {
 
   const columns = [
     {
-      title: 'Customer Name',
+      title: t('customers.table.customer_name'),
       dataIndex: 'customerName',
       sorter: (a, b) => a.customerName.length - b.customerName.length,
     },
     {
-      title: 'Email',
+      title: t('email'),
       dataIndex: 'email',
       sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-      title: 'Phone',
+      title: t('phone'),
       dataIndex: 'phoneNumber',
       sorter: (a, b) => a.phoneNumber.length - b.phoneNumber.length,
     },
     {
-      title: 'City',
-      dataIndex: 'city',
-      sorter: (a, b) => a.city.length - b.city.length,
+      title: t('house_number'),
+      dataIndex: 'houseNumber',
+      sorter: (a, b) => a.houseNumber.length - b.houseNumber.length,
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      sorter: (a, b) => a.address.length - b.address.length,
+      title: t('street_name'),
+      dataIndex: 'streetName',
+      sorter: (a, b) => a.streetName.length - b.streetName.length,
     },
     {
-      title: 'Zip Code',
-      dataIndex: 'zipCode',
-      sorter: (a, b) => a.zipCode.length - b.zipCode.length,
+      title: t('postcode'),
+      dataIndex: 'postCode',
+      sorter: (a, b) => a.postCode.length - b.postCode.length,
     },
     {
-      title: 'Created On',
+      title: t('created_at'),
       dataIndex: 'createdAt',
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
     },
     {
-      title: 'Action',
+      title: t('action'),
       render: (text, record) => (
         <>
           <Link className="me-3" to="newuseredit">
@@ -102,13 +103,13 @@ const CustomerLists = () => {
       <div className="content">
         <div className="page-header">
           <div className="page-title">
-            <h4>Customer List</h4>
-            <h6>Manage your Customer</h6>
+            <h4>{t('customers.title')}</h4>
+            <h6>{t('customers.description')}</h6>
           </div>
           <div className="page-btn">
             <Link to="/dream-pos/users/newcustomer" className="btn btn-added">
               <img src={PlusIcon} alt="img" className="me-2" />
-              Add Customer
+              {t('customers.add_button')}
             </Link>
           </div>
         </div>
@@ -135,11 +136,8 @@ const CustomerLists = () => {
                   <input
                     className="form-control form-control-sm search-icon"
                     type="text"
-                    placeholder="Search..."
+                    placeholder={t('search')}
                   />
-                  <a className="btn btn-searchset">
-                    <img src={Search} alt="img" />
-                  </a>
                 </div>
               </div>
               <div className="wordset">

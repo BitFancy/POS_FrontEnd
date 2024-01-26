@@ -37,7 +37,6 @@ const AuthProvider = ({ children }) => {
           const response = await api.get('/users/me');
           const user123 = response.data;
           setUser(user123);
-          console.log(user123, 'this is user123 info in authcontext init');
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
@@ -67,17 +66,11 @@ const AuthProvider = ({ children }) => {
       api
         .post('/users/login', data)
         .then((res) => {
-          console.log(data, 'this is user login data');
-          console.log(res.data, 'this is user login res data');
           if (!res.data.token) {
             history.push('/signIn');
           } else {
             setAuthToken(res.data.token);
             setUser(res.data.user);
-            console.log(
-              res.data.user,
-              'this is user info in authcontext login'
-            );
             setIsAuthenticated(true);
             resolve();
           }

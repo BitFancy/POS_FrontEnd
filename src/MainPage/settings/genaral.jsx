@@ -5,6 +5,7 @@ import 'react-select2-wrapper/css/select2.css';
 import { Upload } from '../../EntryFile/imagePath';
 import alertify from 'alertifyjs';
 import { api } from '../../utils/api';
+import { useTranslation } from 'react-i18next';
 
 const GenaralSettings = () => {
   const inputRef = useRef(null);
@@ -12,38 +13,46 @@ const GenaralSettings = () => {
   const [restaurantEmail, setRestaurantEmail] = useState('');
   const [restaurantPhone, setRestaurantPhone] = useState('');
   const [restaurantAddress, setRestaurantAddress] = useState('');
-  const [restaurantZipCode, setRestaurantZipCode] = useState('');
+  const [restaurantPostCode, setRestaurantPostCode] = useState('');
   const [restaurantLogo, setRestaurantLogo] = useState('');
   const [logo, setLogo] = useState(null);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    (async () => {
+      await api.get('/restaurant').then((res) => {
+        console.log(res.data);
+        setRestaurantName(res.data.name);
+        setRestaurantEmail(res.data.email);
+        setRestaurantPhone(res.data.phone);
+        setRestaurantAddress(res.data.address);
+        setRestaurantPostCode(res.data.postcode);
+        setRestaurantLogo(res.data.logo);
+      });
+    })();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('hello general setting');
     const formData = new FormData();
     formData.append('restaurantName', restaurantName);
     formData.append('restaurantEmail', restaurantEmail);
     formData.append('restaurantPhone', restaurantPhone);
     formData.append('restaurantAddress', restaurantAddress);
-    formData.append('restaurantZipCode', restaurantZipCode);
+    formData.append('restaurantPostCode', restaurantPostCode);
     formData.append('restaurantLogo', restaurantLogo);
     try {
-      console.log(formData);
       const response = await api.post('/restaurant/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response);
       alertify.success('Restaurant added successfully.');
     } catch (error) {
       console.error(error);
       alertify.error('Some error occurred');
     }
   };
-
-  useEffect(() => {
-    console.log(restaurantLogo);
-  }, [restaurantLogo]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -56,17 +65,18 @@ const GenaralSettings = () => {
       <div className="content">
         <div className="page-header">
           <div className="page-title">
-            <h4>Setting</h4>
-            <h6>Manage General Setting</h6>
+            <h4>{t('setting.title')}</h4>
+            <h6>{t('setting.description')}</h6>
           </div>
         </div>
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-lg-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-sm-6 col-12">
                 <div className="form-group">
                   <label>
-                    Restaurant Name <span className="manitory">*</span>
+                    {t('restaurant_name')}
+                    <span className="manitory">*</span>
                   </label>
                   <input
                     type="text"
@@ -77,10 +87,11 @@ const GenaralSettings = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-sm-6 col-12">
                 <div className="form-group">
                   <label>
-                    Email<span className="manitory">*</span>
+                    {t('email')}
+                    <span className="manitory">*</span>
                   </label>
                   <input
                     type="email"
@@ -90,10 +101,11 @@ const GenaralSettings = () => {
                   />
                 </div>
               </div>
-              <div className="col-lg-3 col-sm-6 col-12">
+              <div className="col-lg-4 col-sm-6 col-12">
                 <div className="form-group">
                   <label>
-                    Phone<span className="manitory">*</span>
+                    {t('phone')}
+                    <span className="manitory">*</span>
                   </label>
                   <input
                     type="text"
@@ -103,25 +115,11 @@ const GenaralSettings = () => {
                   />
                 </div>
               </div>
-              <div className="col-lg-3 col-sm-12">
+              <div className="col-lg-6 col-sm-12">
                 <div className="form-group">
                   <label>
-                    Zip Code<span className="manitory">*</span>{' '}
-                  </label>
-                  <input
-                    type="text"
-                    value={restaurantZipCode}
-                    onChange={(event) =>
-                      setRestaurantZipCode(event.target.value)
-                    }
-                    required
-                  />
-                </div>
-              </div>
-              <div className="col-lg-12 col-sm-12">
-                <div className="form-group">
-                  <label>
-                    Address<span className="manitory">*</span>{' '}
+                    {t('street_name')}
+                    <span className="manitory">*</span>{' '}
                   </label>
                   <input
                     type="text"
@@ -133,10 +131,27 @@ const GenaralSettings = () => {
                   />
                 </div>
               </div>
+              <div className="col-lg-6 col-sm-12">
+                <div className="form-group">
+                  <label>
+                    {t('postcode')}
+                    <span className="manitory">*</span>{' '}
+                  </label>
+                  <input
+                    type="text"
+                    value={restaurantZipCode}
+                    onChange={(event) =>
+                      setRestaurantZipCode(event.target.value)
+                    }
+                    required
+                  />
+                </div>
+              </div>
               <div className="col-lg-12">
                 <div className="form-group">
                   <label>
-                    Restaurant Logo<span className="manitory">*</span>{' '}
+                    {t('setting.restaurant_logo')}
+                    <span className="manitory">*</span>{' '}
                   </label>
                   <div className="image-upload">
                     <input
@@ -164,7 +179,7 @@ const GenaralSettings = () => {
                       ) : (
                         <div>
                           <img src={Upload} alt="img" />
-                          <h4>Drag and drop a file to upload</h4>
+                          <h4>{t('setting.logo_drag')}</h4>
                         </div>
                       )}
                     </div>
@@ -177,10 +192,10 @@ const GenaralSettings = () => {
                     onSubmit={handleSubmit}
                     className="btn btn-submit me-2"
                   >
-                    Save
+                    {t('save')}
                   </button>
                   <button type="button" className="btn btn-cancel">
-                    Cancel
+                    {t('cancel')}
                   </button>
                 </div>
               </div>

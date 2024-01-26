@@ -25,6 +25,7 @@ import 'react-select2-wrapper/css/select2.css';
 import Swal from 'sweetalert2';
 import { api } from '../../utils/api';
 import LoadingSpinner from '../../InitialPage/Sidebar/LoadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const options = [
   { id: 1, text: 'Choose Category', text: 'Choose Category' },
@@ -63,6 +64,7 @@ const confirmText = () => {
 const CategoryList = () => {
   const [inputfilter, setInputfilter] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  const { t } = useTranslation();
 
   const togglefilter = (value) => {
     setInputfilter(value);
@@ -72,7 +74,6 @@ const CategoryList = () => {
     // console.log(data);
     const fetchData = async () => {
       await api.get('/category/all').then((res) => {
-        console.log('category list ----->>  ', res.data);
         res.data.map((category) => {
           category.createdAt = new Date(category.createdAt).toDateString();
         });
@@ -84,17 +85,17 @@ const CategoryList = () => {
 
   const columns = [
     {
-      title: 'Category Name',
+      title: t('categories.table.category_name'),
       dataIndex: 'categoryName',
       sorter: (a, b) => a.categoryName.length - b.categoryName.length,
     },
     {
-      title: 'Created By',
+      title: t('created_at'),
       dataIndex: 'createdAt',
       sorter: (a, b) => a.createdBy.length - b.createdBy.length,
     },
     {
-      title: 'Action',
+      title: t('action'),
       render: () => (
         <>
           <>
@@ -120,8 +121,8 @@ const CategoryList = () => {
         <div className="content">
           <div className="page-header">
             <div className="page-title">
-              <h4>Product Category List </h4>
-              <h6>View/Search product Category</h6>
+              <h4>{t('categories.title')}</h4>
+              <h6>{t('categories.description')}</h6>
             </div>
             <div className="page-btn">
               <Link
@@ -129,7 +130,7 @@ const CategoryList = () => {
                 className="btn btn-added"
               >
                 <img src={PlusIcon} alt="img" className="me-1" />
-                Add Category
+                {t('categories.add_button')}
               </Link>
             </div>
           </div>

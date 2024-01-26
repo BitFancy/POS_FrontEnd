@@ -6,6 +6,7 @@ import FeatherIcon from 'feather-icons-react';
 import { UserContext } from '../../context/UserContext';
 import LoadingSpinner from './LoadingSpinner';
 import useAuth from '../../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = (props) => {
   const [isSideMenu, setSideMenu] = useState('');
@@ -13,6 +14,7 @@ const Sidebar = (props) => {
   const history = useHistory();
   const { user } = useAuth();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   const toggleSidebar = (value) => {
     setSideMenu(value);
@@ -45,10 +47,6 @@ const Sidebar = (props) => {
     '/reactjs/template/dream-pos/index-one',
   ];
 
-  useEffect(() => {
-    console.log('this is user info in sidebar', user);
-  }, []);
-
   if (exclusionArray.indexOf(window.location.pathname) >= 0) {
     return '';
   }
@@ -57,9 +55,6 @@ const Sidebar = (props) => {
   //   return <LoadingSpinner />;
   // }
 
-  console.log(isAuthenticated, '-==========----=-=-=-=-=-=- is authenticated');
-
-  console.log(user, '======================this is side bar user ----------');
   if (!user) {
     return '<LoadingSpinner />';
   }
@@ -77,12 +72,14 @@ const Sidebar = (props) => {
             >
               <ul>
                 <li className="submenu-open">
-                  <h6 className="submenu-hdr">Order Management</h6>
+                  <h6 className="submenu-hdr">
+                    {t('sidebar.order_management')}
+                  </h6>
                   <ul>
                     <li>
                       <Link to="/pos">
                         <FeatherIcon icon="hard-drive" />
-                        <span>Make Order</span>
+                        <span>{t('sidebar.make_order')}</span>
                       </Link>
                     </li>
                     <li
@@ -96,13 +93,15 @@ const Sidebar = (props) => {
                       >
                         <i data-feather="shopping-cart" />
                         <FeatherIcon icon="shopping-cart" />
-                        <span>Order Lists</span>
+                        <span>{t('sidebar.order_lists')}</span>
                       </Link>
                     </li>
                   </ul>
                 </li>
                 <li className="submenu-open">
-                  <h6 className="submenu-hdr">Menu Management</h6>
+                  <h6 className="submenu-hdr">
+                    {t('sidebar.menu_management')}
+                  </h6>
                   <ul>
                     <li
                       className={
@@ -116,7 +115,7 @@ const Sidebar = (props) => {
                         to="/dream-pos/product/productlist-product"
                       >
                         <FeatherIcon icon="box" />
-                        <span>Products</span>
+                        <span>{t('sidebar.products')}</span>
                       </Link>
                     </li>
                     <li
@@ -133,10 +132,10 @@ const Sidebar = (props) => {
                         to="/dream-pos/product/categorylist-product"
                       >
                         <FeatherIcon icon="codepen" />
-                        <span>Category</span>
+                        <span>{t('sidebar.categories')}</span>
                       </Link>
                     </li>
-                    <li
+                    {/* <li
                       className={
                         pathname.includes('importproduct-product')
                           ? 'active'
@@ -152,7 +151,7 @@ const Sidebar = (props) => {
                         <FeatherIcon icon="minimize-2" />
                         <span>Import Products</span>
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </li>
 
@@ -194,7 +193,7 @@ const Sidebar = (props) => {
                 </li> */}
                 {user.role !== 'User' && (
                   <li className="submenu-open">
-                    <h6 className="submenu-hdr">Admin Panel</h6>
+                    <h6 className="submenu-hdr">{t('sidebar.admin_panel')}</h6>
                     <ul>
                       <li className="submenu">
                         <Link
@@ -211,7 +210,7 @@ const Sidebar = (props) => {
                           }
                         >
                           <FeatherIcon icon="users" />
-                          <span>Manage Users</span>{' '}
+                          <span>{t('sidebar.manage_users')}</span>{' '}
                           <span className="menu-arrow" />
                         </Link>
                         {isSideMenu == 'Users' ? (
@@ -223,7 +222,7 @@ const Sidebar = (props) => {
                                   pathname.includes('userlists') ? 'active' : ''
                                 }
                               >
-                                Users
+                                {t('sidebar.users')}
                               </Link>
                             </li>
                             <li>
@@ -235,7 +234,7 @@ const Sidebar = (props) => {
                                     : ''
                                 }
                               >
-                                Customers
+                                {t('sidebar.customers')}
                               </Link>
                             </li>
                           </ul>
@@ -251,7 +250,7 @@ const Sidebar = (props) => {
                           }
                         >
                           <FeatherIcon icon="settings" />
-                          General Settings
+                          {t('sidebar.general_settings')}
                         </Link>
                       </li>
                     </ul>

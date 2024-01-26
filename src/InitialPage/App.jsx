@@ -24,7 +24,6 @@ import { UserContextProvider } from '../context/UserContext';
 
 export default function App(props) {
   useEffect(() => {
-    console.log('This is start of front end');
     if (
       location.pathname.includes('signIn') ||
       location.pathname.includes('signUp') ||

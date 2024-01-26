@@ -5,6 +5,7 @@ import 'react-select2-wrapper/css/select2.css';
 import { Upload } from '../../EntryFile/imagePath';
 import alertify from 'alertifyjs';
 import { api } from '../../utils/api';
+import { useTranslation } from 'react-i18next';
 
 const AddUser = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -16,6 +17,7 @@ const AddUser = () => {
   const [role, setRole] = useState('');
   // const [mobile, setMobile] = useState('');
   const [passError, setPassError] = useState('');
+  const { t } = useTranslation();
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -42,15 +44,11 @@ const AddUser = () => {
       setRole('Admin');
     }
     if (role === 2) {
-      console.log(role);
       setRole('User');
-      console.log(role);
     }
   }, [role]);
 
   const handleSubmit = async () => {
-    console.log(role);
-    console.log(data);
     if (password !== confirmPassword) {
       setPassError('Passwords do not match');
     } else {
@@ -76,8 +74,8 @@ const AddUser = () => {
       <div className="content">
         <div className="page-header">
           <div className="page-title">
-            <h4>User Management</h4>
-            <h6>Add/Update User</h6>
+            <h4>{t('add_user.title')}</h4>
+            <h6>{t('add_user.description')}</h6>
           </div>
         </div>
         <div>
@@ -86,7 +84,7 @@ const AddUser = () => {
               <div className="row">
                 <div className="col-lg-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label>User Name</label>
+                    <label>{t('add_user.user_name')}</label>
                     <input
                       type="text"
                       // placeholder="Enter User Name"
@@ -96,7 +94,7 @@ const AddUser = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Email</label>
+                    <label>{t('email')}</label>
                     <input
                       type="email"
                       // placeholder="Enter Email"
@@ -106,7 +104,7 @@ const AddUser = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Role</label>
+                    <label>{t('add_user.title')}</label>
                     <Select2
                       className="select"
                       data={userRoles}
@@ -118,7 +116,7 @@ const AddUser = () => {
                 </div>
                 <div className="col-lg-6 col-sm-6 col-12">
                   <div className="form-group">
-                    <label>Password</label>
+                    <label>{t('add_user.password')}</label>
                     <div className="pass-group">
                       <input
                         type={passwordShown ? 'text' : 'password'}
@@ -137,7 +135,7 @@ const AddUser = () => {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Confirm Password</label>
+                    <label>{t('add_user.confirm_password')}</label>
                     <div className="pass-group">
                       <input
                         type={passwordShown1 ? 'text' : 'password'}
@@ -164,10 +162,10 @@ const AddUser = () => {
                     onClick={handleSubmit}
                     className="btn btn-submit me-2"
                   >
-                    Submit
+                    {t('submit')}
                   </button>
                   <button type="button" className="btn btn-cancel">
-                    Cancel
+                    {t('cancel')}
                   </button>
                 </div>
               </div>

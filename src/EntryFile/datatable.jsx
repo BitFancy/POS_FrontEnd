@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Table } from 'antd';
 import './antd.css';
 import { itemRender, onShowSizeChange } from '../components/pagination';
 
 const Datatable = ({ props, columns, dataSource }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const { t } = useTranslation();
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -24,7 +25,9 @@ const Datatable = ({ props, columns, dataSource }) => {
       pagination={{
         total: dataSource.length,
         showTotal: (total, range) =>
-          ` ${range[0]} to ${range[1]} of ${total} items`,
+          ` ${range[0]} ${t('to')} ${range[1]} ${t('of')} ${total} ${t(
+            'items'
+          )}`,
         showSizeChanger: true,
         onShowSizeChange: onShowSizeChange,
       }}

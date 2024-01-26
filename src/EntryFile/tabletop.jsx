@@ -9,8 +9,10 @@ import {
   Printer,
   Search,
 } from '../EntryFile/imagePath';
+import { useTranslation } from 'react-i18next';
 
 const Tabletop = ({ inputfilter, togglefilter }) => {
+  const { t } = useTranslation();
   return (
     <div className="table-top">
       <div className="search-set">
@@ -32,7 +34,7 @@ const Tabletop = ({ inputfilter, togglefilter }) => {
           <input
             className="form-control form-control-sm search-icon"
             type="text"
-            placeholder="Search..."
+            placeholder={t('search')}
           />
           {/* <Link to="#" className="btn btn-searchset">
             <img src={Search} alt="img" />

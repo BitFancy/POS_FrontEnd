@@ -3,8 +3,8 @@ import axios from 'axios';
 // Create an instance of axios
 
 export const api = axios.create({
-  baseURL: 'https://restaurant-pos-service.onrender.com/api',
-  // baseURL: 'http://localhost:5000/api',
+  // baseURL: 'https://restaurant-pos-service.onrender.com/api',
+  baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
     // 'x-auth-token': localStorage.getItem('token'),
@@ -13,11 +13,9 @@ export const api = axios.create({
 
 export const setAuthToken = (token) => {
   if (token) {
-    console.log(localStorage.token, 'thisis setauthtoken before');
     // console.log(token, 'thisis setauthtoken');
     api.defaults.headers.common['x-auth-token'] = token;
     localStorage.setItem('token', token);
-    console.log(localStorage.token, 'thisis setauthtoken after');
     // } else {
     //   delete api.defaults.headers.common['x-auth-token'];
     //   localStorage.removeItem('token');

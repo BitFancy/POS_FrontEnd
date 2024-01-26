@@ -27,7 +27,6 @@ const ProductDetails = () => {
     (async () => {
       const response = await api.get(`/product/product-detail/${productId}`);
       for (let j = 0; j < response.data.category.length; j++) {
-        console.log(response.data.category[j], 'category');
         response.data.category[
           j
         ] = `${response.data.category[j].categoryName}, `;
@@ -68,8 +67,6 @@ const ProductDetails = () => {
       setCreatedAt(response.data.createdAt);
       setUpdatedAt(response.data.updatedAt);
     })();
-    console.log('useEffect');
-    console.log('productId-', productId);
   }, []);
 
   const goBack = () => {

@@ -50,7 +50,6 @@ function Login() {
         msg = err.response.data.errors[0].msg;
       }
       showToast(msg, 'error');
-      console.log(err);
     } finally {
       setIsLoading(false);
     }

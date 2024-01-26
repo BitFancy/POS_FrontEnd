@@ -102,7 +102,6 @@ const SignInPage = (props) => {
         msg = err.response.data.errors[0].msg;
       }
       alertify.error(msg);
-      console.log(err);
     } finally {
       setIsLoading(false);
     }

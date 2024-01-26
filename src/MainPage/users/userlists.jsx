@@ -19,11 +19,13 @@ import {
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
 import { api } from '../../utils/api';
+import { useTranslation } from 'react-i18next';
 
 const UserLists = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [inputfilter, setInputfilter] = useState(false);
   const [userList, setUserList] = useState([]);
+  const { t } = useTranslation();
 
   const options = [
     { id: 1, text: 'Disable', text: 'Disable' },
@@ -37,10 +39,6 @@ const UserLists = () => {
     // console.log(data);
     (async () => {
       await api.get('/users/all').then((res) => {
-        console.log(
-          'user list ------------------------------------>>  ',
-          res.data
-        );
         res.data.map((user) => {
           if (user.role === 1) {
             user.role = 'Admin';
@@ -56,27 +54,27 @@ const UserLists = () => {
 
   const columns = [
     {
-      title: 'User Name',
+      title: t('users.table.user_name'),
       dataIndex: 'userName',
       sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-      title: 'Email',
+      title: t('email'),
       dataIndex: 'email',
       sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-      title: 'Role',
+      title: t('role'),
       dataIndex: 'role',
       sorter: (a, b) => a.Role.length - b.Role.length,
     },
     {
-      title: 'Created On',
+      title: t('created_at'),
       dataIndex: 'createdAt',
       sorter: (a, b) => a.On.length - b.On.length,
     },
     {
-      title: 'Action',
+      title: t('action'),
       render: (text, record) => (
         <>
           <Link className="me-3" to="newuseredit">
@@ -95,13 +93,13 @@ const UserLists = () => {
       <div className="content">
         <div className="page-header">
           <div className="page-title">
-            <h4>User List</h4>
-            <h6>Manage your User</h6>
+            <h4>{t('users.title')}</h4>
+            <h6>{t('users.description')}</h6>
           </div>
           <div className="page-btn">
             <Link to="/dream-pos/users/newuser" className="btn btn-added">
               <img src={PlusIcon} alt="img" className="me-2" />
-              Add User
+              {t('users.add_button')}
             </Link>
           </div>
         </div>
@@ -128,11 +126,8 @@ const UserLists = () => {
                   <input
                     className="form-control form-control-sm search-icon"
                     type="text"
-                    placeholder="Search..."
+                    placeholder={t('search')}
                   />
-                  <a className="btn btn-searchset">
-                    <img src={Search} alt="img" />
-                  </a>
                 </div>
               </div>
               <div className="wordset">
