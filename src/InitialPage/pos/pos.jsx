@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import React from 'react';
 // import Header from './posheader';
 import Header from '../Sidebar/Header';
@@ -38,6 +38,9 @@ import TimeDate from '../../MainPage/DateTime/Date';
 import TimeClock from '../../MainPage/DateTime/Clock';
 import LoadingSpinner from '../Sidebar/LoadingSpinner';
 import { useTranslation } from 'react-i18next';
+import { GeneralContext } from '../../context/GeneralContext';
+import { css, get } from 'jquery';
+import { set } from 'react-hook-form';
 
 const Pos = () => {
   const ref = useRef();
@@ -69,8 +72,43 @@ const Pos = () => {
   const [houseNumber, setHouseNumber] = useState('');
   const [streetName, setStreetName] = useState('');
   const [postCode, setPostCode] = useState('');
+  const [customerAddress, setCustomerAddress] = useState({});
+  const [restuarantAddress, setRestaurantAddress] = useState({});
+  const [restaurantPostCode, setRestaurantPostCode] = useState('');
+  const [customerPostCode, setCustomerPostCode] = useState('');
   const date = new Date();
   const { t } = useTranslation();
+  const restaurant = useContext(GeneralContext);
+
+  const currentRestaurant = restaurant[0];
+  useEffect(() => {
+    if (currentRestaurant) {
+      console.log(
+        'current restaurant============================',
+        currentRestaurant
+      );
+      console.log(currentRestaurant.name, 'current restaurant');
+      setRestaurantPostCode(currentRestaurant.postcode);
+    }
+  }, [currentRestaurant]);
+
+  useEffect(() => {
+    console.log(customer, 'customer info');
+    (async () => {
+      await api.get(`/customer/${customer}`).then((res) => {
+        console.log(res.data, 'customer full info');
+        setCustomerPostCode(res.data.postCode);
+        console.log(res.data.postCode, 'customer post code');
+        console.log(restaurantPostCode, 'restaurant post code');
+        console.log(direction, 'direction');
+        console.log('set direction');
+      });
+    })();
+  }, [customer]);
+
+  useEffect(() => {
+    console.log(direction, 'current direction');
+  }, [direction]);
 
   useEffect(() => {
     (async () => {
@@ -121,12 +159,24 @@ const Pos = () => {
         res.data.forEach((row) => {
           setCustomers((prevCustomer) => [
             ...prevCustomer,
-            { id: row._id, text: row.customerName },
+            {
+              id: row._id,
+              text: row.customerName,
+              phoneNumber: row.phoneNumber,
+              email: row.email,
+              houseNumber: row.houseNumber,
+              streetName: row.streetName,
+              postCode: row.postCode,
+            },
           ]);
         });
       });
     })();
   }, []);
+
+  useEffect(() => {
+    console.log(customers, 'customers===================');
+  }, [customers]);
 
   const orderTypes = [
     { id: 1, text: 'Dine-in', text: t('order_type.dine-in') },
@@ -161,10 +211,6 @@ const Pos = () => {
   // const { changeAction, setChangeAction } = useOrderContext();
 
   const handleSubmit = () => {
-    // const mainlist = productList.filter(
-    //   (item) => item.productType.includes(1) || item.productType.includes(2)
-    // );
-
     const dishname = productList.reduce((acc, product) => {
       return acc + ' ' + product.productName;
     }, '');
@@ -187,8 +233,7 @@ const Pos = () => {
     e.preventDefault();
 
     try {
-      const response = await api.get(`/postcode/${postCode}`);
-      console.log(response.data, 'res data');
+      await api.get(`/postcode/${postCode}`);
       console.log('Postcode found');
       await api.post('/customer/add', {
         customerName,
@@ -230,6 +275,32 @@ const Pos = () => {
     status,
   };
 
+  const calculateInitialBearing = (lat1, lon1, lat2, lon2) => {
+    const y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+    const x =
+      Math.cos(lat1) * Math.sin(lat2) -
+      Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+    let brng = Math.atan2(y, x);
+    brng = (brng * 180) / Math.PI; // Convert radians to degrees
+    return (brng + 360) % 360; // Normalize to a value between 0 and 360 degrees
+  };
+
+  const detectDirection = (lat1, lon1, lat2, lon2) => {
+    const bearing = calculateInitialBearing(lat1, lon1, lat2, lon2);
+    const directions = [
+      t('direction.north'),
+      t('direction.north-east'),
+      t('direction.east'),
+      t('direction.south-east'),
+      t('direction.south'),
+      t('direction.south-west'),
+      t('direction.west'),
+      t('direction.north-west'),
+    ];
+    const index = Math.round(bearing / 45) % 8;
+    return directions[index];
+  };
+
   const handleMakeOrder = async () => {
     if (orderData.orderType === '') {
       alertify.warning('Please select the order type!');
@@ -240,6 +311,7 @@ const Pos = () => {
       // } else if (orderData.status === '') {
       //   alertify.warning('Please select the order status!');
     } else {
+      determineDirection();
       await api
         .post('/order/add', orderData)
         .then((res) => {
@@ -280,6 +352,26 @@ const Pos = () => {
   const printOrder = () => {
     alertify.success('Successfully Order Added!');
     setDishes([]);
+  };
+
+  const getPosition = async (postCode) => {
+    const res = await api.get(`/postcode/${postCode}`);
+    console.log(res.data.latitude, 'get lan long from post code');
+    return res.data;
+  };
+
+  const determineDirection = async () => {
+    console.log(']]]]]]]]]]]]]]]]]]]]]]determineDirection===========');
+    const resPosition = await getPosition(restaurantPostCode);
+    const cusPosition = await getPosition(customerPostCode);
+    const detectdirection = detectDirection(
+      resPosition.latitude,
+      resPosition.longitude,
+      cusPosition.latitude,
+      cusPosition.longitude
+    );
+    console.log('handle getdirection', detectdirection);
+    setDirection(detectdirection);
   };
 
   if (!products.length) {
@@ -491,16 +583,16 @@ const Pos = () => {
                             minWidth: '25%',
                             minHight: '',
                           }}
-                          onMouseEnter={() => {
-                            this.setState({
-                              color: '#fff',
-                            });
-                          }}
-                          onMouseLeave={() => {
-                            this.setState({
-                              color: '#28c76f',
-                            });
-                          }}
+                          // onMouseEnter={() => {
+                          //   this.setState({
+                          //     color: '#fff',
+                          //   });
+                          // }}
+                          // onMouseLeave={() => {
+                          //   this.setState({
+                          //     color: '#28c76f',
+                          //   });
+                          // }}
                         >
                           <i className="fa fa-plus me-2" />
                           {t('new')}
@@ -831,24 +923,24 @@ const Pos = () => {
             >
               <div>
                 <div className="text-center mt-5 mb-2 font-weight-bold">
-                  <h2>Restaurant Receipt</h2>
+                  <h2>{t('restaurant_receipt')}</h2>
                 </div>
                 <div className="table-responsive">
                   {/* <div className="d-flex justify-content-between"> */}
                   <div className="px-5">
                     <div className="mt-4 pb-3 border-bottom">
                       <div className="d-flex justify-content-between pb-2">
-                        <span>Restaurant : </span>
+                        <span>{t('restaurant')} : </span>
                         <span>YGO </span>
                       </div>
                       <div className="d-flex justify-content-between">
-                        <span>Address : </span>
+                        <span>{t('address')} : </span>
                         <span>xxx</span>
                       </div>
                     </div>
                   </div>
                   <div className="d-flex justify-content-between mt-2 mb-3 align-items-center px-5">
-                    <span>Customer : </span>
+                    <span>{t('customer')} : </span>
                     <span className="font-weight-bold">
                       {customers.map((list) => {
                         if (list.id === customer) {
@@ -858,12 +950,12 @@ const Pos = () => {
                     </span>
                   </div>
                   <div className="d-flex justify-content-between mb-3 align-items-center px-5">
-                    <span>PayMethod : </span>
+                    <span>{t('paymethod')} : </span>
                     <span>{paymethod}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-3 align-items-center px-5">
                     {/* <p>Time : {date.toISOString()}</p>*/}
-                    <span>Time : </span>
+                    <span>{t('date')} : </span>
                     <span>
                       {<TimeDate />} {<TimeClock />}
                     </span>
@@ -873,9 +965,9 @@ const Pos = () => {
                     <table className="table mb-0 p-5">
                       <thead>
                         <tr>
-                          <th style={{ width: '80%' }}>List of Items</th>
-                          <th>Quantity</th>
-                          <th>Amount</th>
+                          <th style={{ width: '80%' }}>{t('list_of_items')}</th>
+                          <th>{t('quantity')}</th>
+                          <th>{t('amount')}</th>
                         </tr>
                       </thead>
                       <tbody className="table-striped">
@@ -903,28 +995,22 @@ const Pos = () => {
                   </div>
                   <div className="mt-3 border-top mx-5">
                     <tfoot className="d-flex justify-content-between mt-2">
-                      <span>Total Price : </span>
+                      <span>{t('total_price')} : </span>
                       <span>£{totalPrice}</span>
                     </tfoot>
                     <tfoot className="d-flex justify-content-between mt-2">
-                      <span>Distance : </span>
-                      <span>North East, 5km</span>
+                      <span>{t('direction.direction')} : </span>
+                      <span>{direction}</span>
                     </tfoot>
                   </div>
                 </div>
               </div>
               <div className="text-center mt-3 mb-2 font-weight-bold text-yellow">
-                <h5>THANK YOU FOR DINING WITH US!</h5>
-                <h5>PLEASE COME AGAIN</h5>
+                <h5>{t('thanks')} </h5>
+                <h5>{t('please_come_again')} </h5>
               </div>
             </div>
             <div className="d-flex justify-content-center p-3">
-              {/* <div className="px-3 border-end">
-                <Link className="d-flex align-items-center">
-                  <FeatherIcon icon="edit" />
-                  <span className="px-2">Edit</span>
-                </Link>
-              </div> */}
               <div className="px-3 border-end" onClick={printOrder}>
                 <ReactToPrint
                   bodyClass="print-agreement"
@@ -932,7 +1018,7 @@ const Pos = () => {
                   trigger={() => (
                     <Link className="d-flex align-items-center">
                       <FeatherIcon icon="printer" />
-                      <span className="px-2">Print</span>
+                      <span className="px-2"> {t('print')} </span>
                     </Link>
                   )}
                 />
@@ -943,7 +1029,7 @@ const Pos = () => {
                   data-bs-dismiss="modal"
                 >
                   <FeatherIcon icon="x" />
-                  <span className="px-2">Close</span>
+                  <span className="px-2">{t('close')} </span>
                 </Link>
               </div>
             </div>

@@ -1,35 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
+import { api } from '../utils/api';
+import { escapeSelector } from 'jquery';
 
-const GeneralContext = createContext();
+export const GeneralContext = createContext();
 
 const GeneralContextProvider = ({ children }) => {
-  const [restaurnatName, setRestaurantName] = useState('');
-  const [restaurnatLogo, setRestaurantLogo] = useState(null);
-  const [restaurnatHouseNumber, setRestaurantHouseNumber] = useState('');
-  const [restaurnatStreetName, setRestaurantStreetName] = useState('');
-  const [restaurnatPostCode, setRestaurantPostCode] = useState('');
-  const [restaurnatPhoneNumber, setRestaurantPhoneNumber] = useState('');
+  const [restaurant, setRestaurant] = useState({});
 
-  
+  useEffect(() => {
+    (async () => {
+      await api.get('/restaurant').then((res) => {
+        console.log(res.data, 'restaurant res data');
+        setRestaurant(res.data);
+      });
+    })();
+  }, []);
 
   return (
-    <GeneralContext.Provider
-      value={{
-        restaurnatName,
-        setRestaurantName,
-        restaurnatLogo,
-        setRestaurantLogo,
-        restaurnatHouseNumber,
-        setRestaurantHouseNumber,
-        restaurnatStreetName,
-        setRestaurantStreetName,
-        restaurnatPostCode,
-        setRestaurantPostCode,
-        restaurnatPhoneNumber,
-        setRestaurantPhoneNumber,
-      }}
-    >
+    <GeneralContext.Provider value={restaurant}>
       {children}
     </GeneralContext.Provider>
   );

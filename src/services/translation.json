@@ -2,6 +2,19 @@
   "en": {
     "translation": {
       "app_name": "Restaurant POS",
+      "restaurant": "Restaurant",
+      "restaurant_receipt": "Restaurant Receipt",
+      "customer": "Customer",
+      "paymethod": "Pay Method",
+      "date": "Date",
+      "list_of_items": "List of Items",
+      "quantity": "Quantity",
+      "amount": "Amount",
+      "total_price": "Total Price",
+      "distance": "Distance",
+      "thanks": "THANK YOU FOR DINING WITH US!",
+      "please_come_again": "Please Come Again",
+      "print": "Print",
       "english": "English",
       "chinese": "中文",
       "profile": "My Profile",
@@ -23,6 +36,7 @@
       "street_name": "Street Name",
       "postcode": "Postcode",
       "restaurant_name": "Restaurant Name",
+      "address": "Address",
       "save": "Save",
       "cancel": "Cancel",
       "submit": "Submit",
@@ -156,12 +170,36 @@
         "description": "Manage Customer",
         "customer_name": "Customer Name",
         "input_postcode": "Input PostCode"
+      },
+      "direction": {
+        "direction": "Direction",
+        "north": "North",
+        "north_east": "North-East",
+        "east": "East",
+        "south-east": "South-East",
+        "south": "South",
+        "south_west": "South-West",
+        "west": "West",
+        "north_west": "North-West"
       }
     }
   },
   "cn": {
     "translation": {
       "app_name": "餐厅POS",
+      "restaurant": "餐厅",
+      "restaurant_receipt": "餐厅收据",
+      "customer": "客户",
+      "paymethod": "支付方式",
+      "date": "日期",
+      "list_of_items": "项目列表",
+      "quantity": "数量",
+      "amount": "金额",
+      "total_price": "总价",
+      "distance": "距离",
+      "thanks": "感谢您与我们一起用餐",
+      "please_come_again": "请再来一次",
+      "print": "打印",
       "english": "English",
       "chinese": "中文",
       "search": "搜索",
@@ -183,6 +221,7 @@
       "street_name": "街道名称",
       "postcode": "邮政编码",
       "restaurant_name": "餐厅名称",
+      "address": "地址",
       "save": "节省",
       "cancel": "取消",
       "submit": "提交",
@@ -317,6 +356,17 @@
         "description": "管理客户",
         "customer_name": "客户名称",
         "input_postcode": "输入邮政编码"
+      },
+      "direction": {
+        "direction": "方向",
+        "north": "北",
+        "north_east": "东北",
+        "east": "东",
+        "south-east": "东南",
+        "south": "南",
+        "south_west": "西南",
+        "west": "西",
+        "north_west": "西北"
       }
     }
   }

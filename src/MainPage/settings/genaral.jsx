@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Select2 from 'react-select2-wrapper';
 import 'react-select2-wrapper/css/select2.css';
@@ -6,6 +6,7 @@ import { Upload } from '../../EntryFile/imagePath';
 import alertify from 'alertifyjs';
 import { api } from '../../utils/api';
 import { useTranslation } from 'react-i18next';
+import { GeneralContext } from '../../context/GeneralContext';
 
 const GenaralSettings = () => {
   const inputRef = useRef(null);
@@ -17,20 +18,33 @@ const GenaralSettings = () => {
   const [restaurantLogo, setRestaurantLogo] = useState('');
   const [logo, setLogo] = useState(null);
   const { t } = useTranslation();
+  const restaurant = useContext(GeneralContext);
+
+  console.log(restaurant, 'restaurant name in general');
+  const currentRestaurant = restaurant[0];
 
   useEffect(() => {
-    (async () => {
-      await api.get('/restaurant').then((res) => {
-        console.log(res.data);
-        setRestaurantName(res.data.name);
-        setRestaurantEmail(res.data.email);
-        setRestaurantPhone(res.data.phone);
-        setRestaurantAddress(res.data.address);
-        setRestaurantPostCode(res.data.postcode);
-        setRestaurantLogo(res.data.logo);
-      });
-    })();
-  }, []);
+    if (currentRestaurant) {
+      const res = currentRestaurant;
+      setRestaurantName(res.name);
+      setRestaurantEmail(res.email);
+      setRestaurantPhone(res.phone);
+      setRestaurantAddress(res.address);
+      setRestaurantPostCode(res.postcode);
+      setRestaurantLogo(res.logo);
+    } else {
+      setRestaurantName('');
+      setRestaurantEmail('');
+      setRestaurantPhone('');
+      setRestaurantAddress('');
+      setRestaurantPostCode('');
+      setRestaurantLogo(null);
+    }
+  }, [currentRestaurant]);
+
+  useEffect(() => {
+    console.log(restaurantLogo, 'logo');
+  }, [restaurantLogo]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,22 +55,32 @@ const GenaralSettings = () => {
     formData.append('restaurantAddress', restaurantAddress);
     formData.append('restaurantPostCode', restaurantPostCode);
     formData.append('restaurantLogo', restaurantLogo);
+    console.log(restaurantLogo, 'restaurant logo');
     try {
-      const response = await api.post('/restaurant/add', formData, {
+      const resPostcode = await api.get(`/postcode/${restaurantPostCode}`);
+      console.log(resPostcode.data, 'res data');
+      console.log('Postcode found');
+      console.log(formData, 'form data');
+      await api.post('/restaurant/add', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      alertify.success('Restaurant added successfully.');
+      alertify.success('Restaurant saved successfully.');
     } catch (error) {
-      console.error(error);
-      alertify.error('Some error occurred');
+      // alertify.error('Some error occurred');
+      if (error.response && error.response.status === 404) {
+        console.log('Postcode not found');
+        alertify.warning('PostCode invalid!');
+      } else {
+        console.error('An error occurred:', error);
+      }
     }
   };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    setRestaurantLogo(file);
+    setRestaurantLogo(URL.createObjectURL(file));
     setLogo(URL.createObjectURL(file));
   };
 
@@ -118,7 +142,7 @@ const GenaralSettings = () => {
               <div className="col-lg-6 col-sm-12">
                 <div className="form-group">
                   <label>
-                    {t('street_name')}
+                    {t('address')}
                     <span className="manitory">*</span>{' '}
                   </label>
                   <input
@@ -139,9 +163,9 @@ const GenaralSettings = () => {
                   </label>
                   <input
                     type="text"
-                    value={restaurantZipCode}
+                    value={restaurantPostCode}
                     onChange={(event) =>
-                      setRestaurantZipCode(event.target.value)
+                      setRestaurantPostCode(event.target.value)
                     }
                     required
                   />
@@ -167,10 +191,12 @@ const GenaralSettings = () => {
                       style={{ position: 'relative' }}
                       onClick={() => inputRef.current.click()}
                     >
-                      {logo ? (
+                      {restaurantLogo ? (
                         <img
-                          src={logo}
-                          alt="img"
+                          // src={logo}
+                          // src="http://localhost:5000/images/b24d9763-51d2-49ca-88bd-a73780435eee-1706333422001.png"
+                          src={restaurantLogo}
+                          alt="restaurant logo"
                           style={{
                             objectFit: 'contain',
                             height: '100%',
@@ -189,7 +215,7 @@ const GenaralSettings = () => {
               <div className="row">
                 <div className="col-lg-12">
                   <button
-                    onSubmit={handleSubmit}
+                    onClick={handleSubmit}
                     className="btn btn-submit me-2"
                   >
                     {t('save')}

@@ -33,6 +33,8 @@ const Header = (props) => {
 
   const { user, isAuthenticated } = useAuth();
 
+  console.log(user, 'this is current user');
+
   const handlesidebar = () => {
     document.body.classList.toggle('mini-sidebar');
     SetToggle((current) => !current);
