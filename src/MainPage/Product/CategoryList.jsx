@@ -126,7 +126,7 @@ const CategoryList = () => {
             </div>
             <div className="page-btn">
               <Link
-                to="/dream-pos/product/addcategory-product"
+                to="/main/product/addcategory-product"
                 className="btn btn-added"
               >
                 <img src={PlusIcon} alt="img" className="me-1" />

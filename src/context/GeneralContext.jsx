@@ -11,7 +11,6 @@ const GeneralContextProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       await api.get('/restaurant').then((res) => {
-        console.log(res.data, 'restaurant res data');
         setRestaurant(res.data);
       });
     })();

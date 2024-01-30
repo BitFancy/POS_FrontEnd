@@ -13,7 +13,7 @@ i18next
     interpolation: {
       escapeValue: false,
     },
-    debug: process.env.NODE_ENV === 'development',
+    // debug: process.env.NODE_ENV === 'development',
   });
 
 export default i18next;

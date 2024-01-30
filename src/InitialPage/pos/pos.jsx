@@ -83,32 +83,17 @@ const Pos = () => {
   const currentRestaurant = restaurant[0];
   useEffect(() => {
     if (currentRestaurant) {
-      console.log(
-        'current restaurant============================',
-        currentRestaurant
-      );
-      console.log(currentRestaurant.name, 'current restaurant');
       setRestaurantPostCode(currentRestaurant.postcode);
     }
   }, [currentRestaurant]);
 
   useEffect(() => {
-    console.log(customer, 'customer info');
     (async () => {
       await api.get(`/customer/${customer}`).then((res) => {
-        console.log(res.data, 'customer full info');
         setCustomerPostCode(res.data.postCode);
-        console.log(res.data.postCode, 'customer post code');
-        console.log(restaurantPostCode, 'restaurant post code');
-        console.log(direction, 'direction');
-        console.log('set direction');
       });
     })();
   }, [customer]);
-
-  useEffect(() => {
-    console.log(direction, 'current direction');
-  }, [direction]);
 
   useEffect(() => {
     (async () => {
@@ -162,21 +147,17 @@ const Pos = () => {
             {
               id: row._id,
               text: row.customerName,
-              phoneNumber: row.phoneNumber,
+              // phoneNumber: row.phoneNumber,
               email: row.email,
-              houseNumber: row.houseNumber,
-              streetName: row.streetName,
-              postCode: row.postCode,
+              // houseNumber: row.houseNumber,
+              // streetName: row.streetName,
+              // postCode: row.postCode,
             },
           ]);
         });
       });
     })();
   }, []);
-
-  useEffect(() => {
-    console.log(customers, 'customers===================');
-  }, [customers]);
 
   const orderTypes = [
     { id: 1, text: 'Dine-in', text: t('order_type.dine-in') },
@@ -410,8 +391,8 @@ const Pos = () => {
                     </div>
                     <div className="dish-table">
                       {productList.length > 0 &&
-                        productList.map((product, index) => (
-                          <div key={index}>
+                        productList.map((product) => (
+                          <div key={product._id}>
                             {product.productType.includes(5) && (
                               <span>{t('pos.addon')}</span>
                             )}
@@ -446,6 +427,7 @@ const Pos = () => {
                                 </div> */}
                                 <div className="col-lg-2">
                                   <Link
+                                    to="/#"
                                     className="confirm-text"
                                     onClick={() =>
                                       confirmText(product._id, false)
@@ -489,7 +471,7 @@ const Pos = () => {
                   </div>
 
                   <Link
-                    to="/dream-pos/sales/saleslist"
+                    to="/main/sales/saleslist"
                     // className="btn btn-added"
                     className="d-flex align-items-center"
                   >
@@ -574,6 +556,7 @@ const Pos = () => {
                           />
                         </div>
                         <Link
+                          to="/#"
                           className="btn"
                           data-bs-toggle="modal"
                           data-bs-target="#newCustomer"
@@ -583,16 +566,6 @@ const Pos = () => {
                             minWidth: '25%',
                             minHight: '',
                           }}
-                          // onMouseEnter={() => {
-                          //   this.setState({
-                          //     color: '#fff',
-                          //   });
-                          // }}
-                          // onMouseLeave={() => {
-                          //   this.setState({
-                          //     color: '#28c76f',
-                          //   });
-                          // }}
                         >
                           <i className="fa fa-plus me-2" />
                           {t('new')}
@@ -607,7 +580,7 @@ const Pos = () => {
                         {t('pos.total_items')} : {dishes.length}
                       </h4>
                       <h6 onClick={removeOrderList} className="cursorHand">
-                        <Link>{t('clear_all')}</Link>
+                        <Link to="/#">{t('clear_all')}</Link>
                       </h6>
                     </div>
                     <div className="order-table">
@@ -668,6 +641,7 @@ const Pos = () => {
                               </div>
                               <li className="col-lg-2">
                                 <Link
+                                  to="/#"
                                   className="confirm-text"
                                   onClick={() => deleteDish(dish.id)}
                                 >
@@ -739,15 +713,6 @@ const Pos = () => {
                     >
                       {t('pos.checkout')}
                     </button>
-
-                    {/* <Link
-                      className="me-2"
-                      data-bs-toggle="modal"
-                      onClick={() => handleSetOrderDetail(order)}
-                      data-bs-target="#order-details"
-                    >
-                      <img src={Eye1} className="me-2" alt="img" />
-                    </Link> */}
                   </div>
                 </div>
               </div>
@@ -849,13 +814,17 @@ const Pos = () => {
               </div>
               <div className="col-lg-12">
                 <Link
-                  to="#"
+                  to="/#"
                   className="btn btn-submit me-2"
                   onClick={handleAddCustomer}
                 >
                   {t('submit')}
                 </Link>
-                <Link to="#" className="btn btn-cancel" data-bs-dismiss="modal">
+                <Link
+                  to="/#"
+                  className="btn btn-cancel"
+                  data-bs-dismiss="modal"
+                >
                   {t('cancel')}
                 </Link>
               </div>
@@ -944,7 +913,13 @@ const Pos = () => {
                     <span className="font-weight-bold">
                       {customers.map((list) => {
                         if (list.id === customer) {
-                          return list.text;
+                          return (
+                            <span key={list.id} className="font-weight-bold">
+                              {list.text}
+                            </span>
+                          );
+                        } else {
+                          return null; // or any other fallback value
                         }
                       })}
                     </span>
@@ -994,14 +969,14 @@ const Pos = () => {
                     </table>
                   </div>
                   <div className="mt-3 border-top mx-5">
-                    <tfoot className="d-flex justify-content-between mt-2">
+                    <div className="d-flex justify-content-between mt-2">
                       <span>{t('total_price')} : </span>
                       <span>£{totalPrice}</span>
-                    </tfoot>
-                    <tfoot className="d-flex justify-content-between mt-2">
+                    </div>
+                    <div className="d-flex justify-content-between mt-2">
                       <span>{t('direction.direction')} : </span>
                       <span>{direction}</span>
-                    </tfoot>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1016,7 +991,7 @@ const Pos = () => {
                   bodyClass="print-agreement"
                   content={() => ref.current}
                   trigger={() => (
-                    <Link className="d-flex align-items-center">
+                    <Link to="/#" className="d-flex align-items-center">
                       <FeatherIcon icon="printer" />
                       <span className="px-2"> {t('print')} </span>
                     </Link>
@@ -1025,6 +1000,7 @@ const Pos = () => {
               </div>
               <div className="px-3">
                 <Link
+                  to="/#"
                   className="d-flex align-items-center"
                   data-bs-dismiss="modal"
                 >

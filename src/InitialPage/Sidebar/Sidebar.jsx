@@ -89,7 +89,7 @@ const Sidebar = (props) => {
                         className={
                           pathname.includes('saleslist') ? 'active' : ''
                         }
-                        to="/dream-pos/sales/saleslist"
+                        to="/main/sales/saleslist"
                       >
                         <i data-feather="shopping-cart" />
                         <FeatherIcon icon="shopping-cart" />
@@ -112,7 +112,7 @@ const Sidebar = (props) => {
                         className={
                           pathname.includes('productlist-') ? 'active' : ''
                         }
-                        to="/dream-pos/product/productlist-product"
+                        to="/main/product/productlist-product"
                       >
                         <FeatherIcon icon="box" />
                         <span>{t('sidebar.products')}</span>
@@ -129,7 +129,7 @@ const Sidebar = (props) => {
                         className={
                           pathname.includes('categorylist-') ? 'active' : ''
                         }
-                        to="/dream-pos/product/categorylist-product"
+                        to="/main/product/categorylist-product"
                       >
                         <FeatherIcon icon="codepen" />
                         <span>{t('sidebar.categories')}</span>
@@ -217,7 +217,7 @@ const Sidebar = (props) => {
                           <ul>
                             <li>
                               <Link
-                                to="/dream-pos/users/userlists"
+                                to="/main/users/userlists"
                                 className={
                                   pathname.includes('userlists') ? 'active' : ''
                                 }
@@ -227,7 +227,7 @@ const Sidebar = (props) => {
                             </li>
                             <li>
                               <Link
-                                to="/dream-pos/users/customerlists"
+                                to="/main/users/customerlists"
                                 className={
                                   pathname.includes('customerlists')
                                     ? 'active'
@@ -244,7 +244,7 @@ const Sidebar = (props) => {
                       </li>
                       <li>
                         <Link
-                          to="/dream-pos/settings/generalsettings"
+                          to="/main/settings/generalsettings"
                           className={
                             pathname.includes('generalsettings') ? 'active' : ''
                           }

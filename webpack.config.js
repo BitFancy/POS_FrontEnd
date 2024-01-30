@@ -1,21 +1,21 @@
-const path = require("path");
-const webpack = require("webpack");
-const fs = require("fs");
+const path = require('path');
+const webpack = require('webpack');
+const fs = require('fs');
 
 // const publicPath = "/reactjs/template/";
-const publicPath = "/";
+const publicPath = '/';
 
 // Make sure any symlinks in the project folder are resolved:
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // the path(s) that should be cleaned
-let pathsToClean = ["dist", "build"];
+let pathsToClean = ['dist', 'build'];
 
 // the clean options to use
 let cleanOptions = {
@@ -25,31 +25,31 @@ let cleanOptions = {
 };
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
   //  externals: {
   //   // require("jquery") is external and available
   //   //  on the global var jQuery
   //   "jquery": "jQuery"
   // },
   entry: {
-    app: "./src/index.js",
+    app: './src/index.js',
   },
   output: {
     // The build folder.
-    path: resolveApp("dist"),
+    path: resolveApp('dist'),
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: "static/js/[name].[hash:8].js",
-    chunkFilename: "static/js/[name].[hash:8].chunk.js",
+    filename: 'static/js/[name].[hash:8].js',
+    chunkFilename: 'static/js/[name].[hash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
-    hotUpdateChunkFilename: "hot/hot-update.js",
-    hotUpdateMainFilename: "hot/hot-update.json",
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json',
   },
   devServer: {
-    contentBase: "./src/index.js",
-    host: "localhost",
+    contentBase: './src/index.js',
+    host: 'localhost',
     compress: true,
     port: 8002, // port number
     historyApiFallback: true,
@@ -58,18 +58,18 @@ module.exports = {
   externals: {
     // global app config object
     config: JSON.stringify({
-      apiUrl: "",
-      imageapiUrl: "",
+      apiUrl: '',
+      imageapiUrl: '',
 
-      publicPath: "/reactjs/template/",
+      publicPath: '/',
     }),
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: ['*', '.js', '.jsx'],
     alias: {
-      Assets: path.resolve(__dirname, "src/assets/"),
+      Assets: path.resolve(__dirname, 'src/assets/'),
     },
-    modules: [path.join(__dirname, "js/helpers"), "node_modules"],
+    modules: [path.join(__dirname, 'js/helpers'), 'node_modules'],
   },
   module: {
     rules: [
@@ -78,12 +78,12 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         // config for sass compilation
@@ -92,9 +92,9 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
           },
-          "css-loader",
+          'css-loader',
           {
-            loader: "sass-loader",
+            loader: 'sass-loader',
           },
         ],
       },
@@ -102,7 +102,7 @@ module.exports = {
         test: /\.(png|jpg|gif)$/i,
         use: [
           {
-            loader: "url-loader",
+            loader: 'url-loader',
             options: {
               limit: 8192,
             },
@@ -111,7 +111,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000",
+        loader: 'url-loader?limit=100000',
       },
       //  { // config for fonts
       //    test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -130,31 +130,31 @@ module.exports = {
     minimizer: [new UglifyJsPlugin()],
   },
   performance: {
-    hints: process.env.NODE_ENV === "production" ? "warning" : false,
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html",
-      favicon: "./public/favicon.ico",
+      template: './public/index.html',
+      filename: './index.html',
+      favicon: './public/favicon.ico',
     }),
     new MiniCssExtractPlugin({
       // plugin for controlling how compiled css will be outputted and named
-      filename: "css/[name].css",
-      chunkFilename: "css/[id].css",
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[id].css',
     }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
-        "css/*.*",
-        "js/*.*",
-        "fonts/*.*",
-        "images/*.*",
+        'css/*.*',
+        'js/*.*',
+        'fonts/*.*',
+        'images/*.*',
       ],
     }),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
     }),
   ],
 };

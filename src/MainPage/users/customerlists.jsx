@@ -107,7 +107,7 @@ const CustomerLists = () => {
             <h6>{t('customers.description')}</h6>
           </div>
           <div className="page-btn">
-            <Link to="/dream-pos/users/newcustomer" className="btn btn-added">
+            <Link to="/main/users/newcustomer" className="btn btn-added">
               <img src={PlusIcon} alt="img" className="me-2" />
               {t('customers.add_button')}
             </Link>

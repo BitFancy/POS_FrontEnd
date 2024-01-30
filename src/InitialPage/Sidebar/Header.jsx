@@ -33,8 +33,6 @@ const Header = (props) => {
 
   const { user, isAuthenticated } = useAuth();
 
-  console.log(user, 'this is current user');
-
   const handlesidebar = () => {
     document.body.classList.toggle('mini-sidebar');
     SetToggle((current) => !current);
@@ -72,22 +70,19 @@ const Header = (props) => {
             onMouseOver={expandMenuOpen}
           >
             <Link
-              to="/dream-pos/product/productlist-product"
+              to="/main/product/productlist-product"
               className="logo logo-normal"
             >
               {/* <img src={Logo} alt="" /> */}
               <strong>{t('app_name')}</strong>
             </Link>
             <Link
-              to="/dream-pos/product/productlist-product"
+              to="/main/product/productlist-product"
               className="logo logo-white"
             >
               <img src={LogoWhite} alt="" />
             </Link>
-            <Link
-              to="/dream-pos/product/productlist-product"
-              className="logo-small"
-            >
+            <Link to="/main/product/productlist-product" className="logo-small">
               <img src={SmallLogo} alt="" />
             </Link>
             <Link id="toggle_btn" to="#"></Link>
@@ -193,14 +188,14 @@ const Header = (props) => {
                     {/* <hr className="m-0" /> */}
                     <Link
                       className="dropdown-item"
-                      to="/dream-pos/profile/user-profile"
+                      to="/main/profile/user-profile"
                     >
                       <FeatherIcon icon="user" />
                       {t('profile')}
                     </Link>
                     <Link
                       className="dropdown-item"
-                      to="/dream-pos/settings/generalsettings"
+                      to="/main/settings/generalsettings"
                     >
                       <FeatherIcon icon="settings" />
                       {t('settings')}

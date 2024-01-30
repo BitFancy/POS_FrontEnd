@@ -392,21 +392,18 @@ const Header = (props) => {
             onMouseOver={expandMenuOpen}
           >
             <Link
-              to="/dream-pos/product/productlist-product"
+              to="/main/product/productlist-product"
               className="logo logo-normal"
             >
               <img src={Logo} alt="" />
             </Link>
             <Link
-              to="/dream-pos/product/productlist-product"
+              to="/main/product/productlist-product"
               className="logo logo-white"
             >
               <img src={LogoWhite} alt="" />
             </Link>
-            <Link
-              to="/dream-pos/product/productlist-product"
-              className="logo-small"
-            >
+            <Link to="/main/product/productlist-product" className="logo-small">
               <img src={SmallLogo} alt="" />
             </Link>
             <Link id="toggle_btn" to="#"></Link>

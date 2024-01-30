@@ -52,40 +52,10 @@ const SignInPage = (props) => {
       email: email,
       password: password,
     };
-    // console.log(user);
-    // await api
-    //   .post('/users/login', user)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     // localStorage.setItem('token', res.data.token);
-    //     console.log(currentUser, 'this is current user');
-    //     setAuthToken(res.data.token);
-    //     // if (res.data.message) {
-    //     //   alert(res.data.message);
-    //     // }
-    //   })
-    //   .then(() => {
-    //     if (window.localStorage.token) {
-    //       console.log(currentUser, 'this is current user after then');
-    //       history.push('/dream-pos/product/productlist-product');
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     alert(err);
-    //   });
-
-    //-----------------------new signin------------------
+    
 
     try {
-      // setLoginButtonClicked(true);
       setIsLoading(true);
-      // if (user.email == '' || user.password == '') {
-      //   showToast('Please fill in all the information!', 'error');
-      // } else if (!validator.isEmail(user.email)) {
-      //   showToast('Invalid email format!', 'error');
-      // } else {
-      // delete values.confirm;
       if (!localStorage.getItem('loginEmail')) {
         localStorage.setItem('loginEmail', user.email);
       } else {
