@@ -158,11 +158,7 @@ const SidebarThree = (props) => {
                       <li>
                         <Link to="/pos">New Sales</Link>
                       </li>
-                      <li>
-                        <Link to="/dream-pos/return/salesreturnlist-return">
-                          Sales Return List
-                        </Link>
-                      </li>
+                      
                       <li>
                         <Link to="/dream-pos/return/addsalesreturn-return">
                           New Sales Return
@@ -293,11 +289,7 @@ const SidebarThree = (props) => {
                       <span> Return</span> <span className="menu-arrow" />
                     </Link>
                     <ul className={`${menu12 === true ? "d-block" : ""}`}>
-                      <li>
-                        <Link to="/dream-pos/return/salesreturnlist-return">
-                          Sales Return List
-                        </Link>
-                      </li>
+                      
                       <li>
                         <Link to="/dream-pos/return/addsalesreturn-return">
                           Add Sales Return{" "}
@@ -950,11 +942,7 @@ const SidebarThree = (props) => {
                   <li>
                     <Link to="/pos">New Sales</Link>
                   </li>
-                  <li>
-                    <Link to="/dream-pos/return/salesreturnlist-return">
-                      Sales Return List
-                    </Link>
-                  </li>
+                  
                   <li>
                     <Link to="/dream-pos/return/addsalesreturn-return">
                       New Sales Return
@@ -1085,11 +1073,6 @@ const SidebarThree = (props) => {
                   <span> Return</span> <span className="menu-arrow" />
                 </Link>
                 <ul className={`${menu12 === true ? "d-block" : ""}`}>
-                  <li>
-                    <Link to="/dream-pos/return/salesreturnlist-return">
-                      Sales Return List
-                    </Link>
-                  </li>
                   <li>
                     <Link to="/dream-pos/return/addsalesreturn-return">
                       Add Sales Return{" "}

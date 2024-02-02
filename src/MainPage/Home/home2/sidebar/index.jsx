@@ -284,24 +284,7 @@ const SidebarTwo = () => {
                         <span>Invoices</span>
                       </Link>
                     </li>
-                    <li
-                      className={
-                        pathname.includes("salesreturnlist-return")
-                          ? "active"
-                          : ""
-                      }
-                    >
-                      <Link
-                        className={
-                          pathname.includes("salesreturnlist-") ? "active" : ""
-                        }
-                        to="/dream-pos/return/salesreturnlist-return"
-                      >
-                        {/* <i data-feather="copy" /> */}
-                        <FeatherIcon icon="copy" />
-                        <span>Sales Return</span>
-                      </Link>
-                    </li>
+                    
                     <li
                       className={
                         pathname.includes("quotationlist-quotation")
@@ -398,18 +381,7 @@ const SidebarTwo = () => {
                       </Link>
                       {isSideMenu == "return" ? (
                         <ul>
-                          <li>
-                            <Link
-                              className={
-                                pathname.includes("salesreturnlist-")
-                                  ? "active"
-                                  : ""
-                              }
-                              to="/dream-pos/return/salesreturnlist-return"
-                            >
-                              Sales Return
-                            </Link>
-                          </li>
+                          
                           <li>
                             <Link
                               className={

@@ -3,21 +3,12 @@ import Activities from "../MainPage/Activities";
 import Product from "../MainPage/Product/index";
 import Sales from "../MainPage/sales";
 import Profile from "../MainPage/Profile/index";
-import Purchase from "../MainPage/Purchase/index";
 import Expense from "../MainPage/Expense/index";
-import Quotation from "../MainPage/Quotation/index";
-import Transfer from "../MainPage/Transfer/index";
-import Return from "../MainPage/Return/index";
 import People from "../MainPage/People/index";
-import Places from "../MainPage/Places/index";
-import Components from "../MainPage/Components/index";
 import Elements from "../MainPage/elements";
-import Charts from "../MainPage/charts";
 import Icons from "../MainPage/icons";
 import Forms from "../MainPage/forms";
 import Tables from "../MainPage/tables";
-import Application from "../MainPage/application";
-import Report from "../MainPage/report";
 import Users from "../MainPage/users";
 import Settings from "../MainPage/settings";
 import BlankPage from "../MainPage/BlankPage";
@@ -44,36 +35,12 @@ export default [
     component: Profile,
   },
   {
-    path: "purchase",
-    component: Purchase,
-  },
-  {
     path: "expense",
     component: Expense,
   },
   {
-    path: "quotation",
-    component: Quotation,
-  },
-  {
-    path: "transfer",
-    component: Transfer,
-  },
-  {
-    path: "return",
-    component: Return,
-  },
-  {
     path: "people",
     component: People,
-  },
-  {
-    path: "places",
-    component: Places,
-  },
-  {
-    path: "components",
-    component: Components,
   },
   {
     path: "blankpage",
@@ -82,10 +49,6 @@ export default [
   {
     path: "elements",
     component: Elements,
-  },
-  {
-    path: "charts",
-    component: Charts,
   },
   {
     path: "icons",
@@ -98,14 +61,6 @@ export default [
   {
     path: "table",
     component: Tables,
-  },
-  {
-    path: "application",
-    component: Application,
-  },
-  {
-    path: "report",
-    component: Report,
   },
   {
     path: "users",
