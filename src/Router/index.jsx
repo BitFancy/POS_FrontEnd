@@ -3,7 +3,6 @@ import Activities from "../MainPage/Activities";
 import Product from "../MainPage/Product/index";
 import Sales from "../MainPage/sales";
 import Profile from "../MainPage/Profile/index";
-import Expense from "../MainPage/Expense/index";
 import People from "../MainPage/People/index";
 import Elements from "../MainPage/elements";
 import Icons from "../MainPage/icons";
@@ -33,10 +32,6 @@ export default [
   {
     path: "profile",
     component: Profile,
-  },
-  {
-    path: "expense",
-    component: Expense,
   },
   {
     path: "people",
